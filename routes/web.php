@@ -20,6 +20,8 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CriminalsController;
+use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\PoliceStationController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -113,10 +115,10 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('notificationsettings',NotificationController::class);
     Route::resource('countries',CountryController::class);
     Route::resource('states',StateController::class);
+    Route::resource('districts',DistrictController::class);
     Route::resource('cities',CityController::class);
+    Route::resource('police_station',PoliceStationController::class);
     Route::resource('criminals',CriminalsController::class);
-
-
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

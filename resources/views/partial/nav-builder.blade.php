@@ -80,8 +80,18 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
+                <a href="{{url('/districts')}}" class="c-sidebar-nav-link" >
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('District') }}
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
                 <a href="{{url('/cities')}}" class="c-sidebar-nav-link" >
                     <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Cities') }}
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{url('/police_stations')}}" class="c-sidebar-nav-link" >
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Police Station') }}
                 </a>
             </li>
         @endrole
