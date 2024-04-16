@@ -1,22 +1,22 @@
 @extends('layouts.admin')
 @section('title')
-    {{ __('Edit City') }}
+    {{ __('Edit Police Station') }}
 @endsection
 @section('breadcrumb')
     <a class="breadcrumb-item" href="{{ route('home') }}">{{ __('Home') }}</a><a class="breadcrumb-item"
-        href="{{ route('cities.index') }}">{{ __('Cities') }}</a><span
+        href="{{ route('police_stations.index') }}">{{ __('Police Station') }}</a><span
         class="breadcrumb-item active">{{ __('Edit') }}</span>
 
 @endsection
 @section('content')
-    {!! Form::model($city, ['method' => 'PATCH', 'route' => ['cities.update', $city->id]]) !!}
+    {!! Form::model($policeStation, ['method' => 'PATCH', 'route' => ['police_stations.update', $policeStation->id]]) !!}
     <div class="col-md-4 m-auto">
         <div class="card">
-            <div class="card-header">{{ __('Edit City') }} </div>
+            <div class="card-header">{{ __('Edit District') }} </div>
             <div class="card-body">
                 <div class="form-group">
                     {{ Form::label('name', __('Name')) }}
-                    {!! Form::text('name', null, ['placeholder' => __('Name'),  'class' => 'form-control']) !!}
+                    {!! Form::text('code', null, ['placeholder' => __('Name'),  'class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     <label>Country</label>
@@ -38,10 +38,19 @@
                 </div>
                 <div class="form-group">
                     <label>District</label>
-                    <select name="district_id" class="form-select form-select-lg form-control select2" id="district">
+                    <select  name="district_id" class="form-select form-select-lg form-control select2" id="district">
                         <option value="">Select District</option>
-                        @foreach ($districts as $district)
+                        @foreach($districts as $district)
                         <option value="{{ $district->id }}" @if($selected_district_id == $district->id) selected @endif>{{ $district->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <select  name="city_id" class="form-select form-select-lg form-control select2" id="city">
+                        <option value="">Select City</option>
+                        @foreach($cities as $city)
+                        <option value="{{ $city->id }}" @if($selected_city_id == $city->id) selected @endif>{{ $city->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -69,7 +78,7 @@
                         $('#state').append('<option value="' + value
                             .id + '">' + value.name + '</option>');
                     });
-                    $('#city').html('<option value="">Select City</option>');
+                    $('#district').html('<option value="">Select District</option>');
                 }
             });
         });

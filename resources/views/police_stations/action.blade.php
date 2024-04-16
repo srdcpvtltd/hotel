@@ -7,17 +7,17 @@
         <a href="#" class="action-item" role="button" data-toggle="dropdown"
             aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
         @can('edit-module')
-            <a href="{{ route('districts.edit', $district->id) }}" class=" dropdown-item"><i
+            <a href="{{ route('police_stations.edit', $police_station->id) }}" class=" dropdown-item"><i
                     class="cil-pencil action-btn"></i>
                 {{ __('Edit') }}</a>
         @endcan
         <div class="dropdown-divider"></div>
         @can('delete-module')
-            <a href="{{ route('districts.index') }}" class="dropdown-item  text-danger"
+            <a href="{{ route('police_stations.index') }}" class="dropdown-item  text-danger"
                 data-toggle="tooltip" data-original-title="{{ __('Delete') }}"
-                onclick="delete_record('delete-form-{{ $district->id }}')"><i
+                onclick="delete_record('delete-form-{{ $police_station->id }}')"><i
                     class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
-            {!! Form::open(['method' => 'DELETE', 'route' => ['districts.destroy', $district->id], 'id' => 'delete-form-' . $district->id]) !!}
+            {!! Form::open(['method' => 'DELETE', 'route' => ['police_stations.destroy', $police_station->id], 'id' => 'delete-form-' . $police_station->id]) !!}
             {!! Form::close() !!}
         @endcan
     </div>

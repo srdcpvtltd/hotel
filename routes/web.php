@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Artisan;
 */
 Route::get('dropdown', [CountryDropdownController::class, 'view'])->name('dropdownView')->middleware(['auth','XSS','2fa',]);
 Route::get('get-states', [CountryDropdownController::class, 'getStates'])->name('getStates')->middleware(['auth','XSS','2fa',]);
+Route::get('get-district', [CountryDropdownController::class, 'getDistricts'])->name('getDistricts')->middleware(['auth','XSS','2fa',]);
 Route::get('get-cities', [CountryDropdownController::class, 'getCities'])->name('getCities')->middleware(['auth','XSS','2fa',]);
 Route::get('get-guest-details/', [GuestController::class, 'getGuestDetail'])->name('getGuestDetail')->middleware(['auth','XSS','2fa',]);
 
@@ -117,7 +118,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('states',StateController::class);
     Route::resource('districts',DistrictController::class);
     Route::resource('cities',CityController::class);
-    Route::resource('police_station',PoliceStationController::class);
+    Route::resource('police_stations',PoliceStationController::class);
     Route::resource('criminals',CriminalsController::class);
 });
 

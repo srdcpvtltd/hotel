@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 @section('title')
-    {{ __('Create City') }}
+    {{ __('Create District') }}
 @endsection
 @section('breadcrumb')
     <a class="breadcrumb-item" href="{{ route('home') }}">{{ __('Home') }}</a><a class="breadcrumb-item"
-        href="{{ route('cities.index') }}">{{ __('Cities') }}</a><span
+        href="{{ route('districts.index') }}">{{ __('District') }}</a><span
         class="breadcrumb-item active">{{ __('Create') }}</span>
 
 @endsection
 @section('content')
 
-    {!! Form::open(['route' => 'cities.store', 'method' => 'POST']) !!}
+    {!! Form::open(['route' => 'districts.store', 'method' => 'POST']) !!}
     <div class="col-md-4 m-auto">
         <div class="card">
-            <div class="card-header">{{ __('Create New City') }} </div>
+            <div class="card-header">{{ __('Create New District') }} </div>
             <div class="card-body">
                 <div class="form-group">
                     {{ Form::label('name', __('Name')) }}
@@ -58,7 +58,7 @@
                         $('#state').append('<option value="' + value
                             .id + '">' + value.name + '</option>');
                     });
-                    $('#city').html('<option value="">Select City</option>');
+                    $('#district').html('<option value="">Select District</option>');
                 }
             });
         });

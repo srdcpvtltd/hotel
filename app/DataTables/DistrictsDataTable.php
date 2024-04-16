@@ -2,28 +2,28 @@
 
 namespace App\DataTables;
 
-use App\Models\City;
+use App\Models\District;
 use App\Models\Country;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class CitiesDataTable extends DataTable
+class DistrictsDataTable extends DataTable
 {
     public function dataTable($query)
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('state_id', function (City $city) {
-                return ($city->state!=null)?$city->state->name:'-';
+            ->editColumn('state_id', function (District $district) {
+                return ($district->state!=null)?$district->state->name:'-';
             })
-            ->addColumn('action', function (City $city) {
-                return view('cities.action', compact('city'));
+            ->addColumn('action', function (District $district) {
+                return view('districts.action', compact('district'));
             });
     }
 
 
-    public function query(City $model)
+    public function query(District $model)
     {
         //$query=$model->with('country');
         return $model->newQuery()->orderBy('id', 'ASC');
@@ -57,7 +57,7 @@ class CitiesDataTable extends DataTable
 
             Column::make('id'),
             Column::make('state_id')->title('State'),
-            Column::make('name')->title('City'),
+            Column::make('name')->title('District'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -69,6 +69,6 @@ class CitiesDataTable extends DataTable
 
     protected function filename()
     {
-        return 'Cities_' . date('YmdHis');
+        return 'District_' . date('YmdHis');
     }
 }

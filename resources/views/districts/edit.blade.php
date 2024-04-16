@@ -1,18 +1,18 @@
 @extends('layouts.admin')
 @section('title')
-    {{ __('Edit City') }}
+    {{ __('Edit District') }}
 @endsection
 @section('breadcrumb')
     <a class="breadcrumb-item" href="{{ route('home') }}">{{ __('Home') }}</a><a class="breadcrumb-item"
-        href="{{ route('cities.index') }}">{{ __('Cities') }}</a><span
+        href="{{ route('cities.index') }}">{{ __('District') }}</a><span
         class="breadcrumb-item active">{{ __('Edit') }}</span>
 
 @endsection
 @section('content')
-    {!! Form::model($city, ['method' => 'PATCH', 'route' => ['cities.update', $city->id]]) !!}
+    {!! Form::model($district, ['method' => 'PATCH', 'route' => ['districts.update', $district->id]]) !!}
     <div class="col-md-4 m-auto">
         <div class="card">
-            <div class="card-header">{{ __('Edit City') }} </div>
+            <div class="card-header">{{ __('Edit District') }} </div>
             <div class="card-body">
                 <div class="form-group">
                     {{ Form::label('name', __('Name')) }}
@@ -60,7 +60,7 @@
                         $('#state').append('<option value="' + value
                             .id + '">' + value.name + '</option>');
                     });
-                    $('#city').html('<option value="">Select City</option>');
+                    $('#district').html('<option value="">Select District</option>');
                 }
             });
         });

@@ -14,8 +14,8 @@ class CitiesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('state_id', function (City $city) {
-                return ($city->state!=null)?$city->state->name:'-';
+            ->editColumn('district_id', function (City $city) {
+                return ($city->district != null) ? $city->district->name : '-';
             })
             ->addColumn('action', function (City $city) {
                 return view('cities.action', compact('city'));
@@ -33,7 +33,7 @@ class CitiesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('states-table')
+            ->setTableId('districts-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -42,10 +42,10 @@ class CitiesDataTable extends DataTable
                 Button::make('create')->className('btn-primary '),
                 Button::make('pageLength')->className('btn-light ')
 
-            ) ->language([
-                'buttons'=>[
-                    'create'=>__('Create'),
-                    'pageLength'=>__('Show %d rows'),
+            )->language([
+                'buttons' => [
+                    'create' => __('Create'),
+                    'pageLength' => __('Show %d rows'),
                 ]
             ]);
     }
@@ -55,8 +55,11 @@ class CitiesDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('state_id')->title('State'),
+            Column::make('row_number')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
+            Column::make('district_id')->title('District'),
             Column::make('name')->title('City'),
             Column::computed('action')
                 ->exportable(false)

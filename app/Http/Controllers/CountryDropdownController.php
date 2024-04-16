@@ -32,12 +32,29 @@ class CountryDropdownController extends Controller
     public function getCities(Request $request)
     {
         $cities = \DB::table('cities')
-            ->where('state_id', $request->state_id)
+            ->where('district_id', $request->district_id)
             -> orderBy('name')
             ->get();
         
         if (count($cities) > 0) {
             return response()->json($cities);
+        }
+    }
+
+    /**
+     * return cities list
+     *
+     * @return json
+     */
+    public function getDistricts(Request $request)
+    {
+        $districts = \DB::table('districts')
+            ->where('state_id', $request->state_id)
+            -> orderBy('name')
+            ->get();
+        
+        if (count($districts) > 0) {
+            return response()->json($districts);
         }
     }
 }

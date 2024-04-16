@@ -10,8 +10,9 @@ class City extends Model
     use HasFactory;
     protected $guarded = ['id']; 
     public $timestamps = false;
-    public function state()
+
+    public function district()
     {
-        return $this->hasOne('App\Models\State','id','state_id');
+        return $this->hasOne('App\Models\District','id','district_id');
     }
 }

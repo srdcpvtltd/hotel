@@ -8,7 +8,7 @@ use App\Http\Requests\CityRequest;
 use App\Models\State;
 use App\Models\Country;
 use App\Models\City;
-
+use App\Models\District;
 
 class CityController extends Controller
 {
@@ -51,7 +51,6 @@ class CityController extends Controller
     {
         $message='';
         try {
-            //echo '<pre>';var_dump($request->all());exit;
             $cityService = $this->cityService->store($request, City::class);
             $message='City saved successfully';
         } catch (\Exception $exception) {
@@ -82,13 +81,19 @@ class CityController extends Controller
     {
         $countries = Country::get();
         $states = State::get();
+        $districts = District::get();
+        $state = State::where('id', $city->district->state_id)->first();
+        $country = Country::where('id', $state->country_id)->first();
+
         $selected_country_id=0;
         $selected_state_id=0;
-        if($city->state!=null){
-            $selected_country_id=$city->state->country_id;
-            $selected_state_id=$city->state->id;
+        if($city->district!=null){
+            $selected_country_id=$country->id;
+            $selected_state_id=$city->district->state_id;
+            $selected_district_id=$city->district->id;
         }
-        return view('cities.edit')->with(compact('city','states','countries','selected_country_id','selected_state_id'));
+
+        return view('cities.edit')->with(compact('city','districts', 'states','countries','selected_country_id','selected_state_id', 'selected_district_id'));
     }
 
     /**

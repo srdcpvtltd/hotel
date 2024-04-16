@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class District extends Model
 {
     use HasFactory;
+    protected $guarded = ['id']; 
+    public $timestamps = false;
+    public function state()
+    {
+        return $this->hasOne('App\Models\State','id','state_id');
+    }
 }
