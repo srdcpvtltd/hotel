@@ -70,50 +70,26 @@
                                     </a>
                                 </div>
                                 <div class="col-md-3 mt-3 mb-3">
-                                    <a href="">
+                                    <a href="<?php echo e(url('rooms')); ?>">
                                         <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
                                             <p class="mb-0"><i class="cil-bed dgn"></i></p>
                                             <p class="mb-0">Rooms</p>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-md-3 mt-3 mb-3">
+                                <!-- <div class="col-md-3 mt-3 mb-3">
                                     <a href="">
                                         <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
                                             <p class="mb-0"><i class="cil-fastfood dgn"></i></p>
                                             <p class="mb-0">Menus / Services</p>
                                         </div>
                                     </a>
-                                </div>
-                                <div class="col-md-3 mt-3 mb-3">
-                                    <a href="">
-                                        <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                            <p class="mb-0"><i class="cil-people dgn"></i></p>
-                                            <p class="mb-0">Customers</p>
-                                        </div>
-                                    </a>
-                                </div>
+                                </div> -->
                                 <div class="col-md-3 mt-3 mb-3">
                                     <a href="">
                                         <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
                                             <p class="mb-0"><i class="cil-user-follow dgn"></i></p>
                                             <p class="mb-0">Secondary Accounts</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 mt-3 mb-3">
-                                    <a href="">
-                                        <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                            <p class="mb-0"><i class="cil-history dgn"></i></p>
-                                            <p class="mb-0">History</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 mt-3 mb-3">
-                                    <a href="">
-                                        <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                            <p class="mb-0"><i class="cil-settings dgn"></i></p>
-                                            <p class="mb-0">Other Settings</p>
                                         </div>
                                     </a>
                                 </div>

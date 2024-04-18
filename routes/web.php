@@ -23,6 +23,7 @@ use App\Http\Controllers\CriminalsController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\SystemManagementController;
 use App\Http\Controllers\SystemSettingController;
@@ -43,6 +44,7 @@ Route::get('get-states', [CountryDropdownController::class, 'getStates'])->name(
 Route::get('get-district', [CountryDropdownController::class, 'getDistricts'])->name('getDistricts')->middleware(['auth','XSS','2fa',]);
 Route::get('get-cities', [CountryDropdownController::class, 'getCities'])->name('getCities')->middleware(['auth','XSS','2fa',]);
 Route::get('get-guest-details/', [GuestController::class, 'getGuestDetail'])->name('getGuestDetail')->middleware(['auth','XSS','2fa',]);
+Route::get('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/', [FrontEndController::class, 'index']);
@@ -127,6 +129,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('system_management',SystemManagementController::class);
     Route::resource('room_type',RoomTypeController::class);
     Route::resource('price_rule',PriceRuleController::class);
+    Route::resource('rooms',RoomController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);
