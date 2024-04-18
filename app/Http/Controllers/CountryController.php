@@ -74,7 +74,7 @@ class CountryController extends Controller
      */
     public function edit(Country $country)
     {
-        
+        dd($country);
         return view('countries.edit')->with(compact('country'));
     }
 

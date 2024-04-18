@@ -22,6 +22,10 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CriminalsController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\PoliceStationController;
+use App\Http\Controllers\PriceRuleController;
+use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\SystemManagementController;
+use App\Http\Controllers\SystemSettingController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -111,6 +115,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
 {
     Route::resource('roles',RoleController::class);
     Route::resource('users',UserController::class);
+    Route::resource('criminals',CriminalsController::class);
     Route::resource('permission',PermissionController::class);
     Route::resource('modules',ModualController::class);
     Route::resource('notificationsettings',NotificationController::class);
@@ -119,7 +124,9 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('districts',DistrictController::class);
     Route::resource('cities',CityController::class);
     Route::resource('police_stations',PoliceStationController::class);
-    Route::resource('criminals',CriminalsController::class);
+    Route::resource('system_management',SystemManagementController::class);
+    Route::resource('room_type',RoomTypeController::class);
+    Route::resource('price_rule',PriceRuleController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);
@@ -196,4 +203,4 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 
-Route::resource('tests', App\Http\Controllers\TestController::class)->middleware(['auth','XSS']);
+// Route::resource('tests', App\Http\Controllers\TestController::class)->middleware(['auth','XSS']);
