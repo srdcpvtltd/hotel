@@ -16,8 +16,8 @@ class RoomTypeRequest extends BaseRequest
     {
         $this->setModel(RoomType::class);
         $this->setModelActions();
-        return $this->isAuthorized();
-
+        // return $this->isAuthorized();
+        return true;
     }
     public function setModelActions(){
         $model_name="roomtype";
