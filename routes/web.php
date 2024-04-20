@@ -207,3 +207,13 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 // Route::resource('tests', App\Http\Controllers\TestController::class)->middleware(['auth','XSS']);
+
+Route::get('clear_cache', function () {
+
+    \Artisan::call('optimize:clear');
+});
+
+Route::get('run_migration', function () {
+
+    \Artisan::call('migrate');
+});
