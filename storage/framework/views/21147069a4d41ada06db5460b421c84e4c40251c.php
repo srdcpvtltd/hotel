@@ -6,13 +6,13 @@
     <div class="dropdown-menu" x-placement="bottom-start">
         <a href="#" class="action-item" role="button" data-toggle="dropdown"
             aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-module')): ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-System Management')): ?>
             <a href="<?php echo e(route('price_rule.edit', $pricerule->id)); ?>" class=" dropdown-item"><i
                     class="cil-pencil action-btn"></i>
                 <?php echo e(__('Edit')); ?></a>
         <?php endif; ?>
         <div class="dropdown-divider"></div>
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-module')): ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-System Management')): ?>
             <a href="<?php echo e(route('price_rule.index')); ?>" class="dropdown-item  text-danger"
                 data-toggle="tooltip" data-original-title="<?php echo e(__('Delete')); ?>"
                 onclick="delete_record('delete-form-<?php echo e($pricerule->id); ?>')"><i

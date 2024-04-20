@@ -104,12 +104,6 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
 
             </a>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a href="<?php echo e(url('/system_management')); ?>" class="c-sidebar-nav-link">
-                <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('System Settings')); ?>
-
-            </a>
-        </li>
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('viewer')): ?>
         <li class="c-sidebar-nav-item">
@@ -159,7 +153,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         </li>
         <li class="c-sidebar-nav-item">
             <a href="<?php echo e(url('/system_management')); ?>" class="c-sidebar-nav-link">
-                <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('System Settings')); ?>
+                <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('System Management')); ?>
 
             </a>
         </li>

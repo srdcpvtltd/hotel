@@ -90,11 +90,6 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Police Station') }}
             </a>
         </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{url('/system_management')}}" class="c-sidebar-nav-link">
-                <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('System Settings') }}
-            </a>
-        </li>
         @endrole
         @role('viewer')
         <li class="c-sidebar-nav-item">
@@ -137,7 +132,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         </li>
         <li class="c-sidebar-nav-item">
             <a href="{{url('/system_management')}}" class="c-sidebar-nav-link">
-                <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('System Settings') }}
+                <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('System Management') }}
             </a>
         </li>
         @endif
