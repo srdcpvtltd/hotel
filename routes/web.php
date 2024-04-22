@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CountryDropdownController;
 use App\Http\Controllers\ModualController;
 use App\Http\Controllers\PermissionController;
@@ -130,6 +131,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('room_type',RoomTypeController::class);
     Route::resource('price_rule',PriceRuleController::class);
     Route::resource('rooms',RoomController::class);
+    Route::resource('booking',BookingController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);
@@ -210,10 +212,10 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('clear_cache', function () {
 
-    \Artisan::call('optimize:clear');
+    Artisan::call('optimize:clear');
 });
 
 Route::get('run_migration', function () {
 
-    \Artisan::call('migrate');
+    Artisan::call('migrate');
 });
