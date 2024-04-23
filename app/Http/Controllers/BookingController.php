@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\BookingDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookingRequest;
+use App\Models\AdvanceBooking;
+use App\Models\Booking;
+use App\Models\Room;
+use App\Models\RoomType;
+use App\Services\BookingService;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -16,74 +23,61 @@ class BookingController extends Controller
         $this->BookingService = $BookingService;
     }
 
-    public function index(RoomDataTable $table)
+    public function index(BookingDataTable $table)
     {
-        return $table->render('system_management.room.index');
+        return $table->render('booking.index');
     }
 
     public function create()
     {
-        $room_type = RoomType::all();
+        $room_types = RoomType::all();
 
-        return view('system_management.room.create', compact('room_type'));
+        return view('booking.create', compact('room_types'));
     }
 
-    public function store(RoomRequest $request)
+    public function store(BookingRequest $request)
     {
         $message = '';
         try {
-            $BookingService = $this->BookingService->store($request, Room::class);
-            $message = 'Room saved successfully';
+            $BookingService = $this->BookingService->store($request, AdvanceBooking::class);
+            $message = 'Booking saved successfully';
         } catch (\Exception $exception) {
             $message = 'Error has exit';
         }
-        return redirect()->route('rooms.index')
+        return redirect()->route('booking.index')
             ->with('message', __($message));
     }
 
-    public function edit(Room $room)
+    public function edit(AdvanceBooking $booking)
     {
-        $room_type = RoomType::all();
-        return view('system_management.room.edit')->with(compact('room', 'room_type'));
+        $room_types = RoomType::all();
+        return view('booking.edit')->with(compact('booking', 'room_types'));
     }
 
-    public function update(RoomRequest $request, Room $room)
+    public function update(BookingRequest $request, AdvanceBooking $booking)
     {
         try {
-            $this->BookingService->update($request, $room);
+            $this->BookingService->update($request, $booking);
 
-            $message = 'Room Updated successfully';
+            $message = 'Booking Updated successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Update';
         }
-        return redirect()->route('rooms.index')
+        return redirect()->route('booking.index')
             ->with('message', __($message));
     }
 
-    public function destroy(RoomRequest $request, Room $room)
+    public function destroy(BookingRequest $request, AdvanceBooking $booking)
     {
         try {
-            $this->BookingService->destroy($request, $room);
+            $this->BookingService->destroy($request, $booking);
 
-            $message = 'Room Deleted successfully';
+            $message = 'Booking Deleted successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Deleted';
         }
-        return redirect()->route('rooms.index')
+        return redirect()->route('booking.index')
             ->with('message', __($message));
-    }
-
-    public function getPrice(Request $request)
-    {
-        $price = \DB::table('price_rules')
-            ->where('room_type_id', $request->Roomtype_id)
-            ->first();
-
-        if ($price != null) {
-            return response()->json($price->price);
-        } else {
-            return response()->json('No Price Rules Created');
-        }
     }
 
 }

@@ -54,7 +54,6 @@ class CitiesDataTable extends DataTable
     protected function getColumns()
     {
         return [
-
             Column::make('row_number')
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')

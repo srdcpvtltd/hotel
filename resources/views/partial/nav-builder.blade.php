@@ -106,7 +106,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         @role('user')
         @if($checkIsHotelCreated && ($checkIsHotelCreated->city != NULL || $checkIsHotelCreated->police_station != NULL))
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="{{ route('booking.create') }}">
+            <a class="c-sidebar-nav-link" href="{{ route('booking.index') }}">
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Bookings') }}
             </a>
         </li>

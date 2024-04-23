@@ -122,7 +122,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
         <?php if($checkIsHotelCreated && ($checkIsHotelCreated->city != NULL || $checkIsHotelCreated->police_station != NULL)): ?>
         <li class="c-sidebar-nav-item">
-            <a class="c-sidebar-nav-link" href="<?php echo e(route('booking.create')); ?>">
+            <a class="c-sidebar-nav-link" href="<?php echo e(route('booking.index')); ?>">
                 <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Bookings')); ?>
 
             </a>
