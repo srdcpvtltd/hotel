@@ -71,5 +71,10 @@
     </div>
 </div>
 {!! Form::close() !!}
-
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+    function validateTelInput(input) {
+        input.value = input.value.replace(/[^\d]/g, ''); // Replace any non-digit characters with an empty string
+    }
+</script>
 @endsection
