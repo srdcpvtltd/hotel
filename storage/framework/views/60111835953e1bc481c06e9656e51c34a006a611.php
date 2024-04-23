@@ -121,12 +121,14 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
         <?php if($checkIsHotelCreated && ($checkIsHotelCreated->city != NULL || $checkIsHotelCreated->police_station != NULL)): ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Booking')): ?>
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="<?php echo e(route('booking.index')); ?>">
                 <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Bookings')); ?>
 
             </a>
         </li>
+        <?php endif; ?>
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.create')); ?>">
                 <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Guest Check In')); ?>
@@ -157,12 +159,14 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
 
             </a>
         </li>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-System Management')): ?>
         <li class="c-sidebar-nav-item">
             <a href="<?php echo e(url('/system_management')); ?>" class="c-sidebar-nav-link">
                 <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('System Management')); ?>
 
             </a>
         </li>
+        <?php endif; ?>
         <?php endif; ?>
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>

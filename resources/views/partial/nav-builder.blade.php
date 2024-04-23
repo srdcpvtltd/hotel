@@ -105,11 +105,13 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         @endrole
         @role('user')
         @if($checkIsHotelCreated && ($checkIsHotelCreated->city != NULL || $checkIsHotelCreated->police_station != NULL))
+        @can('show-Booking')
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{ route('booking.index') }}">
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Bookings') }}
             </a>
         </li>
+        @endcan
         <li class="c-sidebar-nav-item">
             <a class="c-sidebar-nav-link" href="{{ route('guest.create') }}">
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Guest Check In') }}
@@ -135,11 +137,13 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Report') }}
             </a>
         </li>
+        @can('show-System Management')
         <li class="c-sidebar-nav-item">
             <a href="{{url('/system_management')}}" class="c-sidebar-nav-link">
                 <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('System Management') }}
             </a>
         </li>
+        @endcan
         @endif
         @endrole
         @role('user')
