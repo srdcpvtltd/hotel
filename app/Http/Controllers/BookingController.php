@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    
+
 
     protected $BookingService;
 
@@ -80,4 +80,13 @@ class BookingController extends Controller
             ->with('message', __($message));
     }
 
+    public function proceed_check_in($id)
+    {
+        $booking = AdvanceBooking::find($id)->first();
+        $countries = \DB::table('countries')->get();
+        $room_types = RoomType::all();
+        $room = Room::all();
+
+        return view('booking.register', compact('booking','countries','room_types','room'));
+    }
 }

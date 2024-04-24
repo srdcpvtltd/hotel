@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-{{ __('Guest Check In') }}
+{{ __(' Booking') }}
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -18,7 +18,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group row">
-
                                 <label class="col-6" style="margin-top:20px;">Have you ever visited this location before ?</label>
                                 <div class="col-6">
                                     <div class="custom-control custom-radio custom-control-inline">
@@ -65,11 +64,11 @@
                 <div class="form-row">
                     <div class="col">
                         <label>Guest Name <i class="fa fa-star f-required"></i></label>
-                        <input required name="gues_name" placeholder="Guest Name" type="text" class="form-control">
+                        <input required name="gues_name" placeholder="Guest Name" type="text" class="form-control" value="{{ $booking->name }}">
                     </div>
                     <div class="col">
                         <label>Guest Mobile Number <i class="fa fa-star f-required"></i></label>
-                        <input name="mobile_number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
+                        <input name="mobile_number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" value="{{ $booking->phone_number }}" />
                     </div>
                     <div class="col">
                         <label>Alternative Moible Number</label>
@@ -304,21 +303,20 @@
                         <input type="text" class="form-control" required placeholder="Id Number" name="id_number">
                     </div>
                     <!-- <div class="col">
-                                <label>Id Upload(PDF / Image)</label>
-                                <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
-
-                            </div> -->
+                        <label>Id Upload(PDF / Image)</label>
+                        <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
+                    </div> -->
                 </div>
                 <!-- <div class="form-row">
-                            <div class="col">
-                                <label>Visitor Photo Upload (JPEG Image Only)</label>
-                                <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
-                                <img style="display: none;" id="visitor-preview" src="#" alt="your image"/>
-                            </div>
-                            <div class="col">
-                                <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
-                            </div>
-                        </div> -->
+                    <div class="col">
+                        <label>Visitor Photo Upload (JPEG Image Only)</label>
+                        <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
+                        <img style="display: none;" id="visitor-preview" src="#" alt="your image" />
+                    </div>
+                    <div class="col">
+                        <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
+                    </div>
+                </div> -->
             </div>
         </div>
 
@@ -380,10 +378,29 @@
             <div class="card-header">Booking Detail</div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="form-group">
                             <label>Total Number Of Room Booked</label>
                             <input type="number" required class="form-control selected-room" name="room_booked" />
+                        </div>
+                    </div> -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Room Type</label>
+                            <select name="room_type" id="room_type" class="form-control">
+                                <option value="">Select</option>
+                                @foreach($room_types as $room_type)
+                                <option value="{{ $room_type->id }}">{{ $room_type->room_type }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Available Rooms</label>
+                            <select name="room" id="room" class="form-control">
+                                <option value="">Select</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -414,6 +431,7 @@
                             <!-- <option value="friend">Friend</option>
                             <option value="relative">Relative</option>
                             <option value="others">Others</option> -->
+
                             <option value="exam">Exam</option>
                             <option value="meeting">Meeting</option>
                             <option value="travel">Travel</option>
@@ -709,6 +727,20 @@
                             $('#p_city').html('<option value="">Select City</option>');
                             gustDetail = {};
                         }
+                    }
+                }
+            });
+        });
+        $('#room_type').on('change', function() {
+            let val = this.value;
+            $.ajax({
+                url: "{{ route('getGuestDetail') }}?room_type=" + val,
+                type: 'get',
+                success: function(res) {
+                    if (!jQuery.isEmptyObject(res)) {
+
+                    } else {
+                    
                     }
                 }
             });

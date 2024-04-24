@@ -35,7 +35,7 @@ class BookingDataTable extends DataTable
      */
     public function query(AdvanceBooking $model)
     {
-        return $model->newQuery()->orderBy('id', 'ASC');
+        return $model->newQuery()->where('status', 0)->orderBy('id', 'ASC');
     }
 
     /**

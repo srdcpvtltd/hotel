@@ -1,16 +1,18 @@
-@extends('layouts.admin')
-@section('title')
-{{ __('Guest Check In') }}
-@endsection
-@section('content')
+
+<?php $__env->startSection('title'); ?>
+<?php echo e(__('Guest Check In')); ?>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <div class="container-fluid">
-    @if(session()->has('success'))
+    <?php if(session()->has('success')): ?>
     <div class="alert alert-success">
-        {{ session()->get('success') }}
+        <?php echo e(session()->get('success')); ?>
+
     </div>
-    @endif
-    <form action="{{ route('guest.store') }}" id="guest-register" enctype="multipart/form-data" method="post">
-        @csrf
+    <?php endif; ?>
+    <form action="<?php echo e(route('guest.store')); ?>" id="guest-register" enctype="multipart/form-data" method="post">
+        <?php echo csrf_field(); ?>
 
         <div class="fade-in guest-register">
             <div class="card">
@@ -50,7 +52,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12">
-                            <img class="d-img" src="{{ asset(url('public\images\user-icon.png')) }}" />
+                            <img class="d-img" src="<?php echo e(asset(url('public\images\user-icon.png'))); ?>" />
                             <input type="hidden" name="guest_image" class="image-tag" />
                             <div id="results"></div>
                         </div>
@@ -147,9 +149,9 @@
                         <div class="col">
                             <select required class="form-select form-select-lg form-control" name="country" id="country">
                                 <option value="" selected>Select country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country->id); ?>"><?php echo e($country->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col otherHide">
@@ -220,9 +222,9 @@
                         <div class="col">
                             <select required name="p_country" class="form-select form-select-lg form-control" id="p-country">
                                 <option value="" selected>Select country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country->id); ?>"><?php echo e($country->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col p_otherHide">
@@ -279,10 +281,10 @@
                         <label>Arrival Date & Time At Reception <i class="fa fa-star f-required"></i></label>
                         <div class="row">
                             <div class="col">
-                                <input type="date" class="form-control" required placeholder="Select Date" name="arrival_date" value="{{ date('Y-m-d') }}" />
+                                <input type="date" class="form-control" required placeholder="Select Date" name="arrival_date" value="<?php echo e(date('Y-m-d')); ?>" />
                             </div>
                             <div class="col">
-                                <input type="time" class="form-control" required placeholder="Select Date" name="arrival_time" value="{{ date('H:i') }}" />
+                                <input type="time" class="form-control" required placeholder="Select Date" name="arrival_time" value="<?php echo e(date('H:i')); ?>" />
                             </div>
                         </div>
                     </div>
@@ -515,7 +517,7 @@
         margin-bottom: 10px;
     }
 </style>
-<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 
 <script>
     $(document).ready(function() {
@@ -553,7 +555,7 @@
     function getStatelist(countryId, is_parent) {
         $('#' + is_parent + 'state').html('');
         $.ajax({
-            url: "{{ route('getStates') }}?country_id=" + countryId,
+            url: "<?php echo e(route('getStates')); ?>?country_id=" + countryId,
             type: 'get',
             success: function(res) {
                 $('#' + is_parent + 'state').html('<option value="">Select State</option>');
@@ -577,7 +579,7 @@
     function getCityList(stateId, is_parent) {
         $('#' + is_parent + 'city').html('');
         $.ajax({
-            url: "{{ route('getCities') }}?state_id=" + stateId,
+            url: "<?php echo e(route('getCities')); ?>?state_id=" + stateId,
             type: 'get',
             success: function(res) {
                 $('#' + is_parent + 'city').html('<option value="">Select City</option>');
@@ -628,7 +630,7 @@
                 if (!jQuery.isEmptyObject(gustDetail)) {
                     $.each(gustDetail, function(key, value) {
                         if (key == 'guest_image') {
-                            $('.d-img').attr('src', "{{ asset(url('public/images/user-icon.png')) }}");
+                            $('.d-img').attr('src', "<?php echo e(asset(url('public/images/user-icon.png'))); ?>");
                         } else if (key == 'country_id') {
                             $('#country option[value="' + value + '"]').prop('selected', false);
                         } else if (key == 'p_country_id') {
@@ -650,9 +652,9 @@
 
         $('#searchPhone').on('change', function() {
             let val = this.value;
-            let imgPath = "{{ asset(url('storage/app/public/')) }}";
+            let imgPath = "<?php echo e(asset(url('storage/app/public/'))); ?>";
             $.ajax({
-                url: "{{ route('getGuestDetail') }}?mobile=" + val,
+                url: "<?php echo e(route('getGuestDetail')); ?>?mobile=" + val,
                 type: 'get',
                 success: function(res) {
                     if (!jQuery.isEmptyObject(res)) {
@@ -692,7 +694,7 @@
                             $.each(gustDetail, function(key, value) {
 
                                 if (key == 'guest_image') {
-                                    $('.d-img').attr('src', "{{ asset(url('public/images/user-icon.png')) }}");
+                                    $('.d-img').attr('src', "<?php echo e(asset(url('public/images/user-icon.png'))); ?>");
                                 } else if (key == 'country_id') {
                                     $('#country option[value="' + value + '"]').prop('selected', false);
                                 } else if (key == 'p_country_id') {
@@ -847,4 +849,5 @@
     //     }
     // })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/guest/register.blade.php ENDPATH**/ ?>

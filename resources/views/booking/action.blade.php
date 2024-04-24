@@ -8,6 +8,11 @@
             {{ __('Edit') }}</a>
         @endcan
         <div class="dropdown-divider"></div>
+        @can('manage-Booking')
+        <a href="{{ route('booking.proceed_check_in', $booking->id) }}" class="dropdown-item"><i class="cil-pencil action-btn"></i>
+            {{ __('Proceed To Check In') }}</a>
+        @endcan
+        <div class="dropdown-divider"></div>
         @can('delete-Booking')
         <a href="{{ route('booking.index') }}" class="dropdown-item  text-danger" data-toggle="tooltip" data-original-title="{{ __('Delete') }}" onclick="delete_record('delete-form-{{ $booking->id }}')"><i class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
         {!! Form::open(['method' => 'DELETE', 'route' => ['booking.destroy', $booking->id], 'id' => 'delete-form-' . $booking->id]) !!}

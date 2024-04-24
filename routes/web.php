@@ -46,6 +46,7 @@ Route::get('get-district', [CountryDropdownController::class, 'getDistricts'])->
 Route::get('get-cities', [CountryDropdownController::class, 'getCities'])->name('getCities')->middleware(['auth','XSS','2fa',]);
 Route::get('get-guest-details/', [GuestController::class, 'getGuestDetail'])->name('getGuestDetail')->middleware(['auth','XSS','2fa',]);
 Route::get('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->middleware(['auth','XSS','2fa',]);
+Route::get('get-room', [BookingController::class, 'getRoom'])->name('getRoom')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/', [FrontEndController::class, 'index']);
@@ -76,6 +77,9 @@ Route::get('/guest/filter', [GuestController::class, 'guestFilter'])->name('gues
 Route::get('/guest/quickinvoice/{id}', [GuestController::class, 'quickinvoice'])->name('guest.quickinvoice')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/pdfquickinvoice/{id}', [GuestController::class, 'pdfquickinvoice'])->name('guest.pdfquickinvoice')->middleware(['auth','XSS','2fa',]);
 Route::get('/booking/delete/{booking_id}', [GuestController::class, 'bookingDelete'])->name('booking.delete')->middleware(['auth','XSS','2fa',]);
+
+//Advance booking check in (23/04/24)
+Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);
 
 Route::get('/guest/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('guest.report')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/queries', [\App\Http\Controllers\ReportController::class, 'guest_queries'])->name('guest.queries')->middleware(['auth','XSS','2fa',]);

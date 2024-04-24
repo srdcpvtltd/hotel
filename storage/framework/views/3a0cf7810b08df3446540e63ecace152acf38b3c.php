@@ -1,16 +1,18 @@
-@extends('layouts.admin')
-@section('title')
-{{ __('Guest Check In') }}
-@endsection
-@section('content')
+
+<?php $__env->startSection('title'); ?>
+<?php echo e(__(' Booking')); ?>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <div class="container-fluid">
-    @if(session()->has('success'))
+    <?php if(session()->has('success')): ?>
     <div class="alert alert-success">
-        {{ session()->get('success') }}
+        <?php echo e(session()->get('success')); ?>
+
     </div>
-    @endif
-    <form action="{{ route('guest.store') }}" id="guest-register" enctype="multipart/form-data" method="post">
-        @csrf
+    <?php endif; ?>
+    <form action="<?php echo e(route('guest.store')); ?>" id="guest-register" enctype="multipart/form-data" method="post">
+        <?php echo csrf_field(); ?>
 
         <div class="fade-in guest-register">
             <div class="card">
@@ -18,7 +20,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group row">
-
                                 <label class="col-6" style="margin-top:20px;">Have you ever visited this location before ?</label>
                                 <div class="col-6">
                                     <div class="custom-control custom-radio custom-control-inline">
@@ -50,7 +51,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12">
-                            <img class="d-img" src="{{ asset(url('public\images\user-icon.png')) }}" />
+                            <img class="d-img" src="<?php echo e(asset(url('public\images\user-icon.png'))); ?>" />
                             <input type="hidden" name="guest_image" class="image-tag" />
                             <div id="results"></div>
                         </div>
@@ -65,11 +66,11 @@
                 <div class="form-row">
                     <div class="col">
                         <label>Guest Name <i class="fa fa-star f-required"></i></label>
-                        <input required name="gues_name" placeholder="Guest Name" type="text" class="form-control">
+                        <input required name="gues_name" placeholder="Guest Name" type="text" class="form-control" value="<?php echo e($booking->name); ?>">
                     </div>
                     <div class="col">
                         <label>Guest Mobile Number <i class="fa fa-star f-required"></i></label>
-                        <input name="mobile_number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
+                        <input name="mobile_number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" value="<?php echo e($booking->phone_number); ?>" />
                     </div>
                     <div class="col">
                         <label>Alternative Moible Number</label>
@@ -147,9 +148,9 @@
                         <div class="col">
                             <select required class="form-select form-select-lg form-control" name="country" id="country">
                                 <option value="" selected>Select country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country->id); ?>"><?php echo e($country->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col otherHide">
@@ -220,9 +221,9 @@
                         <div class="col">
                             <select required name="p_country" class="form-select form-select-lg form-control" id="p-country">
                                 <option value="" selected>Select country</option>
-                                @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($country->id); ?>"><?php echo e($country->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col p_otherHide">
@@ -279,10 +280,10 @@
                         <label>Arrival Date & Time At Reception <i class="fa fa-star f-required"></i></label>
                         <div class="row">
                             <div class="col">
-                                <input type="date" class="form-control" required placeholder="Select Date" name="arrival_date" value="{{ date('Y-m-d') }}" />
+                                <input type="date" class="form-control" required placeholder="Select Date" name="arrival_date" value="<?php echo e(date('Y-m-d')); ?>" />
                             </div>
                             <div class="col">
-                                <input type="time" class="form-control" required placeholder="Select Date" name="arrival_time" value="{{ date('H:i') }}" />
+                                <input type="time" class="form-control" required placeholder="Select Date" name="arrival_time" value="<?php echo e(date('H:i')); ?>" />
                             </div>
                         </div>
                     </div>
@@ -304,21 +305,20 @@
                         <input type="text" class="form-control" required placeholder="Id Number" name="id_number">
                     </div>
                     <!-- <div class="col">
-                                <label>Id Upload(PDF / Image)</label>
-                                <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
-
-                            </div> -->
+                        <label>Id Upload(PDF / Image)</label>
+                        <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
+                    </div> -->
                 </div>
                 <!-- <div class="form-row">
-                            <div class="col">
-                                <label>Visitor Photo Upload (JPEG Image Only)</label>
-                                <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
-                                <img style="display: none;" id="visitor-preview" src="#" alt="your image"/>
-                            </div>
-                            <div class="col">
-                                <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
-                            </div>
-                        </div> -->
+                    <div class="col">
+                        <label>Visitor Photo Upload (JPEG Image Only)</label>
+                        <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
+                        <img style="display: none;" id="visitor-preview" src="#" alt="your image" />
+                    </div>
+                    <div class="col">
+                        <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
+                    </div>
+                </div> -->
             </div>
         </div>
 
@@ -380,10 +380,29 @@
             <div class="card-header">Booking Detail</div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="form-group">
                             <label>Total Number Of Room Booked</label>
                             <input type="number" required class="form-control selected-room" name="room_booked" />
+                        </div>
+                    </div> -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Room Type</label>
+                            <select name="room_type" id="room_type" class="form-control">
+                                <option value="">Select</option>
+                                <?php $__currentLoopData = $room_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($room_type->id); ?>"><?php echo e($room_type->room_type); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Available Rooms</label>
+                            <select name="room" id="room" class="form-control">
+                                <option value="">Select</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -414,6 +433,7 @@
                             <!-- <option value="friend">Friend</option>
                             <option value="relative">Relative</option>
                             <option value="others">Others</option> -->
+
                             <option value="exam">Exam</option>
                             <option value="meeting">Meeting</option>
                             <option value="travel">Travel</option>
@@ -515,7 +535,7 @@
         margin-bottom: 10px;
     }
 </style>
-<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 
 <script>
     $(document).ready(function() {
@@ -553,7 +573,7 @@
     function getStatelist(countryId, is_parent) {
         $('#' + is_parent + 'state').html('');
         $.ajax({
-            url: "{{ route('getStates') }}?country_id=" + countryId,
+            url: "<?php echo e(route('getStates')); ?>?country_id=" + countryId,
             type: 'get',
             success: function(res) {
                 $('#' + is_parent + 'state').html('<option value="">Select State</option>');
@@ -577,7 +597,7 @@
     function getCityList(stateId, is_parent) {
         $('#' + is_parent + 'city').html('');
         $.ajax({
-            url: "{{ route('getCities') }}?state_id=" + stateId,
+            url: "<?php echo e(route('getCities')); ?>?state_id=" + stateId,
             type: 'get',
             success: function(res) {
                 $('#' + is_parent + 'city').html('<option value="">Select City</option>');
@@ -628,7 +648,7 @@
                 if (!jQuery.isEmptyObject(gustDetail)) {
                     $.each(gustDetail, function(key, value) {
                         if (key == 'guest_image') {
-                            $('.d-img').attr('src', "{{ asset(url('public/images/user-icon.png')) }}");
+                            $('.d-img').attr('src', "<?php echo e(asset(url('public/images/user-icon.png'))); ?>");
                         } else if (key == 'country_id') {
                             $('#country option[value="' + value + '"]').prop('selected', false);
                         } else if (key == 'p_country_id') {
@@ -650,9 +670,9 @@
 
         $('#searchPhone').on('change', function() {
             let val = this.value;
-            let imgPath = "{{ asset(url('storage/app/public/')) }}";
+            let imgPath = "<?php echo e(asset(url('storage/app/public/'))); ?>";
             $.ajax({
-                url: "{{ route('getGuestDetail') }}?mobile=" + val,
+                url: "<?php echo e(route('getGuestDetail')); ?>?mobile=" + val,
                 type: 'get',
                 success: function(res) {
                     if (!jQuery.isEmptyObject(res)) {
@@ -692,7 +712,7 @@
                             $.each(gustDetail, function(key, value) {
 
                                 if (key == 'guest_image') {
-                                    $('.d-img').attr('src', "{{ asset(url('public/images/user-icon.png')) }}");
+                                    $('.d-img').attr('src', "<?php echo e(asset(url('public/images/user-icon.png'))); ?>");
                                 } else if (key == 'country_id') {
                                     $('#country option[value="' + value + '"]').prop('selected', false);
                                 } else if (key == 'p_country_id') {
@@ -709,6 +729,21 @@
                             $('#p_city').html('<option value="">Select City</option>');
                             gustDetail = {};
                         }
+                    }
+                }
+            });
+        });
+        $('#room_type').on('change', function() {
+            let val = this.value;
+            alert(val);
+            $.ajax({
+                url: "<?php echo e(route('getGuestDetail')); ?>?mobile=" + val,
+                type: 'get',
+                success: function(res) {
+                    if (!jQuery.isEmptyObject(res)) {
+
+                    } else {
+                    
                     }
                 }
             });
@@ -847,4 +882,5 @@
     //     }
     // })
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/booking/register.blade.php ENDPATH**/ ?>
