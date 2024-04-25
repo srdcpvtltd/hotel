@@ -22,6 +22,12 @@ class RoomDataTable extends DataTable
             ->editColumn('room_type_id', function (Room $room) {
                 return ($room->room_type != null) ? $room->room_type->room_type : '-';
             })
+            ->editColumn('status', function (Room $room) {
+                return ($room->status === 1) ? '<span class="badge badge-danger" style="font-size: 14px;
+">Booked</span>' : '<span class="badge badge-success" style="font-size: 14px;
+">Available</span>';
+            })
+            ->rawColumns(['status'])
             ->addColumn('action', function (Room $room) {
                 return view('system_management.room.action', compact('room'));
             });
@@ -46,7 +52,7 @@ class RoomDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('roomdatatable-table')
+            ->setTableId('rooms-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -78,6 +84,7 @@ class RoomDataTable extends DataTable
             Column::make('name')->title('Room Name'),
             Column::make('room_type_id')->title('Room Type'),
             Column::make('price')->title('Price'),
+            Column::make('status')->title('status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

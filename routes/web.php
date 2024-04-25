@@ -80,6 +80,7 @@ Route::get('/booking/delete/{booking_id}', [GuestController::class, 'bookingDele
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);
+Route::post('/room_booking', [BookingController::class, 'room_booking'])->name('booking.room_booking')->middleware(['auth','XSS','2fa',]);
 
 Route::get('/guest/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('guest.report')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/queries', [\App\Http\Controllers\ReportController::class, 'guest_queries'])->name('guest.queries')->middleware(['auth','XSS','2fa',]);

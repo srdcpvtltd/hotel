@@ -409,9 +409,8 @@
                 </div>
                 <div class="form-row bookin-lable">
                     <div class="col">SI. Number</div>
-                    <div class="col">Building</div>
-                    <div class="col">Floor Number</div>
                     <div class="col">Room Number</div>
+                    <div class="col">Room Type</div>
                 </div>
                 <div class="booking-room-wrapper">
                     <div class="form-row booking-item">
@@ -461,9 +460,8 @@
         </div>
         <div class="center-submit">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="#" style="    margin-top: 30px;margin-left: 10px;" class="btn btn-danger">Close</a>
+            <a href="#" style="margin-top: 30px;margin-left: 10px;" class="btn btn-danger">Close</a>
         </div>
-
 </div>
 </form>
 </div>
@@ -535,19 +533,7 @@
 </style>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 
-<script>
-    $(document).ready(function() {
-        $(".booking-expand").click(function() {
-            $('.bookin-lable').show();
-            var getBookinRoom = $(".selected-room").val();
-            $('.booking-room-wrapper').empty()
 
-            for (let i = 0; i < getBookinRoom; i++) {
-                $('.booking-room-wrapper').append("<div class='form-row booking-item'><div class='col-md-1'>" + (i + 1) + "</div><div class='col'><input type='text' required class='form-control' placeholder='Building Number' name='bookingdata[booking" + i + "][building_number]'></div><div class='col'><input type='text' required class='form-control' placeholder='Floor Number' name='bookingdata[booking" + i + "][floor_number]'></div><div class='col'><input type='text' required class='form-control' placeholder='Room Number' name='bookingdata[booking" + i + "][room_number]'></div></div>");
-            }
-        });
-    });
-</script>
 <script language="JavaScript">
     Webcam.set('constraints', {
         facingMode: "environment"
@@ -618,6 +604,7 @@
         $(".accompany-hide").hide();
         $('.accomapny-lable').hide();
         $('.bookin-lable').hide();
+        $(".booking-expand").attr('disabled', true);
         $('#country').on('change', function() {
             var countryId = this.value;
             if (countryId == 165) {
@@ -734,13 +721,54 @@
         $('#room_type').on('change', function() {
             let val = this.value;
             $.ajax({
-                url: "{{ route('getGuestDetail') }}?room_type=" + val,
+                url: "{{ route('getRoom') }}?room_type=" + val,
                 type: 'get',
                 success: function(res) {
                     if (!jQuery.isEmptyObject(res)) {
+                        $('#room').empty();
+                        $('#room').append('<option value="">Select</option>');
+                        $.each(res, function(key, value) {
+                            $('#room').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
 
+                        $(".booking-expand").attr('disabled', false);
+                        $(".booking-expand").click(function() {
+                            $('.bookin-lable').show();
+                            var room_type = $("#room_type").val();
+                            var room = $("#room").val();
+                            var gues_name = $('input[name="gues_name"]').val();
+                            var mobile_number = $('input[name="mobile_number"]').val();
+                            var age = $('input[name="age"]').val();
+                            var gender = $('input[name="gender"]').val();
+                            var email_id = $('input[name="email_id"]').val();
+                            var arrival_date = $('input[name="arrival_date"]').val();
+                            var arrival_time = $('input[name="arrival_time"]').val();
+                            $.ajax({
+                                url: "{{ route('booking.room_booking') }}",
+                                type: 'post',
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    "room_type": room_type,
+                                    "room": room,
+                                    "gues_name": gues_name,
+                                    "mobile_number": mobile_number,
+                                    "age": age,
+                                    "gender": gender,
+                                    "email_id": email_id,
+                                    "arrival_date": arrival_date,
+                                    "arrival_time": arrival_time,
+                                },
+                                dataType: 'json',
+                                success: function(res) {
+
+                                }
+                            });
+                            // $('.booking-room-wrapper').append("<div class='form-row booking-item'><div class='col-md-1'>" + (i + 1) + "</div><div class='col'><input type='text' disabled class='form-control' value=" + room + "></div><div class='col'><input type='text' disabled class='form-control' value=" + room_type + "></div><div class='col'></div></div>");
+                            $(".booking-expand").attr('disabled', true);
+                        });
                     } else {
-                    
+                        $('#room').empty();
+                        $('#room').append('<option value="">Select</option>');
                     }
                 }
             });

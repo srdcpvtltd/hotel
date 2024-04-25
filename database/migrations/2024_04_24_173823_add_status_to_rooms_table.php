@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToTable extends Migration
+class AddStatusToRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToTable extends Migration
      */
     public function up()
     {
-        Schema::table('advance_bookings', function (Blueprint $table) {
-            $table->integer('status')->default(0)->after('total_price');
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->integer('status')->default(0)->after('price');
         });
     }
 
@@ -25,7 +25,7 @@ class AddColumnToTable extends Migration
      */
     public function down()
     {
-        Schema::table('advance_bookings', function (Blueprint $table) {
+        Schema::table('rooms', function (Blueprint $table) {
             $table->dropColumn('status');
         });
     }

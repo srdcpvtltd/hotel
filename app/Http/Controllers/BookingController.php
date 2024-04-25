@@ -7,10 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookingRequest;
 use App\Models\AdvanceBooking;
 use App\Models\Booking;
+use App\Models\BookingRoom;
+use App\Models\HotelProfile;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -87,6 +90,40 @@ class BookingController extends Controller
         $room_types = RoomType::all();
         $room = Room::all();
 
-        return view('booking.register', compact('booking','countries','room_types','room'));
+        return view('booking.register', compact('booking', 'countries', 'room_types', 'room'));
+    }
+
+    public function getRoom(Request $request)
+    {
+        $rooms = Room::where('room_type_id', $request->room_type)->where('status', 0)->get();
+
+        if (count($rooms) > 0) {
+            return response()->json($rooms);
+        }
+    }
+
+    public function room_booking(Request $request)
+    {
+        // dd($request->all());
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        $room = Room::where('id', $request->room)->first();
+
+        $booking = new Booking();
+        $booking->gues_name = $request->gues_name;
+        $booking->mobile_number = $request->mobile_number;
+        $booking->age = $request->age;
+        $booking->user_id = Auth::id();
+        $booking->gender = $request->gender;
+        $booking->email_id = $request->email_id;
+        $booking->hotel_id = $hotel->id;
+        $booking->arrival_date = $request->arrival_date;
+        $booking->arrival_time = $request->arrival_time;
+        $booking->save();
+
+        $book_room = new BookingRoom();
+        $book_room->booking_id = $booking->id;
+        $book_room->room_number = $room->name;
+        $book_room->created_at = date('Y-m-d H:i:s');
+        $book_room->save();
     }
 }
