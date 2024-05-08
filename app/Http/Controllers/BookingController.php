@@ -104,26 +104,22 @@ class BookingController extends Controller
 
     public function room_booking(Request $request)
     {
-        // dd($request->all());
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        $room_type = RoomType::where('id', $request->room_type)->first();
+
         $room = Room::where('id', $request->room)->first();
+        $room->status = 1;
+        $room->updated_at = date('Y-m-d H:i:s');
+        $room->save();
 
-        $booking = new Booking();
-        $booking->gues_name = $request->gues_name;
-        $booking->mobile_number = $request->mobile_number;
-        $booking->age = $request->age;
-        $booking->user_id = Auth::id();
-        $booking->gender = $request->gender;
-        $booking->email_id = $request->email_id;
-        $booking->hotel_id = $hotel->id;
-        $booking->arrival_date = $request->arrival_date;
-        $booking->arrival_time = $request->arrival_time;
-        $booking->save();
+        $rooms = Room::where('room_type_id', $request->room_type)->where('status', 0)->get();
+        $booked_rooms = Room::where('status', 1)->get();
 
-        $book_room = new BookingRoom();
-        $book_room->booking_id = $booking->id;
-        $book_room->room_number = $room->name;
-        $book_room->created_at = date('Y-m-d H:i:s');
-        $book_room->save();
+        if ($room->status == 1) {
+            return response()->json([
+                'data' => $booked_rooms,
+                'room_type' => $room_type,
+                'rooms' => $rooms
+            ]);
+        }
     }
 }
