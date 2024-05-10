@@ -13,7 +13,7 @@
         <?php endif; ?>
         <form action="<?php echo e(route('guest.store')); ?>" id="guest-register" enctype="multipart/form-data" method="post">
             <?php echo csrf_field(); ?>
-
+            <input type="hidden" name="advance_booking_id" value="<?php echo e($booking->id); ?>">
             <div class="fade-in guest-register">
                 <div class="card">
                     <div class="card-body">
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-row otherDisplay" style="display:none">
                             <div class="col">
                                 <input name="other_country" required placeholder="Other Country" type="text"
@@ -270,8 +270,8 @@
                             </div>
                             <div class="col otherHide">
                                 <div>
-                                    <select required name="district" class="form-select form-select-lg form-control"
-                                        id="district">
+                                    <select required name="p_district" class="form-select form-select-lg form-control"
+                                        id="p-district">
                                         <option value="">Select District</option>
                                     </select>
                                 </div>
@@ -285,6 +285,12 @@
                             <div class="col">
                                 <div>
                                     <input name="p_other_state" required placeholder="Other State" type="text"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div>
+                                    <input name="p_other_district" required placeholder="Other District" type="text"
                                         class="form-control">
                                 </div>
                             </div>
@@ -357,20 +363,20 @@
                                 name="id_number">
                         </div>
                         <!-- <div class="col">
-                                                <label>Id Upload(PDF / Image)</label>
-                                                <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
-                                            </div> -->
+                                    <label>Id Upload(PDF / Image)</label>
+                                    <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
+                                </div> -->
                     </div>
                     <!-- <div class="form-row">
-                                            <div class="col">
-                                                <label>Visitor Photo Upload (JPEG Image Only)</label>
-                                                <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
-                                                <img style="display: none;" id="visitor-preview" src="#" alt="your image" />
-                                            </div>
-                                            <div class="col">
-                                                <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
-                                            </div>
-                                        </div> -->
+                                <div class="col">
+                                    <label>Visitor Photo Upload (JPEG Image Only)</label>
+                                    <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
+                                    <img style="display: none;" id="visitor-preview" src="#" alt="your image" />
+                                </div>
+                                <div class="col">
+                                    <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
+                                </div>
+                            </div> -->
                 </div>
             </div>
 
@@ -438,11 +444,11 @@
                 <div class="card-body">
                     <div class="row">
                         <!-- <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Total Number Of Room Booked</label>
-                                                    <input type="number" required class="form-control selected-room" name="room_booked" />
-                                                </div>
-                                            </div> -->
+                                <div class="form-group">
+                                    <label>Total Number Of Room Booked</label>
+                                    <input type="number" required class="form-control selected-room" name="room_booked" />
+                                </div>
+                            </div> -->
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Room Type</label>
@@ -486,8 +492,8 @@
                             <select name="whom_to_visit" class="custom-select whom-to-visit">
                                 <option value="">Select Purpose of Visit</option>
                                 <!-- <option value="friend">Friend</option>
-                                                    <option value="relative">Relative</option>
-                                                    <option value="others">Others</option> -->
+                                                                <option value="relative">Relative</option>
+                                                                <option value="others">Others</option> -->
 
                                 <option value="exam">Exam</option>
                                 <option value="meeting">Meeting</option>
@@ -496,23 +502,23 @@
                             </select>
                         </div>
                         <!-- <div class="col-md-6">
-                                                <div class="whom-to-visit-wrapper" style="display:none;">
-                                                    <div class="form-row">
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>Name</label>
-                                                                <input type="text" placeholder="Name" name="whom_to_visit_name" class="form-control" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label>Mobile Number</label>
-                                                                <input name="whom_to_visit_mobile" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
-                                                            </div>
-                                                        </div>
+                                        <div class="whom-to-visit-wrapper" style="display:none;">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label>Name</label>
+                                                        <input type="text" placeholder="Name" name="whom_to_visit_name" class="form-control" />
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label>Mobile Number</label>
+                                                        <input name="whom_to_visit_mobile" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
                     </div>
                 </div>
             </div>
@@ -520,8 +526,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="#" style="margin-top: 30px;margin-left: 10px;" class="btn btn-danger">Close</a>
             </div>
-    </div>
-    </form>
+        </form>
     </div>
 
     <style>
@@ -591,7 +596,6 @@
     </style>
     <script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
 
-
     <script language="JavaScript">
         Webcam.set('constraints', {
             facingMode: "environment"
@@ -633,15 +637,40 @@
                             $('#' + is_parent + 'state').append('<option value="' + value.id + '">' +
                                 value.name + '</option>');
                     });
-                    $('#' + is_parent + 'city').html('<option value="">Select City</option>');
+                    $('#' + is_parent + 'district').html('<option value="">Select District</option>');
                 }
             });
         }
 
-        function getCityList(stateId, is_parent) {
+        function getDistrictList(stateId, is_parent) {
+            $('#' + is_parent + 'district').html('');
+            $.ajax({
+                url: "<?php echo e(route('getDistricts')); ?>?state_id=" + stateId,
+                type: 'get',
+                success: function(res) {
+                    $('#' + is_parent + 'district').html('<option value="">Select District</option>');
+                    let sel_district = '';
+                    if (is_parent == '') {
+                        sel_district = (!jQuery.isEmptyObject(gustDetail)) ? gustDetail['district_id'] : '';
+                    } else {
+                        sel_district = (!jQuery.isEmptyObject(gustDetail)) ? gustDetail['p_district_id'] : '';
+                    }
+                    $.each(res, function(key, value) {
+                        if (sel_district == value.id)
+                            $('#' + is_parent + 'district').append('<option value="' + value.id +
+                                '" selected="">' + value.name + '</option>');
+                        else
+                            $('#' + is_parent + 'district').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                    });
+                }
+            });
+        }
+
+        function getCityList(districtId, is_parent) {
             $('#' + is_parent + 'city').html('');
             $.ajax({
-                url: "<?php echo e(route('getCities')); ?>?state_id=" + stateId,
+                url: "<?php echo e(route('getCities')); ?>?district_id=" + districtId,
                 type: 'get',
                 success: function(res) {
                     $('#' + is_parent + 'city').html('<option value="">Select City</option>');
@@ -662,6 +691,7 @@
                 }
             });
         }
+
         $(document).ready(function() {
             $(".accompany-hide").hide();
             $('.accomapny-lable').hide();
@@ -683,7 +713,11 @@
             });
             $('#state').on('change', function() {
                 var stateId = this.value;
-                getCityList(stateId, '');
+                getDistrictList(stateId, '');
+            });
+            $('#district').on('change', function() {
+                var districtId = this.value;
+                getCityList(districtId, '');
             });
 
             $("input[name=is_visited_before]").on('change', function() {
@@ -712,6 +746,8 @@
 
                         $('#state').html('<option value="">Select State</option>');
                         $('#p_state').html('<option value="">Select State</option>');
+                        $('#district').html('<option value="">Select District</option>');
+                        $('#p_district').html('<option value="">Select District</option>');
                         $('#city').html('<option value="">Select City</option>');
                         $('#p_city').html('<option value="">Select City</option>');
                         gustDetail = {};
@@ -729,9 +765,11 @@
                         if (!jQuery.isEmptyObject(res)) {
                             gustDetail = res;
                             getStatelist(gustDetail['country_id'], '');
-                            getCityList(gustDetail['state_id'], '');
+                            getDistrictList(gustDetail['state_id'], '');
+                            getCityList(gustDetail['district_id'], '');
                             getStatelist(gustDetail['p_country_id'], 'p-');
-                            getCityList(gustDetail['p_state_id'], 'p-');
+                            getDistrictList(gustDetail['p_state_id'], 'p-');
+                            getCityList(gustDetail['p_district_id'], 'p-');
                             $.each(res, function(key, value) {
                                 if (key == 'guest_image') {
                                     $('.d-img').attr('src', imgPath + '/' + value);
@@ -744,6 +782,9 @@
                                 } else if (key == 'state_id') {
                                     $('#state option[value="' + value + '"]').prop(
                                         'selected', true);
+                                } else if (key == 'district_id') {
+                                    $('#district option[value="' + value + '"]').prop(
+                                        'selected', true);
                                 } else if (key == 'p_country_id') {
                                     $('#p-country option[value="' + value + '"]').prop(
                                         'selected', true);
@@ -752,6 +793,9 @@
                                         'selected', true);
                                 } else if (key == 'p_state_id') {
                                     $('#p-state option[value="' + value + '"]').prop(
+                                        'selected', true);
+                                } else if (key == 'p_district_id') {
+                                    $('#p-district option[value="' + value + '"]').prop(
                                         'selected', true);
                                 } else if (key == 'gender') {
                                     $('#gender option[value="' + value + '"]').prop(
@@ -794,6 +838,8 @@
 
                                 $('#state').html('<option value="">Select State</option>');
                                 $('#p_state').html('<option value="">Select State</option>');
+                                $('#district').html('<option value="">Select District</option>');
+                                $('#p_district').html('<option value="">Select District</option>');
                                 $('#city').html('<option value="">Select City</option>');
                                 $('#p_city').html('<option value="">Select City</option>');
                                 gustDetail = {};
@@ -842,7 +888,18 @@
                                 if (!jQuery.isEmptyObject(result.data)) {
                                     $('.booking-room-wrapper').empty();
                                     $.each(result.data, function(key, value) {
-                                        $('.booking-room-wrapper').append("<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" + key + "][room_number]' type='text' readonly class='form-control' value=" + value.name + "></div><div class='col'><input name='bookingdata[booking" + key + "][room_type]' type='text' readonly class='form-control' value=" + result.room_type.room_type + "></div></div>");
+                                        $('.booking-room-wrapper').append(
+                                            "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" +
+                                            key +
+                                            "][room_number]' type='text' readonly class='form-control' value=" +
+                                            value.name +
+                                            "></div><div class='col'><input type='text' readonly class='form-control' value=" +
+                                            result.room_type.room_type +
+                                            "><input name='bookingdata[booking" +
+                                            key +
+                                            "][room_type_id]' type='hidden' value=" +
+                                            result.room_type.id +
+                                            "></div></div>");
                                     });
 
                                     if (!jQuery.isEmptyObject(result.rooms)) {
@@ -850,7 +907,10 @@
                                         $('#room').append(
                                             '<option value="">Select</option>');
                                         $.each(result.rooms, function(key, value) {
-                                            $('#room').append('<option value="' + value.id + '">' + value.name + '</option>');
+                                            $('#room').append(
+                                                '<option value="' + value
+                                                .id + '">' + value.name +
+                                                '</option>');
                                         });
                                     } else {
                                         $('#room').empty();
@@ -874,7 +934,6 @@
                     $('.p_otherDisplay').show();
                     $('.p_otherHide').hide();
                 } else {
-
                     $('.p_otherDisplay').hide();
                     $('.p_otherHide').show();
                     $('.p_otherDisplay').find('input').val('');
@@ -884,7 +943,11 @@
             });
             $('#p-state').on('change', function() {
                 var stateId = this.value;
-                getCityList(stateId, 'p-');
+                getDistrictList(stateId, 'p-');
+            });
+            $('#p-district').on('change', function() {
+                var districtId = this.value;
+                getCityList(districtId, 'p-');
             });
         });
         // For same a present
@@ -897,13 +960,14 @@
                 var land_mark = $("input[name*='land_mark']").val();
                 var country = $('#country :selected').val();
                 var state = $('#state :selected').val();
+                var district = $('#district :selected').val();
                 var city = $('#city :selected').val();
                 var otherCountry = $("input[name*='other_country']").val();
                 var otherstate = $("input[name*='other_state']").val();
                 var othercity = $("input[name*='other_city']").val();
                 var town = $("input[name*='present_town']").val();
                 var pin = $("input[name*='present_pin']").val();
-                console.log("state", state)
+                // console.log("state", state)
                 // replace all value
                 $("input[name*='house_number']").val(house_number);
                 $("input[name*='p_lane']").val(lane);
@@ -915,7 +979,10 @@
                 setTimeout(function() {
                     $("#p-state").val(state).change();
                     setTimeout(function() {
-                        $("#p-city").val(city).change();
+                        $("#p-district").val(district).change();
+                        setTimeout(function() {
+                            $("#p-city").val(city).change();
+                        }, 500);
                     }, 500);
                 }, 500);
 
@@ -928,11 +995,13 @@
                 $("input[name*='p_land_mark']").val('');
                 $("#p-country").val('').change();
                 $("#p-state").val('').change();
+                $("#p-district").val('').change();
                 $("#p-city").val('').change();
                 $("input[name*='p_town']").val('');
                 $("input[name*='p_pin']").val('');
                 $("input[name*='p_other_country']").val('');
                 $("input[name*='p_other_state']").val('');
+                $("input[name*='p_other_district']").val('');
                 $("input[name*='p_other_city']").val('');
             }
         })

@@ -14,6 +14,7 @@ use App\Models\RoomType;
 use App\Services\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -86,7 +87,7 @@ class BookingController extends Controller
     public function proceed_check_in($id)
     {
         $booking = AdvanceBooking::find($id)->first();
-        $countries = \DB::table('countries')->get();
+        $countries = DB::table('countries')->get();
         $room_types = RoomType::all();
         $room = Room::all();
 

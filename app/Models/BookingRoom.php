@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class BookingRoom extends Model
 {
     use HasFactory;
-    protected $fillable = ['building_number','floor_number','room_number'];
+    protected $fillable = ['room_type_id','room_number'];
     protected $appends = ['checkout_datetime'];
 
     public function getCheckoutDatetimeAttribute()
