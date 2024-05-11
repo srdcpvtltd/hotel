@@ -3,13 +3,11 @@
     <span class="breadcrumb-item active"><?php echo e(__('Guest Detail')); ?></span>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('title'); ?>
-    <?php echo e(__(' Dashboard')); ?>
+    <?php echo e(__('Guest Details')); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <div class="container-fluid">
-
-
+    <div class="">
         <?php if(session()->has('success')): ?>
             <div class="alert alert-success">
                 <?php echo e(session()->get('success')); ?>
@@ -18,15 +16,11 @@
         <?php endif; ?>
 
         <div class="fade-in guest-register">
-
-
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-
                         <div class="card">
                             <div class="card-header">Guest Detail</div>
-
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12 text-center" style="margin-bottom: 15px;">
@@ -62,10 +56,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm">
-
-                        <?php if(!empty($criminal)): ?>
+                    <?php if(!empty($criminal)): ?>
+                        <div class="col-sm">
                             <div class="card">
                                 <div class="card-header">Criminal Detail</div>
                                 <div class="card-body">
@@ -103,45 +95,45 @@
                                     </div>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                     <?php endif; ?>
+                    <div class="col-sm">
+                        <div class="card">
+                            <div class="card-header">Booking Detail</div>
+                            <div class="card-body">
+                                <h5><b>Room Booked :</b> <?php echo e($booking->room_booked); ?></h5>
+                                <?php $__currentLoopData = $booking->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="row">
+                                        <div class="col-md-4 detil-item">
+                                            <b>Room Type:</b> <?php echo e($room->room_type->room_type); ?>
 
+                                        </div>
+                                        <div class="col-md-4 detil-item">
+                                            <b>Room Number:</b> <?php echo e($room->room_number); ?>
+
+                                        </div>
+
+                                        <div class="col-md-4 detil-item">
+                                            <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+                                                <button
+                                                    class="btn btn-info"><?php echo e($room->status ? 'Completed' : 'In Progress'); ?></button>
+                                                
+                                                    <?php if($room->status == '0'): ?>
+                                                    <a href="<?php echo e($room->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $room->id))); ?>"
+                                                        style="<?php echo e($room->status ? 'cursor: not-allowed; pointer-events:none' : ''); ?>"
+                                                        class="btn btn-primary"
+                                                        onclick="return disableDoubleClick()">Checkout</a>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-header">Booking Detail</div>
-            <div class="card-body">
-                <h5><b>Room Booked :</b> <?php echo e($booking->room_booked); ?></h5>
-                <?php $__currentLoopData = $booking->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="row">
-                        <div class="col-md-3 detil-item">
-                            <b>Building Number:</b> <?php echo e($room->building_number); ?>
-
-                        </div>
-                        <div class="col-md-3 detil-item">
-                            <b>Floor Number:</b> <?php echo e($room->floor_number); ?>
-
-                        </div>
-                        <div class="col-md-2 detil-item">
-                            <b>Room Number:</b> <?php echo e($room->room_number); ?>
-
-                        </div>
-
-                        <div class="col-md-3 detil-item">
-                            <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
-                                <button class="btn btn-info"><?php echo e($room->status ? 'Completed' : 'In Progress'); ?></button>
-                                <a href="<?php echo e($room->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $room->id))); ?>"
-                                    style="<?php echo e($room->status ? 'cursor: not-allowed; pointer-events:none' : ''); ?>"
-                                    class="btn btn-primary" onclick="return disableDoubleClick()">Checkout</a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        </div>
-    </div>
     </div>
     <style>
         .detil-item {

@@ -443,12 +443,6 @@
                 <div class="card-header">Booking Detail</div>
                 <div class="card-body">
                     <div class="row">
-                        <!-- <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Total Number Of Room Booked</label>
-                                    <input type="number" required class="form-control selected-room" name="room_booked" />
-                                </div>
-                            </div> -->
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Room Type</label>

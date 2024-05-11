@@ -38,6 +38,7 @@ return array(
     'App\\Http\\Controllers\\CountryController' => $baseDir . '/app/Http/Controllers/CountryController.php',
     'App\\Http\\Controllers\\CountryDropdownController' => $baseDir . '/app/Http/Controllers/CountryDropdownController.php',
     'App\\Http\\Controllers\\CriminalsController' => $baseDir . '/app/Http/Controllers/CriminalsController.php',
+    'App\\Http\\Controllers\\DesignationController' => $baseDir . '/app/Http/Controllers/DesignationController.php',
     'App\\Http\\Controllers\\DistrictController' => $baseDir . '/app/Http/Controllers/DistrictController.php',
     'App\\Http\\Controllers\\FaceRecognitionController' => $baseDir . '/app/Http/Controllers/FaceRecognitionController.php',
     'App\\Http\\Controllers\\FrontEndController' => $baseDir . '/app/Http/Controllers/FrontEndController.php',

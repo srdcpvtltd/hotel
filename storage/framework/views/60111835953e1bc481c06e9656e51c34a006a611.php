@@ -167,6 +167,20 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
             </a>
         </li>
         <?php endif; ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Designation')): ?>
+        <li class="c-sidebar-nav-item">
+            <a href="<?php echo e(url('/designation')); ?>" class="c-sidebar-nav-link">
+                <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('Designation')); ?>
+
+            </a>
+        </li>
+        <?php endif; ?>
+        <li class="c-sidebar-nav-item">
+            <a href="<?php echo e(url('')); ?>" class="c-sidebar-nav-link">
+                <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Hotel Staff')); ?>
+
+            </a>
+        </li>
         <?php endif; ?>
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>

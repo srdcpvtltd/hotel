@@ -21,6 +21,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CriminalsController;
+use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
@@ -77,6 +78,9 @@ Route::get('/guest/filter', [GuestController::class, 'guestFilter'])->name('gues
 Route::get('/guest/quickinvoice/{id}', [GuestController::class, 'quickinvoice'])->name('guest.quickinvoice')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/pdfquickinvoice/{id}', [GuestController::class, 'pdfquickinvoice'])->name('guest.pdfquickinvoice')->middleware(['auth','XSS','2fa',]);
 Route::get('/booking/delete/{booking_id}', [GuestController::class, 'bookingDelete'])->name('booking.delete')->middleware(['auth','XSS','2fa',]);
+
+//Designation
+Route::resource('designation', DesignationController::class);
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);

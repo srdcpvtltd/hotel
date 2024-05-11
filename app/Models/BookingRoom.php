@@ -16,4 +16,8 @@ class BookingRoom extends Model
     {
         return Carbon::parse(($this->checkout_date.' '.$this->checkout_time))->format('d-m-Y H:i:s');
     }
+
+    public function room_type() {
+        return $this->belongsTo(RoomType::class, 'room_type_id');
+    }
 }

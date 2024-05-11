@@ -9,6 +9,7 @@ use App\Models\Criminal;
 use App\Models\CriminalBookingMatch;
 use App\Models\HotelProfile;
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,9 @@ class GuestController extends Controller
     {
         $countries = DB::table('countries')
             ->get();
-        return view('guest.register', compact('countries'));
+        $room_types = RoomType::all();
+
+        return view('guest.register', compact('countries','room_types'));
     }
 
     public function store(Request $request)
@@ -199,7 +202,7 @@ class GuestController extends Controller
             $rooom->status = 0;
             $rooom->updated_at = date('Y-m-d H:i:s');
             $rooom->save();
-            return redirect()->back()->with('success', "Booking status set completed");
+            return redirect()->back()->with('success', "Room Checkout Successfully");
         } else {
             $room->status = 0;
             $room->checkout_date = null;

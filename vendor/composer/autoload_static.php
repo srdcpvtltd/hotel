@@ -744,6 +744,7 @@ class ComposerStaticInitbf0894a5a5d69f86c4aec59bbbbcdaa5
         'App\\Http\\Controllers\\CountryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CountryController.php',
         'App\\Http\\Controllers\\CountryDropdownController' => __DIR__ . '/../..' . '/app/Http/Controllers/CountryDropdownController.php',
         'App\\Http\\Controllers\\CriminalsController' => __DIR__ . '/../..' . '/app/Http/Controllers/CriminalsController.php',
+        'App\\Http\\Controllers\\DesignationController' => __DIR__ . '/../..' . '/app/Http/Controllers/DesignationController.php',
         'App\\Http\\Controllers\\DistrictController' => __DIR__ . '/../..' . '/app/Http/Controllers/DistrictController.php',
         'App\\Http\\Controllers\\FaceRecognitionController' => __DIR__ . '/../..' . '/app/Http/Controllers/FaceRecognitionController.php',
         'App\\Http\\Controllers\\FrontEndController' => __DIR__ . '/../..' . '/app/Http/Controllers/FrontEndController.php',
