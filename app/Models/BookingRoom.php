@@ -9,11 +9,15 @@ use Carbon\Carbon;
 class BookingRoom extends Model
 {
     use HasFactory;
-    protected $fillable = ['building_number','floor_number','room_number'];
+    protected $fillable = ['room_type_id','room_number'];
     protected $appends = ['checkout_datetime'];
 
     public function getCheckoutDatetimeAttribute()
     {
         return Carbon::parse(($this->checkout_date.' '.$this->checkout_time))->format('d-m-Y H:i:s');
+    }
+
+    public function room_type() {
+        return $this->belongsTo(RoomType::class, 'room_type_id');
     }
 }

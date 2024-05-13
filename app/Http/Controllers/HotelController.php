@@ -198,7 +198,7 @@ class HotelController extends Controller
         $hotel = HotelProfile::where('id',$hotelId)->where('user_id',Auth::id())->first();
         
         if($hotel){
-            $city = City::where('code', $hotel->city)->first();
+            // $city = City::where('code', $hotel->city)->first();
             $police_station = PoliceStation::where([['city_id', $hotel->city]])->orderBy('desc', "ASC")->get();
             $countries = \DB::table('countries')->get();
             return view('frontend.pages.edit-hotel')->with('countries',$countries)->with('user',$user)->with('hotel',$hotel)->with('police_station',$police_station);

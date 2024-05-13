@@ -81,7 +81,6 @@ class RoleController extends Controller
     public function edit($id)
     {
         if (\Auth::user()->can('edit-role')) {
-
             $role = Role::find($id);
             $permission = Permission::get();
             $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CountryDropdownController;
 use App\Http\Controllers\ModualController;
 use App\Http\Controllers\PermissionController;
@@ -20,8 +21,15 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CriminalsController;
+use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\HotelStaffController;
 use App\Http\Controllers\PoliceStationController;
+use App\Http\Controllers\PriceRuleController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\SystemManagementController;
+use App\Http\Controllers\SystemSettingController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -39,6 +47,8 @@ Route::get('get-states', [CountryDropdownController::class, 'getStates'])->name(
 Route::get('get-district', [CountryDropdownController::class, 'getDistricts'])->name('getDistricts')->middleware(['auth','XSS','2fa',]);
 Route::get('get-cities', [CountryDropdownController::class, 'getCities'])->name('getCities')->middleware(['auth','XSS','2fa',]);
 Route::get('get-guest-details/', [GuestController::class, 'getGuestDetail'])->name('getGuestDetail')->middleware(['auth','XSS','2fa',]);
+Route::get('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->middleware(['auth','XSS','2fa',]);
+Route::get('get-room', [BookingController::class, 'getRoom'])->name('getRoom')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/', [FrontEndController::class, 'index']);
@@ -69,6 +79,17 @@ Route::get('/guest/filter', [GuestController::class, 'guestFilter'])->name('gues
 Route::get('/guest/quickinvoice/{id}', [GuestController::class, 'quickinvoice'])->name('guest.quickinvoice')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/pdfquickinvoice/{id}', [GuestController::class, 'pdfquickinvoice'])->name('guest.pdfquickinvoice')->middleware(['auth','XSS','2fa',]);
 Route::get('/booking/delete/{booking_id}', [GuestController::class, 'bookingDelete'])->name('booking.delete')->middleware(['auth','XSS','2fa',]);
+
+//Designation
+Route::resource('designation', DesignationController::class);
+
+//Hotel Staff
+Route::resource('hotel_staff', HotelStaffController::class);
+
+
+//Advance booking check in (23/04/24)
+Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);
+Route::post('/room_booking', [BookingController::class, 'room_booking'])->name('booking.room_booking')->middleware(['auth','XSS','2fa',]);
 
 Route::get('/guest/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('guest.report')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/queries', [\App\Http\Controllers\ReportController::class, 'guest_queries'])->name('guest.queries')->middleware(['auth','XSS','2fa',]);
@@ -111,6 +132,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
 {
     Route::resource('roles',RoleController::class);
     Route::resource('users',UserController::class);
+    Route::resource('criminals',CriminalsController::class);
     Route::resource('permission',PermissionController::class);
     Route::resource('modules',ModualController::class);
     Route::resource('notificationsettings',NotificationController::class);
@@ -119,7 +141,11 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('districts',DistrictController::class);
     Route::resource('cities',CityController::class);
     Route::resource('police_stations',PoliceStationController::class);
-    Route::resource('criminals',CriminalsController::class);
+    Route::resource('system_management',SystemManagementController::class);
+    Route::resource('room_type',RoomTypeController::class);
+    Route::resource('price_rule',PriceRuleController::class);
+    Route::resource('rooms',RoomController::class);
+    Route::resource('booking',BookingController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);
@@ -196,4 +222,14 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 
-Route::resource('tests', App\Http\Controllers\TestController::class)->middleware(['auth','XSS']);
+// Route::resource('tests', App\Http\Controllers\TestController::class)->middleware(['auth','XSS']);
+
+Route::get('clear_cache', function () {
+    Artisan::call('optimize:clear');
+    return redirect('/');
+});
+
+Route::get('run_migration', function () {
+    Artisan::call('migrate');
+    return redirect('/');
+});

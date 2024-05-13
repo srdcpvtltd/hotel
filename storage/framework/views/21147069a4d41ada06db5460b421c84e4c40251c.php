@@ -6,22 +6,22 @@
     <div class="dropdown-menu" x-placement="bottom-start">
         <a href="#" class="action-item" role="button" data-toggle="dropdown"
             aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-module')): ?>
-            <a href="<?php echo e(route('cities.edit', $city->id)); ?>" class=" dropdown-item"><i
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-System Management')): ?>
+            <a href="<?php echo e(route('price_rule.edit', $pricerule->id)); ?>" class=" dropdown-item"><i
                     class="cil-pencil action-btn"></i>
                 <?php echo e(__('Edit')); ?></a>
         <?php endif; ?>
         <div class="dropdown-divider"></div>
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-module')): ?>
-            <a href="<?php echo e(route('cities.index')); ?>" class="dropdown-item  text-danger"
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-System Management')): ?>
+            <a href="<?php echo e(route('price_rule.index')); ?>" class="dropdown-item  text-danger"
                 data-toggle="tooltip" data-original-title="<?php echo e(__('Delete')); ?>"
-                onclick="delete_record('delete-form-<?php echo e($city->id); ?>')"><i
+                onclick="delete_record('delete-form-<?php echo e($pricerule->id); ?>')"><i
                     class="cil-trash action-btn"></i><?php echo e(__('Delete')); ?></a>
-            <?php echo Form::open(['method' => 'DELETE', 'route' => ['cities.destroy', $city->id], 'id' => 'delete-form-' . $city->id]); ?>
+            <?php echo Form::open(['method' => 'DELETE', 'route' => ['price_rule.destroy', $pricerule->id], 'id' => 'delete-form-' . $pricerule->id]); ?>
 
             <?php echo Form::close(); ?>
 
         <?php endif; ?>
     </div>
 </div>
-<?php /**PATH C:\xampp\htdocs\hotel\resources\views/cities/action.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\xampp\htdocs\hotel\resources\views/system_management/price_rule/action.blade.php ENDPATH**/ ?>

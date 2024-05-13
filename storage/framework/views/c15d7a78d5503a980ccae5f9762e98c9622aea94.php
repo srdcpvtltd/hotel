@@ -1,11 +1,11 @@
 
 <?php $__env->startSection('title'); ?>
-    <?php echo e(__('Police Stations')); ?>
+    <?php echo e(__('Designation')); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('breadcrumb'); ?>
     <a class="breadcrumb-item" href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a><span
-        class="breadcrumb-item active"><?php echo e(__('Police Stations')); ?></span>
+        class="breadcrumb-item active"><?php echo e(__('Designation')); ?></span>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
     <?php echo $__env->make('layouts.datatables_css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -18,7 +18,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header"><i class="fa fa-align-justify"></i>
-                            <h4><?php echo e(__('Police Stations')); ?></h4>
+                            <h4><?php echo e(__('Designations')); ?></h4>
                         </div>
                         <div class="card-body">
                             <?php echo e($dataTable->table(['width' => '100%', 'class' => 'table table-responsive-sm table-striped'])); ?>
@@ -37,4 +37,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/police_stations/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/designation/index.blade.php ENDPATH**/ ?>
