@@ -176,7 +176,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
         </li>
         <?php endif; ?>
         <li class="c-sidebar-nav-item">
-            <a href="<?php echo e(url('')); ?>" class="c-sidebar-nav-link">
+            <a href="<?php echo e(url('hotel_staff')); ?>" class="c-sidebar-nav-link">
                 <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Hotel Staff')); ?>
 
             </a>

@@ -9,7 +9,7 @@
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <div class="col-md-6 m-auto">
+    <div class="col-md-8 m-auto">
         <div class="card">
             <div class="card-header"><strong><?php echo e(__('Add/Edit Permissions to ')); ?> <?php echo e($role->name); ?> <?php echo e(__(' Role')); ?>
 

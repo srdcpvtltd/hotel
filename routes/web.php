@@ -23,6 +23,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CriminalsController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\HotelStaffController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
 use App\Http\Controllers\RoomController;
@@ -81,6 +82,10 @@ Route::get('/booking/delete/{booking_id}', [GuestController::class, 'bookingDele
 
 //Designation
 Route::resource('designation', DesignationController::class);
+
+//Hotel Staff
+Route::resource('hotel_staff', HotelStaffController::class);
+
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);

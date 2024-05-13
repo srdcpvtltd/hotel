@@ -151,11 +151,13 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
             </a>
         </li>
         @endcan
+        @can('show-hotelstaff')
         <li class="c-sidebar-nav-item">
-            <a href="{{url('')}}" class="c-sidebar-nav-link">
+            <a href="{{url('hotel_staff')}}" class="c-sidebar-nav-link">
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Hotel Staff') }}
             </a>
         </li>
+        @endcan
         @endif
         @endrole
         @role('user')

@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\DesignationDataTable;
+use App\DataTables\HotelstaffDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DesignationRequest;
+use App\Http\Requests\HotelstaffRequest;
 use App\Models\Designation;
+use App\Models\Hotel_staff;
 use App\Models\HotelProfile;
-use App\Services\DesignationService;
+use App\Services\HotelstaffService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class DesignationController extends Controller
+class HotelStaffController extends Controller
 {
-    protected $DesignationService;
+    protected $HotelstaffService;
 
-    public function __construct(DesignationService $DesignationService)
+    public function __construct(HotelstaffService $HotelstaffService)
     {
-        $this->DesignationService = $DesignationService;
+        $this->HotelstaffService = $HotelstaffService;
     }
 
     /**
@@ -25,9 +26,9 @@ class DesignationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(DesignationDataTable $table)
+    public function index(HotelstaffDataTable $table)
     {
-        return $table->render('designation.index');
+        return $table->render('hotel_staff.index');
     }
 
     /**
@@ -37,7 +38,9 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        return view('designation.create');
+        $designation = Designation::all();
+
+        return view('hotel_staff.create', compact('designation'));
     }
 
     /**
@@ -46,7 +49,7 @@ class DesignationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(DesignationRequest $request)
+    public function store(HotelstaffRequest $request)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
@@ -54,15 +57,19 @@ class DesignationController extends Controller
         }
         $message = '';
         try {
-            $designation = new Designation();
-            $designation->hotel_id = $hotel->id;
-            $designation->designation = $request->designation;
-            $designation->save();
-            $message = 'Designation saved successfully';
+            $staff = new Hotel_staff();
+            $staff->hotel_id = $hotel->id;
+            $staff->name = $request->name;
+            $staff->contact_no = $request->contact_no;
+            $staff->designation_id = $request->designation;
+            $staff->salary = $request->salary;
+            $staff->shift = $request->shift;
+            $staff->save();
+            $message = 'Staff saved successfully';
         } catch (\Exception $exception) {
             $message = 'Error has exit';
         }
-        return redirect()->route('designation.index')
+        return redirect()->route('hotel_staff.index')
             ->with('message', __($message));
     }
 
@@ -83,9 +90,10 @@ class DesignationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Designation $designation)
+    public function edit(Hotel_staff $hotel_staff)
     {
-        return view('designation.edit', compact('designation'));
+        $designation = Designation::all();
+        return view('hotel_staff.edit', compact('hotel_staff', 'designation'));
     }
 
     /**
@@ -95,16 +103,16 @@ class DesignationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DesignationRequest $request, Designation $designation)
+    public function update(HotelstaffRequest $request, Hotel_staff $hotel_staff)
     {
         try {
-            $this->DesignationService->update($request, $designation);
+            $this->HotelstaffService->update($request, $hotel_staff);
 
-            $message = 'Designation Updated successfully';
+            $message = 'Staff Updated successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Update';
         }
-        return redirect()->route('designation.index')
+        return redirect()->route('hotel_staff.index')
             ->with('message', __($message));
     }
     /**
@@ -113,16 +121,16 @@ class DesignationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DesignationRequest $request, Designation $designation)
+    public function destroy(HotelstaffRequest $request, Hotel_staff $hotel_staff)
     {
         try {
-            $this->DesignationService->destroy($request, $designation);
+            $this->HotelstaffService->destroy($request, $hotel_staff);
 
-            $message = 'Designation Deleted successfully';
+            $message = 'Staff Deleted successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Deleted';
         }
-        return redirect()->route('designation.index')
+        return redirect()->route('hotel_staff.index')
             ->with('message', __($message));
     }
 }
