@@ -15,6 +15,7 @@ use App\Models\State;
 use App\Models\HotelProfile;
 use App\Models\PoliceStation;
 use Exception;
+use Illuminate\Support\Facades\Session as FacadesSession;
 use Session;
 
 class HotelController extends Controller
@@ -48,6 +49,7 @@ class HotelController extends Controller
             $this->validate($request, [
                 'cmbcountry' => 'required',
                 'cmbstate' => 'required',
+                'cmbdistrict' => 'required',
                 'cmbcity' => 'required',
                 'police_station' => 'required',
             ]);
@@ -93,6 +95,7 @@ class HotelController extends Controller
             $hotel->otherCountry = (isset($request->otherCountry) && !empty($request->otherCountry)) ? $request->otherCountry : null;
             $hotel->state = (isset($request->cmbstate) && !empty($request->cmbstate)) ? $request->cmbstate : null;
             $hotel->otherState = (isset($request->otherState) && !empty($request->otherState)) ? $request->otherState : null;
+            $hotel->district = (isset($request->cmbdistrict) && !empty($request->cmbdistrict)) ? $request->cmbdistrict : null;
             $hotel->otherCity = (isset($request->otherCity) && !empty($request->otherCity)) ? $request->otherCity : null;
             $hotel->city = (isset($request->cmbcity) && !empty($request->cmbcity)) ? $request->cmbcity : null;
             
@@ -106,7 +109,7 @@ class HotelController extends Controller
             $hotel->metal_detector = (boolean)$request->metal_radio_btn;
             
             $hotel->save();
-            Session::flash('message', "Hotel Added Successfully");
+            FacadesSession::flash('message', "Hotel Added Successfully");
             return redirect('/dashboard')->with('success', "Hotel Added Successfully");
         }catch (Exception $e)
         {
