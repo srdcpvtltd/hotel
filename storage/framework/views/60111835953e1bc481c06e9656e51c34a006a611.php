@@ -175,12 +175,14 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
             </a>
         </li>
         <?php endif; ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-hotelstaff')): ?>
         <li class="c-sidebar-nav-item">
             <a href="<?php echo e(url('hotel_staff')); ?>" class="c-sidebar-nav-link">
                 <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Hotel Staff')); ?>
 
             </a>
         </li>
+        <?php endif; ?>
         <?php endif; ?>
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>

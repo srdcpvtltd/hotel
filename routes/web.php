@@ -65,7 +65,7 @@ Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middle
 
 Route::post('/chart', [HomeController::class, 'chart'])->name('get.chart.data')->middleware(['auth','XSS',]);
 
-Route::get('notification', [HomeController::class,'notification']);
+Route::get('notification', [HomeController::class,'notification'])->middleware(['auth','XSS','2fa',]);
 
 // Guest
 Route::get('/guest/create', [GuestController::class, 'index'])->name('guest.create')->middleware(['auth','XSS','2fa',]);
@@ -81,10 +81,10 @@ Route::get('/guest/pdfquickinvoice/{id}', [GuestController::class, 'pdfquickinvo
 Route::get('/booking/delete/{booking_id}', [GuestController::class, 'bookingDelete'])->name('booking.delete')->middleware(['auth','XSS','2fa',]);
 
 //Designation
-Route::resource('designation', DesignationController::class);
+Route::resource('designation', DesignationController::class)->middleware(['auth','XSS','2fa',]);
 
 //Hotel Staff
-Route::resource('hotel_staff', HotelStaffController::class);
+Route::resource('hotel_staff', HotelStaffController::class)->middleware(['auth','XSS','2fa',]);
 
 
 //Advance booking check in (23/04/24)
