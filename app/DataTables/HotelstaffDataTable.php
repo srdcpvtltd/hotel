@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Hotel_staff;
+use App\Models\HotelProfile;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -37,7 +39,8 @@ class HotelstaffDataTable extends DataTable
      */
     public function query(Hotel_staff $model)
     {
-        return $model->newQuery()->orderBy('id', 'ASC');
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'ASC');
     }
 
     /**

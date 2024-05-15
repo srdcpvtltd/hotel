@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Designation;
+use App\Models\HotelProfile;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -34,7 +36,8 @@ class DesignationDataTable extends DataTable
      */
     public function query(Designation $model)
     {
-        return $model->newQuery()->orderBy('id', 'ASC');
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'ASC');
     }
 
     /**
@@ -74,8 +77,8 @@ class DesignationDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-                Column::make('hotel_id')->title('hotel'),
-                Column::make('designation')->title('designation'),
+            Column::make('hotel_id')->title('hotel'),
+            Column::make('designation')->title('designation'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
