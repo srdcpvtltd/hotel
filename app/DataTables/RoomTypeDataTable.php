@@ -2,7 +2,9 @@
 
 namespace App\DataTables;
 
+use App\Models\HotelProfile;
 use App\Models\RoomType;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -32,7 +34,8 @@ class RoomTypeDataTable extends DataTable
      */
     public function query(RoomType $model)
     {
-        return $model->newQuery()->orderBy('id', 'ASC');
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'ASC');
     }
 
     /**

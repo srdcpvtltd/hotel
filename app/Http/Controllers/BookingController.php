@@ -34,16 +34,30 @@ class BookingController extends Controller
 
     public function create()
     {
-        $room_types = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $room_types = RoomType::where('hotel_id', $hotel->id)->get();
 
         return view('booking.create', compact('room_types'));
     }
 
     public function store(BookingRequest $request)
     {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
+        $hotel_id = [
+            'hotel_id' => $hotel->id,
+        ];
+
         $message = '';
         try {
-            $BookingService = $this->BookingService->store($request, AdvanceBooking::class);
+            $BookingService = $this->BookingService->store($request, AdvanceBooking::class, $hotel_id);
             $message = 'Booking saved successfully';
         } catch (\Exception $exception) {
             $message = 'Error has exit';
@@ -54,7 +68,13 @@ class BookingController extends Controller
 
     public function edit(AdvanceBooking $booking)
     {
-        $room_types = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $room_types = RoomType::where('hotel_id', $hotel->id)->get();
+
         return view('booking.edit')->with(compact('booking', 'room_types'));
     }
 
@@ -86,10 +106,15 @@ class BookingController extends Controller
 
     public function proceed_check_in($id)
     {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
         $booking = AdvanceBooking::find($id)->first();
         $countries = DB::table('countries')->get();
-        $room_types = RoomType::all();
-        $room = Room::all();
+        $room_types = RoomType::where('hotel_id', $hotel->id)->get();
+        $room = Room::where('hotel_id', $hotel->id)->get();
 
         return view('booking.register', compact('booking', 'countries', 'room_types', 'room'));
     }

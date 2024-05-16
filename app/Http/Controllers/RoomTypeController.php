@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\DataTables\RoomTypeDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomTypeRequest;
+use App\Models\HotelProfile;
 use App\Models\RoomType;
 use App\Services\RoomTypeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoomTypeController extends Controller
 {
@@ -29,9 +31,18 @@ class RoomTypeController extends Controller
 
     public function store(RoomTypeRequest $request)
     {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
+        $hotel_id = [
+            'hotel_id' => $hotel->id,
+        ];
+
         $message='';
         try {
-            $RoomTypeService = $this->RoomTypeService->store($request, RoomType::class);
+            $RoomTypeService = $this->RoomTypeService->store($request, RoomType::class, $hotel_id);
             $message='Room Type saved successfully';
         } catch (\Exception $exception) {
             $message='Error has exit';
