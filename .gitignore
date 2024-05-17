@@ -5,7 +5,7 @@
 /public/storage
 /storage/*.key
 /vendor
-/public/images
+# /public/images
 .env
 composer.lock
 .env.backup
@@ -19,3 +19,33 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+.DS_Store
+*.swp
+
+# Ignore coverage reports
+coverage/
+*.lcov
+
+# Ignore compiled files
+*.class
+*.o
+*.so
+
+# Ignore personal config files
+*.iml
+
+# Ignore temporary files
+tmp/
+*.tmp
+*.temp
+*.pid
+
+# Ignore backup files
+*.bak
+*.backup
+
+# Ignore generated documentation
+docs/
+
+# Ignore specific files
+secrets.yml
