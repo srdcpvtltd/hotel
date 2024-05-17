@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+//add,update,delete - hotel
 Route::middleware('auth:api')->group(function () {
-    //add,update,delete - hotel
     Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
+    // dd("jyoti");
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
 });
@@ -63,4 +63,4 @@ Route::post('/save-bg-check-results/{}', [FaceRecognitionController::class, 'sav
 
 
 
-Route::resource('tests', App\Http\Controllers\API\TestAPIController::class);
+// Route::resource('tests', App\Http\Controllers\API\TestAPIController::class);
