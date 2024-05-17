@@ -1,31 +1,21 @@
-        .DS_Store
-        .editorconfig
-        .env
-        .gitattributes
-        .htaccess
-        .rnd
-        .styleci.yml
-        README.md
-        app/
-        artisan
-        bootstrap/
-        composer.json
-        composer.lock
-        config/
-        database/
-        index.php
-        package-lock.json
-        package.json
-        phpunit.xml
-        public/
-        resources/
-        routes/
-        server.php
-        server/
-        sql/
-        storage/
-        test/
-        tests/
-        vendor/
-        verification.php
-        webpack.mix.js
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/public/images
+.env
+composer.lock
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
