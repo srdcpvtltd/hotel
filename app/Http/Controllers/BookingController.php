@@ -50,9 +50,10 @@ class BookingController extends Controller
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
-        
+
         $hotel_id = [
             'hotel_id' => $hotel->id,
+            'room_status' => 1,
         ];
 
         $message = '';
@@ -110,13 +111,13 @@ class BookingController extends Controller
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
-        
-        $booking = AdvanceBooking::find($id)->first();
+
+        $booking = AdvanceBooking::where('id', $id)->first();
         $countries = DB::table('countries')->get();
         $room_types = RoomType::where('hotel_id', $hotel->id)->get();
         $room = Room::where('hotel_id', $hotel->id)->get();
 
-        return view('booking.register', compact('booking', 'countries', 'room_types', 'room'));
+        return view('booking.register', compact('booking', 'countries', 'room_types', 'room', 'id'));
     }
 
     public function getRoom(Request $request)
@@ -132,20 +133,13 @@ class BookingController extends Controller
     {
         $room_type = RoomType::where('id', $request->room_type)->first();
 
-        $room = Room::where('id', $request->room)->first();
-        $room->status = 1;
-        $room->updated_at = date('Y-m-d H:i:s');
-        $room->save();
+        $room = Room::where('id', $request->room)->where('status', 0)->first();
 
-        $rooms = Room::where('room_type_id', $request->room_type)->where('status', 0)->get();
-        $booked_rooms = Room::where('status', 1)->get();
+        // $data = "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" + count + "][room_number]' type='text' readonly class='form-control' value=" + result . room . name + "></div><div class='col'><input type='text' readonly class='form-control' value=" + result . room_type . room_type + "><input name='bookingdata[booking" + count + "][room_type_id]' type='hidden' value=" + result . room_type . id + "></div></div>";
 
-        if ($room->status == 1) {
-            return response()->json([
-                'data' => $booked_rooms,
-                'room_type' => $room_type,
-                'rooms' => $rooms
-            ]);
-        }
+        return response()->json([
+            'room_type' => $room_type,
+            'room' => $room
+        ]);
     }
 }

@@ -13,7 +13,7 @@
         <?php endif; ?>
         <form action="<?php echo e(route('guest.store')); ?>" id="guest-register" enctype="multipart/form-data" method="post">
             <?php echo csrf_field(); ?>
-            <input type="hidden" name="advance_booking_id" value="<?php echo e($booking->id); ?>">
+            <input type="hidden" name="advance_booking_id" value="<?php echo e($id); ?>">
             <div class="fade-in guest-register">
                 <div class="card">
                     <div class="card-body">
@@ -363,20 +363,20 @@
                                 name="id_number">
                         </div>
                         <!-- <div class="col">
-                                    <label>Id Upload(PDF / Image)</label>
-                                    <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
-                                </div> -->
+                                                                        <label>Id Upload(PDF / Image)</label>
+                                                                        <input onchange="loadIdDocument(event)" type="file" name="document_id" class="form-control" />
+                                                                    </div> -->
                     </div>
                     <!-- <div class="form-row">
-                                <div class="col">
-                                    <label>Visitor Photo Upload (JPEG Image Only)</label>
-                                    <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
-                                    <img style="display: none;" id="visitor-preview" src="#" alt="your image" />
-                                </div>
-                                <div class="col">
-                                    <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
-                                </div>
-                            </div> -->
+                                                                    <div class="col">
+                                                                        <label>Visitor Photo Upload (JPEG Image Only)</label>
+                                                                        <input onchange="visitorPhoto(event)" type="file" class="form-control" accept="image/*" name="visitor_photo">
+                                                                        <img style="display: none;" id="visitor-preview" src="#" alt="your image" />
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <img style="display: none;margin-top:0;" id="id-preview" src="#" alt="your image" />
+                                                                    </div>
+                                                                </div> -->
                 </div>
             </div>
 
@@ -486,8 +486,8 @@
                             <select name="whom_to_visit" class="custom-select whom-to-visit">
                                 <option value="">Select Purpose of Visit</option>
                                 <!-- <option value="friend">Friend</option>
-                                                                <option value="relative">Relative</option>
-                                                                <option value="others">Others</option> -->
+                                                                                                    <option value="relative">Relative</option>
+                                                                                                    <option value="others">Others</option> -->
 
                                 <option value="exam">Exam</option>
                                 <option value="meeting">Meeting</option>
@@ -496,23 +496,23 @@
                             </select>
                         </div>
                         <!-- <div class="col-md-6">
-                                        <div class="whom-to-visit-wrapper" style="display:none;">
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Name</label>
-                                                        <input type="text" placeholder="Name" name="whom_to_visit_name" class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label>Mobile Number</label>
-                                                        <input name="whom_to_visit_mobile" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                                                            <div class="whom-to-visit-wrapper" style="display:none;">
+                                                                                <div class="form-row">
+                                                                                    <div class="col">
+                                                                                        <div class="form-group">
+                                                                                            <label>Name</label>
+                                                                                            <input type="text" placeholder="Name" name="whom_to_visit_name" class="form-control" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col">
+                                                                                        <div class="form-group">
+                                                                                            <label>Mobile Number</label>
+                                                                                            <input name="whom_to_visit_mobile" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> -->
                     </div>
                 </div>
             </div>
@@ -690,7 +690,7 @@
             $(".accompany-hide").hide();
             $('.accomapny-lable').hide();
             $('.bookin-lable').hide();
-            $(".booking-expand").attr('disabled', true);
+            // $(".booking-expand").attr('disabled', true);
             $('#country').on('change', function() {
                 var countryId = this.value;
                 if (countryId == 165) {
@@ -832,8 +832,10 @@
 
                                 $('#state').html('<option value="">Select State</option>');
                                 $('#p_state').html('<option value="">Select State</option>');
-                                $('#district').html('<option value="">Select District</option>');
-                                $('#p_district').html('<option value="">Select District</option>');
+                                $('#district').html(
+                                    '<option value="">Select District</option>');
+                                $('#p_district').html(
+                                    '<option value="">Select District</option>');
                                 $('#city').html('<option value="">Select City</option>');
                                 $('#p_city').html('<option value="">Select City</option>');
                                 gustDetail = {};
@@ -863,59 +865,55 @@
                 });
             });
             $("#room").change(function() {
-                $(".booking-expand").attr('disabled', false);
-                $(".booking-expand").click(function() {
+                var count = 0;
+                $(document).on("click", ".booking-expand", function() {
                     $('.bookin-lable').show();
                     var room_type = $("#room_type").val();
                     var room = $("#room").val();
-                    if (room != null) {
-                        $.ajax({
-                            url: "<?php echo e(route('booking.room_booking')); ?>",
-                            type: 'post',
-                            data: {
-                                "_token": "<?php echo e(csrf_token()); ?>",
-                                "room_type": room_type,
-                                "room": room,
-                            },
-                            dataType: 'json',
-                            success: function(result) {
-                                if (!jQuery.isEmptyObject(result.data)) {
-                                    $('.booking-room-wrapper').empty();
-                                    $.each(result.data, function(key, value) {
-                                        $('.booking-room-wrapper').append(
-                                            "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" +
-                                            key +
-                                            "][room_number]' type='text' readonly class='form-control' value=" +
-                                            value.name +
-                                            "></div><div class='col'><input type='text' readonly class='form-control' value=" +
-                                            result.room_type.room_type +
-                                            "><input name='bookingdata[booking" +
-                                            key +
-                                            "][room_type_id]' type='hidden' value=" +
-                                            result.room_type.id +
-                                            "></div></div>");
-                                    });
+                    var selectedRoomType = $('#room_type option:selected').text();
+                    var selectedRoom = $('#room option:selected').text();
 
-                                    if (!jQuery.isEmptyObject(result.rooms)) {
-                                        $('#room').empty();
-                                        $('#room').append(
-                                            '<option value="">Select</option>');
-                                        $.each(result.rooms, function(key, value) {
-                                            $('#room').append(
-                                                '<option value="' + value
-                                                .id + '">' + value.name +
-                                                '</option>');
-                                        });
-                                    } else {
-                                        $('#room').empty();
-                                        $('#room').append(
-                                            '<option value="">Select</option>');
-                                    }
-                                }
-                            }
-                        });
+                    if (room != null) {
+                        $('.booking-room-wrapper').append(
+                            "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" + count +
+                            "][room_number]' type='text' readonly class='form-control' value=" + selectedRoom +
+                            "></div><div class='col'><input type='text' readonly class='form-control' value=" + selectedRoomType +
+                            "><input name='bookingdata[booking" + count +
+                            "][room_type_id]' type='hidden' value=" + room_type +
+                            "></div></div>");
+
+                        count++;
+                        console.log(count);
+                        // $.ajax({
+                        //     url: "<?php echo e(route('booking.room_booking')); ?>",
+                        //     type: 'post',
+                        //     data: {
+                        //         "_token": "<?php echo e(csrf_token()); ?>",
+                        //         "room_type": room_type,
+                        //         "room": room,
+                        //     },
+                        //     dataType: 'json',
+                        //     success: function(result) {
+                        //         if (!jQuery.isEmptyObject(result)) {
+                        //             $('.booking-room-wrapper').append(
+                        //                 "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" +
+                        //                 count +
+                        //                 "][room_number]' type='text' readonly class='form-control' value=" +
+                        //                 result.room.name +
+                        //                 "></div><div class='col'><input type='text' readonly class='form-control' value=" +
+                        //                 result.room_type.description +
+                        //                 "><input name='bookingdata[booking" +
+                        //                 count +
+                        //                 "][room_type_id]' type='hidden' value=" +
+                        //                 result.room_type.id +
+                        //                 "></div></div>");
+
+                        //             count++;
+                        //             console.log(count);
+                        //         }
+                        //     }
+                        // });
                     }
-                    $(".booking-expand").attr('disabled', true);
                 });
             });
         });
@@ -1057,16 +1055,6 @@
                 );
             }
         })
-
-        // Whom to visit
-        // $(".whom-to-visit").change(function() {
-        //     var whoToVisit = $('.whom-to-visit :selected').val();
-        //     if (whoToVisit) {
-        //         $(".whom-to-visit-wrapper").css('display', 'block');
-        //     } else {
-        //         $(".whom-to-visit-wrapper").css('display', 'none');
-        //     }
-        // })
     </script>
 <?php $__env->stopSection(); ?>
 
