@@ -135,8 +135,6 @@ class BookingController extends Controller
 
         $room = Room::where('id', $request->room)->where('status', 0)->first();
 
-        // $data = "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" + count + "][room_number]' type='text' readonly class='form-control' value=" + result . room . name + "></div><div class='col'><input type='text' readonly class='form-control' value=" + result . room_type . room_type + "><input name='bookingdata[booking" + count + "][room_type_id]' type='hidden' value=" + result . room_type . id + "></div></div>";
-
         return response()->json([
             'room_type' => $room_type,
             'room' => $room

@@ -31,6 +31,7 @@ class GuestController extends Controller
 
     public function store(Request $request)
     {
+
         // check is hotel avialble or not
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         //dd($request->all());
@@ -135,6 +136,20 @@ class GuestController extends Controller
                 $room->updated_at = date('Y-m-d H:i:s');
                 $room->save();
             }
+            
+            // room status
+            $count = count($request->bookingdata);
+            for($i=0; $i< $count; $i++){
+                $rooms[] = $request->bookingdata['booking'.$i]['room_number'];
+            }
+    
+            foreach ($rooms as $room) {
+                $room = Room::where('name', $room)->first();
+                $room->status = 1;
+                $room->updated_at = date('Y-m-d H:i:s');
+                $room->save();
+            }
+    
         }
         //dd($booking);
         return redirect('/dashboard')->with('success', "Booking created successfully.");

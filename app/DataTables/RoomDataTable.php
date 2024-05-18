@@ -25,7 +25,7 @@ class RoomDataTable extends DataTable
                 return ($room->room_type != null) ? $room->room_type->room_type : '-';
             })
             ->editColumn('status', function (Room $room) {
-                return ($room->room_status === 1) ? '<span class="badge badge-danger" style="font-size: 14px;
+                return ($room->status === 1) ? '<span class="badge badge-danger" style="font-size: 14px;
 ">Booked</span>' : '<span class="badge badge-success" style="font-size: 14px;
 ">Available</span>';
             })
