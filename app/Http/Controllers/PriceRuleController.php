@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\DataTables\PriceRuleDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PriceRuleRequest;
+use App\Models\HotelProfile;
 use App\Models\PriceRule;
 use App\Models\RoomType;
 use App\Services\PriceRuleService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class PriceRuleController extends Controller
 {
@@ -21,26 +21,39 @@ class PriceRuleController extends Controller
         $this->PriceRuleService = $PriceRuleService;
     }
 
-    public function index(PriceRuleDataTable $table)
-    {
+    public function index(PriceRuleDataTable $table){
         return $table->render('system_management.price_rule.index');
     }
 
     public function create()
     {
-        $room_type = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $room_type = RoomType::where('hotel_id', $hotel->id)->get();
 
         return view('system_management.price_rule.create', compact('room_type'));
     }
 
     public function store(PriceRuleRequest $request)
     {
-        $message = '';
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
+        $hotel_id = [
+            'hotel_id' => $hotel->id,
+        ];
+
+        $message='';
         try {
-            $PriceRuleService = $this->PriceRuleService->store($request, PriceRule::class);
-            $message = 'Price Rule saved successfully';
+            $PriceRuleService = $this->PriceRuleService->store($request, PriceRule::class, $hotel_id);
+            $message='Price Rule saved successfully';
         } catch (\Exception $exception) {
-            $message = 'Error has exit';
+            $message='Error has exit';
         }
         return redirect()->route('price_rule.index')
             ->with('message', __($message));
@@ -48,7 +61,13 @@ class PriceRuleController extends Controller
 
     public function edit(PriceRule $price_rule)
     {
-        $room_type = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $room_type = RoomType::where('hotel_id', $hotel->id)->get();
+        
         return view('system_management.price_rule.edit')->with(compact('price_rule', 'room_type'));
     }
 
@@ -57,9 +76,9 @@ class PriceRuleController extends Controller
         try {
             $this->PriceRuleService->update($request, $price_rule);
 
-            $message = 'Price Rule Updated successfully';
+            $message='Price Rule Updated successfully';
         } catch (\Exception $exception) {
-            $message = 'Error has Update';
+            $message='Error has Update';
         }
         return redirect()->route('price_rule.index')
             ->with('message', __($message));

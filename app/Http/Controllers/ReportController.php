@@ -357,7 +357,7 @@ class ReportController extends Controller
 
         $sql = HotelProfile::whereNotIn('id', $booked_hotels)->orderBy('created_at','DESC');
 
-        $cities = \DB::table('cities')->whereNotNull('code')->get();
+        $cities = \DB::table('cities')->get();
 
         $hotels = $sql->paginate(20);
         $police_stations = \DB::table('police_stations')->get();
@@ -592,7 +592,7 @@ class ReportController extends Controller
         $inputs = [];
         $sql = HotelProfile::orderBy('created_at','DESC');
 
-        $cities = \DB::table('cities')->whereNotNull('code')->get();
+        $cities = \DB::table('cities')->get();
         if($request->get('city') != ''){
             $sql->where('city',$request->get('city'));
             $inputs['city'] = $request->get('city');

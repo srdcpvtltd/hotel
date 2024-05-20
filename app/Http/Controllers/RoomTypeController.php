@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\DataTables\RoomTypeDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomTypeRequest;
+use App\Models\HotelProfile;
 use App\Models\RoomType;
 use App\Services\RoomTypeService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class RoomTypeController extends Controller
 {
@@ -21,8 +20,7 @@ class RoomTypeController extends Controller
         $this->RoomTypeService = $RoomTypeService;
     }
 
-    public function index(RoomTypeDataTable $table)
-    {
+    public function index(RoomTypeDataTable $table){
         return $table->render('system_management.room_type.index');
     }
 
@@ -33,12 +31,47 @@ class RoomTypeController extends Controller
 
     public function store(RoomTypeRequest $request)
     {
-        $message = '';
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
+        $hotel_id = [
+            'hotel_id' => $hotel->id,
+        ];
+
+        $message='';
         try {
-            $RoomTypeService = $this->RoomTypeService->store($request, RoomType::class);
-            $message = 'Room Type saved successfully';
+            $RoomTypeService = $this->RoomTypeService->store($request, RoomType::class, $hotel_id);
+            $message='Room Type saved successfully';
         } catch (\Exception $exception) {
-            $message = 'Error has exit';
+            $message='Error has exit';
+        }
+        return redirect()->route('room_type.index')
+            ->with('message', __($message));
+    }
+
+    public function update(RoomTypeRequest $request, RoomType $room_type)
+    {
+        try {
+            $this->RoomTypeService->update($request, $room_type);
+
+            $message='Room Type Updated successfully';
+        } catch (\Exception $exception) {
+            $message='Error has Update';
+        }
+        return redirect()->route('room_type.index')
+            ->with('message', __($message));
+    }
+
+    public function destroy(RoomTypeRequest $request,RoomType $room_type)
+    {
+        try {
+            $this->RoomTypeService->destroy($request, $room_type);
+
+            $message='Room Type Deleted successfully';
+        } catch (\Exception $exception) {
+            $message='Error has Deleted';
         }
         return redirect()->route('room_type.index')
             ->with('message', __($message));
@@ -48,32 +81,6 @@ class RoomTypeController extends Controller
     {
 
         return view('system_management.room_type.edit')->with(compact('room_type'));
-    }
-
-    public function update(RoomTypeRequest $request, RoomType $room_type)
-    {
-        try {
-            $this->RoomTypeService->update($request, $room_type);
-
-            $message = 'Room Type Updated successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Update';
-        }
-        return redirect()->route('room_type.index')
-            ->with('message', __($message));
-    }
-
-    public function destroy(RoomTypeRequest $request, RoomType $room_type)
-    {
-        try {
-            $this->RoomTypeService->destroy($request, $room_type);
-
-            $message = 'Room Type Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
-        }
-        return redirect()->route('room_type.index')
-            ->with('message', __($message));
     }
 
     //room type APIs starts here

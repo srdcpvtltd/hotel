@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\DataTables\RoomDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoomRequest;
+use App\Models\HotelProfile;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Services\RoomService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -30,16 +32,30 @@ class RoomController extends Controller
 
     public function create()
     {
-        $room_type = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $room_type = RoomType::where('hotel_id', $hotel->id)->get();
 
         return view('system_management.room.create', compact('room_type'));
     }
 
     public function store(RoomRequest $request)
     {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
+        $hotel_id = [
+            'hotel_id' => $hotel->id,
+        ];
+
         $message = '';
         try {
-            $RoomService = $this->RoomService->store($request, Room::class);
+            $RoomService = $this->RoomService->store($request, Room::class, $hotel_id);
             $message = 'Room saved successfully';
         } catch (\Exception $exception) {
             $message = 'Error has exit';
@@ -50,7 +66,13 @@ class RoomController extends Controller
 
     public function edit(Room $room)
     {
-        $room_type = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $room_type = RoomType::where('hotel_id', $hotel->id)->get();
+        
         return view('system_management.room.edit')->with(compact('room', 'room_type'));
     }
 

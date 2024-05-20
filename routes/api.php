@@ -59,7 +59,7 @@ Route::get('/criminals', [FaceRecognitionController::class, 'criminals']);
 //get guests - pending BG check only
 Route::get('/guests', [FaceRecognitionController::class, 'guests']);
 //send result
-Route::post('/save-bg-check-results/{}', [FaceRecognitionController::class, 'saveBgCheckResults']);
+Route::post('/save-bg-check-results', [FaceRecognitionController::class, 'saveBgCheckResults']);
 
 
 
