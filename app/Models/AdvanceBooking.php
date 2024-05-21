@@ -11,6 +11,9 @@ class AdvanceBooking extends Model
     protected $guarded = ['id']; 
     public $timestamps = false;
 
+    protected $attributes=[
+        'status' => 0
+    ];
     public function room_type()
     {
         return $this->hasOne('App\Models\RoomType','id','room_type_id');

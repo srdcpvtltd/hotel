@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\AdvanceBookingsController;
+use App\Http\Controllers\Api\HotelRegisterController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
-use App\Http\Controllers\HotelRegisterController;
 use App\Http\Controllers\PriceRuleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //add,update,delete - hotel
 Route::middleware('auth:api')->group(function () {
     Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
-    // dd("jyoti");
+    // dd("testing");
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
 });
@@ -30,6 +31,13 @@ Route::middleware('auth:api')->group(function () {
 //Hotel register and login
 Route::post("hotel-register", [HotelRegisterController::class, 'hotel_register']);
 Route::post("login", [HotelRegisterController::class, 'login']);
+
+
+//Bookings
+Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create_advance_bookings']); //create Advance Booking
+Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking
+Route::post("update-advance-booking", [AdvanceBookingsController::class, 'update_advance_bookings']); //update Advance Booking
+Route::post("delete-advance-booking", [AdvanceBookingsController::class, 'delete_advance_bookings']); //delete Advance Booking
 
 //crud for room type
 Route::post("create-room-type", [RoomTypeController::class, 'create_room_type']); //create room type
