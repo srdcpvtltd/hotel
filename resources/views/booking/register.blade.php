@@ -11,7 +11,7 @@
         @endif
         <form action="{{ route('guest.store') }}" id="guest-register" enctype="multipart/form-data" method="post">
             @csrf
-            <input type="hidden" name="advance_booking_id" value="{{ $booking->id }}">
+            <input type="hidden" name="advance_booking_id" value="{{ $id }}">
             <div class="fade-in guest-register">
                 <div class="card">
                     <div class="card-body">
@@ -688,7 +688,6 @@
             $(".accompany-hide").hide();
             $('.accomapny-lable').hide();
             $('.bookin-lable').hide();
-            $(".booking-expand").attr('disabled', true);
             $('#country').on('change', function() {
                 var countryId = this.value;
                 if (countryId == 165) {
@@ -860,61 +859,43 @@
                     }
                 });
             });
-            $("#room").change(function() {
-                $(".booking-expand").attr('disabled', false);
-                $(".booking-expand").click(function() {
-                    $('.bookin-lable').show();
-                    var room_type = $("#room_type").val();
-                    var room = $("#room").val();
-                    if (room != null) {
-                        $.ajax({
-                            url: "{{ route('booking.room_booking') }}",
-                            type: 'post',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "room_type": room_type,
-                                "room": room,
-                            },
-                            dataType: 'json',
-                            success: function(result) {
-                                if (!jQuery.isEmptyObject(result.data)) {
-                                    $('.booking-room-wrapper').empty();
-                                    $.each(result.data, function(key, value) {
-                                        $('.booking-room-wrapper').append(
-                                            "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" +
-                                            key +
-                                            "][room_number]' type='text' readonly class='form-control' value=" +
-                                            value.name +
-                                            "></div><div class='col'><input type='text' readonly class='form-control' value=" +
-                                            result.room_type.room_type +
-                                            "><input name='bookingdata[booking" +
-                                            key +
-                                            "][room_type_id]' type='hidden' value=" +
-                                            result.room_type.id +
-                                            "></div></div>");
-                                    });
+            var count = 0;
+            $(document).on("click", ".booking-expand", function() {
+                $('.bookin-lable').show();
+                var room_type = $("#room_type").val();
+                var room = $("#room").val();
 
-                                    if (!jQuery.isEmptyObject(result.rooms)) {
-                                        $('#room').empty();
-                                        $('#room').append(
-                                            '<option value="">Select</option>');
-                                        $.each(result.rooms, function(key, value) {
-                                            $('#room').append(
-                                                '<option value="' + value
-                                                .id + '">' + value.name +
-                                                '</option>');
-                                        });
-                                    } else {
-                                        $('#room').empty();
-                                        $('#room').append(
-                                            '<option value="">Select</option>');
-                                    }
-                                }
+                if (room != null) {
+                    $.ajax({
+                        url: "{{ route('booking.room_booking') }}",
+                        type: 'post',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "room_type": room_type,
+                            "room": room,
+                        },
+                        dataType: 'json',
+                        success: function(result) {
+                            if (!jQuery.isEmptyObject(result)) {
+                                $('.booking-room-wrapper').append(
+                                    "<div class='form-row booking-item'><div class='col'><input name='bookingdata[booking" +
+                                    count +
+                                    "][room_number]' type='text' readonly class='form-control' value=" +
+                                    result.room.name +
+                                    "></div><div class='col'><input type='text' readonly class='form-control' value=" +
+                                    result.room_type.description +
+                                    "><input name='bookingdata[booking" +
+                                    count +
+                                    "][room_type_id]' type='hidden' value=" +
+                                    result.room_type.id +
+                                    "></div></div>");
+
+                                count++;
+                                console.log(count);
                             }
-                        });
-                    }
-                    $(".booking-expand").attr('disabled', true);
-                });
+                        }
+                    });
+                }
             });
         });
 
@@ -1055,15 +1036,5 @@
                 );
             }
         })
-
-        // Whom to visit
-        // $(".whom-to-visit").change(function() {
-        //     var whoToVisit = $('.whom-to-visit :selected').val();
-        //     if (whoToVisit) {
-        //         $(".whom-to-visit-wrapper").css('display', 'block');
-        //     } else {
-        //         $(".whom-to-visit-wrapper").css('display', 'none');
-        //     }
-        // })
     </script>
 @endsection

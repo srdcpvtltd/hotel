@@ -144,7 +144,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
             </a>
         </li>
         @endcan
-        @can('show-Designation')
+        {{-- @can('show-Designation')
         <li class="c-sidebar-nav-item">
             <a href="{{url('/designation')}}" class="c-sidebar-nav-link">
                 <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('Designation') }}
@@ -157,10 +157,10 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
                 <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Hotel Staff') }}
             </a>
         </li>
-        @endcan
+        @endcan --}}
         @endif
         @endrole
-        @role('user')
+        {{-- @role('user')
         <li class="c-sidebar-nav-item">
             @if($checkIsHotelCreated)
             <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
@@ -172,7 +172,7 @@ $checkIsHotelCreated = DB::table('hotel_profiles')->where('user_id', Auth::id())
             </a>
             @endif
         </li>
-        @endrole
+        @endrole --}}
         @include('layouts.menu')
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>

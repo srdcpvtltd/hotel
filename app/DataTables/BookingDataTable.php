@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\AdvanceBooking;
+use App\Models\HotelProfile;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -35,7 +37,8 @@ class BookingDataTable extends DataTable
      */
     public function query(AdvanceBooking $model)
     {
-        return $model->newQuery()->where('status', 0)->orderBy('id', 'ASC');
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        return $model->newQuery()->where('hotel_id', $hotel->id)->where('status', 0)->orderBy('id', 'ASC');
     }
 
     /**
