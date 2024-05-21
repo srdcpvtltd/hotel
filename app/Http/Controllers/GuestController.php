@@ -24,14 +24,18 @@ class GuestController extends Controller
     {
         $countries = DB::table('countries')
             ->get();
-        $room_types = RoomType::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
 
-        return view('guest.register', compact('countries','room_types'));
+        $room_types = RoomType::where('hotel_id', $hotel->id)->get();
+
+        return view('guest.register', compact('countries', 'room_types'));
     }
 
     public function store(Request $request)
     {
-
         // check is hotel avialble or not
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         //dd($request->all());
@@ -136,20 +140,19 @@ class GuestController extends Controller
                 $room->updated_at = date('Y-m-d H:i:s');
                 $room->save();
             }
-            
+
             // room status
             $count = count($request->bookingdata);
-            for($i=0; $i< $count; $i++){
-                $rooms[] = $request->bookingdata['booking'.$i]['room_number'];
+            for ($i = 0; $i < $count; $i++) {
+                $rooms[] = $request->bookingdata['booking' . $i]['room_number'];
             }
-    
+
             foreach ($rooms as $room) {
                 $room = Room::where('name', $room)->first();
                 $room->status = 1;
                 $room->updated_at = date('Y-m-d H:i:s');
                 $room->save();
             }
-    
         }
         //dd($booking);
         return redirect('/dashboard')->with('success', "Booking created successfully.");

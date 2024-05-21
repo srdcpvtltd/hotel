@@ -23,10 +23,10 @@ class UserController extends Controller
     {
         if (\Auth::user()->can('manage-user')) {
 
-        return $table->render('users.index');
-    } else {
-        return redirect()->back()->with('error', 'Permission denied.');
-    }
+            return $table->render('users.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
 
@@ -34,14 +34,13 @@ class UserController extends Controller
     {
         if (\Auth::user()->can('create-user')) {
 
-        $roles = Role::pluck('name', 'name')->all();
-        return view('users.create', compact('roles'));
-    } else {
-        return redirect()->back()->with('error', 'Permission denied.');
+            $roles = Role::pluck('name', 'name')->all();
+            return view('users.create', compact('roles'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
-    }
-
-
+    
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -75,12 +74,11 @@ class UserController extends Controller
     {
         if (\Auth::user()->can('show-user')) {
 
-        $user = User::find($id);
-        return view('users.show', compact('user'));
-    } else {
-        return redirect()->back()->with('error', 'Permission denied.');
-    }
-
+            $user = User::find($id);
+            return view('users.show', compact('user'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
 
@@ -88,14 +86,14 @@ class UserController extends Controller
     {
         if (\Auth::user()->can('edit-user')) {
 
-        $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
+            $user = User::find($id);
+            $roles = Role::pluck('name', 'name')->all();
+            $userRole = $user->roles->pluck('name', 'name')->all();
 
-        return view('users.edit', compact('user', 'roles', 'userRole'));
-    } else {
-        return redirect()->back()->with('error', 'Permission denied.');
-    }
+            return view('users.edit', compact('user', 'roles', 'userRole'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
 
@@ -107,15 +105,14 @@ class UserController extends Controller
 
             'roles' => 'required'
         ]);
-        $input = $request->except('password','confirm_password');
+        $input = $request->except('password', 'confirm_password');
 
         $user = User::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
-        if($request->password)
-        {
+        if ($request->password) {
             //Change Password
             $user->password = bcrypt($request->get('password'));
             $user->save();
@@ -130,16 +127,14 @@ class UserController extends Controller
         if (\Auth::user()->can('delete-user')) {
 
 
-        if($id==1)
-        {
+            if ($id == 1) {
 
-            return redirect()->back()->with('error', 'Permission denied.');
-        }else{
+                return redirect()->back()->with('error', 'Permission denied.');
+            } else {
 
-            DB::table("users")->delete($id);
-            return redirect()->route('users.index')->with('message', __('User delete successfully.'));
-
-        }
+                DB::table("users")->delete($id);
+                return redirect()->route('users.index')->with('message', __('User delete successfully.'));
+            }
         }
     }
 
@@ -156,7 +151,7 @@ class UserController extends Controller
                 $google2fa_url = "";
                 $secret_key = "";
 
-                if($user->loginSecurity()->exists()){
+                if ($user->loginSecurity()->exists()) {
                     $google2fa = (new \PragmaRX\Google2FAQRCode\Google2FA());
                     $google2fa_url = $google2fa->getQRCodeInline(
                         config('app.name'),
@@ -174,7 +169,7 @@ class UserController extends Controller
             }
             $userDetail = Auth::user();
 
-            return view('users.profile', compact('data','userDetail'));
+            return view('users.profile', compact('data', 'userDetail'));
         } else {
             $userDetail = Auth::user();
 

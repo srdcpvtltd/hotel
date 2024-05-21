@@ -54,6 +54,14 @@ class HotelProfile extends Model
         'no_of_cameras',
         'no_of_cameras_outside',
         'metal_detector',
+        //
+        'user_id',
+        'country',
+        'otherCountry',
+        'state',
+        'district',
+        'otherState',
+        'otherCity'
     ];
 
     public function getStateNameAttribute()

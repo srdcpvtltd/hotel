@@ -11,8 +11,12 @@ class Room extends Model
     protected $guarded = ['id']; 
     public $timestamps = false;
 
+    protected $attributes=[
+        'status' => 1
+    ];
+
     public function room_type()
     {
-        return $this->hasOne('App\Models\RoomType','id','room_type_id');
+        return $this->belongsTo(RoomType::class, 'room_type_id');
     }
 }

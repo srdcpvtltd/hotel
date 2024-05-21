@@ -181,7 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\UtilityFacadesServiceProvider::class,
-
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*
