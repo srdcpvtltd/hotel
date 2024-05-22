@@ -36,7 +36,6 @@ class GuestController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         // check is hotel avialble or not
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {

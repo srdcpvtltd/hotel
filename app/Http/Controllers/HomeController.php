@@ -45,7 +45,6 @@ class HomeController extends Controller
 
     public function chart(Request $request)
     {
-
         if ($request->type == 'year') {
 
             $arrLable = [];

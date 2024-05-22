@@ -5,11 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\AdvanceBooking;
 use App\Models\Booking;
+use App\Models\BookingRoom;
 use App\Models\HotelProfile;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\Reader\Xls\RC4;
 
 class BookingController extends Controller
 {
@@ -36,7 +38,7 @@ class BookingController extends Controller
         $booking->mobile_number = $request->mobile_number;
         $booking->alter_mobile_number = $request->alter_mobile_number;
         $booking->age = $request->age;
-        $booking->user_id = Auth::user()->id;
+        $booking->user_id =Auth::id();
         $booking->gender = $request->gender;
         $booking->email_id = $request->email_id;
         $booking->arrived_from = $request->arrived_from;
@@ -120,5 +122,25 @@ class BookingController extends Controller
                 'message' => "Checkin failed"
             ]);
         }
+    }
+
+    public function get_checkin_details(){
+
+        $bookings = Booking::with('rooms')->where('user_id',914)
+        ->whereHas('rooms', function($query){
+            $query->where('status',0);
+        })
+        ->get();
+
+        return response()->json([
+            'data' => $bookings
+        ]);
+    }
+    
+    public function check_out(Request $request){
+        
+        $booking_room = BookingRoom::where('id',$request->booking_room_id)
+        ->where('booking_id',$request->booking_id)->get();
+        dd($booking_room);
     }
 }
