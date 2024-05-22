@@ -111,7 +111,7 @@ class GuestController extends Controller
         $booking->id_number = $request->id_number;
         $booking->remarks = $request->remarks;
         $booking->accompany_person = $request->accompany_person;
-        $booking->room_booked = $request->room_booked;
+        $booking->room_booked = count($request->bookingdata);
         $booking->whom_to_visit = $request->whom_to_visit;
         $booking->whom_to_visit_name = $request->whom_to_visit_name;
         $booking->whom_to_visit_mobile = $request->whom_to_visit_mobile;
