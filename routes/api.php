@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AdvanceBookingsController;
+use App\Http\Controllers\API\BookingController;
 use App\Http\Controllers\Api\HotelRegisterController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
@@ -34,6 +35,7 @@ Route::post("login", [HotelRegisterController::class, 'login']);
 
 
 //Bookings
+Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
 Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create_advance_bookings']); //create Advance Booking
 Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking
 Route::post("update-advance-booking", [AdvanceBookingsController::class, 'update_advance_bookings']); //update Advance Booking
