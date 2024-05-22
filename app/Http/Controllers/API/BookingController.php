@@ -20,7 +20,14 @@ class BookingController extends Controller
         $payload['user_id'] = Auth::user()->id;
 
         $result = Booking::create($payload);
-
-
+        if($result){
+            return response()->json([
+                'message' => "Checkin Successfull"
+            ]);
+        }else{
+            return response()->json([
+                'message' => "Failed to checkin, Please try again"
+            ]);
+        }
     }
 }
