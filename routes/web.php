@@ -24,6 +24,7 @@ use App\Http\Controllers\CriminalsController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HotelStaffController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
 use App\Http\Controllers\RoomController;
@@ -116,12 +117,12 @@ Route::get('/admin/hotel_report/export', [\App\Http\Controllers\ReportController
 Route::get('/admin/viewer_report', [\App\Http\Controllers\ReportController::class, 'viewer_report'])->name('viewer_report.report')->middleware(['auth','XSS','2fa',]);
 Route::get('/admin/viewer_report/export', [\App\Http\Controllers\ReportController::class, 'viewer_reportexport'])->name('admin.viewer_report.report')->middleware(['auth','XSS','2fa',]);
 
-Route::get('admin/hotel/detail/{hotel_id}', [HotelController::class, 'show'])->name('post-view-hotel');
-Route::get('admin/hotel/update/{hotel_id}', [HotelController::class, 'admin_edit_hotel'])->name('post-edit-hotel');
-Route::get('admin/hotel/delete/{hotel_id}', [HotelController::class, 'destory'])->name('post-removed-hotel');
-Route::post('/admin_update_hotel', [HotelController::class, 'admin_update_hotel'])->name('admin-update-hotel');
-
+Route::get('admin/hotel/detail/{hotel_id}', [HotelController::class, 'show'])->name('post-view-hotel')->middleware(['auth','XSS','2fa',]);
+Route::get('admin/hotel/update/{hotel_id}', [HotelController::class, 'admin_edit_hotel'])->name('post-edit-hotel')->middleware(['auth','XSS','2fa',]);
+Route::get('admin/hotel/delete/{hotel_id}', [HotelController::class, 'destory'])->name('post-removed-hotel')->middleware(['auth','XSS','2fa',]);
+Route::post('/admin_update_hotel', [HotelController::class, 'admin_update_hotel'])->name('admin-update-hotel')->middleware(['auth','XSS','2fa',]);
 Route::get('/admin/guest/detail/{booking_id}', [GuestController::class, 'adminshow'])->name('admin.guest.show')->middleware(['auth','XSS','2fa',]);
+
 Route::get('/dashboardapi/invalid_users',function(){
     $cubes = new App\Services\Dashboard\InvalidUsers();
     return response()->json(['status' => 'success','html' => $cubes->handleResponce()]);
@@ -149,6 +150,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('price_rule',PriceRuleController::class);
     Route::resource('rooms',RoomController::class);
     Route::resource('booking',BookingController::class);
+    Route::resource('plans',PlanController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

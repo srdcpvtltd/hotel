@@ -105,6 +105,12 @@
 
                 </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a href="<?php echo e(url('/plans')); ?>" class="c-sidebar-nav-link">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Plans')); ?>
+
+                </a>
+            </li>
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('viewer')): ?>
             <li class="c-sidebar-nav-item">

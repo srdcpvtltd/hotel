@@ -2,12 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\PoliceStation;
+use App\Models\Plan;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class PoliceStationsDataTable extends DataTable
+class PlanDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,21 +21,21 @@ class PoliceStationsDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('city_id', function (PoliceStation $police_station) {
-                return ($police_station->city != null) ? $police_station->city->name : '-';
+            ->editColumn('role_id', function (Plan $plan) {
+                return ($plan->role != null) ? $plan->role->name : '-';
             })
-            ->addColumn('action', function (PoliceStation $police_station) {
-                return view('police_stations.action', compact('police_station'));
+            ->addColumn('action', function (Plan $plan) {
+                return view('plan.action', compact('plan'));
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\PoliceStationsDataTable $model
+     * @param \App\Models\Plan $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PoliceStation $model)
+    public function query(Plan $model)
     {
         return $model->newQuery()->orderBy('id', 'ASC');
     }
@@ -46,7 +48,7 @@ class PoliceStationsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('policestationsdatatable-table')
+            ->setTableId('plan-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -75,8 +77,10 @@ class PoliceStationsDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-            Column::make('city_id')->title('City'),
-            Column::make('code')->title('Police Station'),
+            Column::make('role_id')->title('Role'),
+            Column::make('name')->title('Name'),
+            Column::make('price')->title('Price'),
+            Column::make('modules')->title('Modules'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -91,6 +95,6 @@ class PoliceStationsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'PoliceStations_' . date('YmdHis');
+        return 'Plan_' . date('YmdHis');
     }
 }

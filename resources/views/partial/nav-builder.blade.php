@@ -91,6 +91,11 @@
                     <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Police Station') }}
                 </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a href="{{ url('/plans') }}" class="c-sidebar-nav-link">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Plans') }}
+                </a>
+            </li>
         @endrole
         @role('viewer')
             <li class="c-sidebar-nav-item">
