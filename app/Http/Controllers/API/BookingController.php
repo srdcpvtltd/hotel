@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\AdvanceBooking;
 use App\Models\Booking;
 use App\Models\BookingRoom;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\District;
 use App\Models\HotelProfile;
 use App\Models\Room;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -160,6 +164,63 @@ class BookingController extends Controller
         } else {
             return response()->json([
                 'message' => "Already Checkedout"
+            ]);
+        }
+    }
+
+    public function get_country(){
+        $country_data = Country::all();
+
+        if($country_data->toArray()){
+            return response()->json([
+                'data' => $country_data
+            ]);
+        }else{
+            return response()->json([
+                'message' => "No Country Data Found"
+            ]);
+        }
+        
+    }
+
+    public function get_state(Request $request){
+        $state_data = State::where('country_id',$request->country_id)->get();
+
+        if($state_data->toArray()){
+            return response()->json([
+                'data' => $state_data
+            ]);
+        }else{
+            return response()->json([
+                'message' => "No Country Data Found"
+            ]);
+        }
+    }
+
+    public function get_district(Request $request){
+        $district_data = District::where('state_id',$request->state_id)->get();
+
+        if($district_data->toArray()){
+            return response()->json([
+                'data' => $district_data
+            ]);
+        }else{
+            return response()->json([
+                'message' => "No Country Data Found"
+            ]);
+        }
+    }
+
+    public function get_city(Request $request){
+        $city_data = City::where('district_id',$request->district_id)->get();
+
+        if($city_data->toArray()){
+            return response()->json([
+                'data' => $city_data
+            ]);
+        }else{
+            return response()->json([
+                'message' => "No Country Data Found"
             ]);
         }
     }
