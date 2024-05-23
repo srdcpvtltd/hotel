@@ -11,6 +11,7 @@ use App\Models\Country;
 use App\Models\District;
 use App\Models\HotelProfile;
 use App\Models\Room;
+use App\Models\RoomType;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -221,6 +222,36 @@ class BookingController extends Controller
         }else{
             return response()->json([
                 'message' => "No Country Data Found"
+            ]);
+        }
+    }
+
+    public function get_room_type(){
+        $room_type_data = RoomType::where('hotel_id',1045)->get();
+
+        if($room_type_data->toArray()){
+            return response()->json([
+                'data' => $room_type_data
+            ]);
+        }else{
+            return response()->json([
+                'message' => "No Data Found"
+            ]);
+        }
+    }
+
+    public function get_rooms(Request $request){
+        $room_data = Room::where('room_type_id',$request->room_type_id)
+        ->where('status',0)
+        ->get(['id','name']);
+
+        if($room_data->toArray()){
+            return response()->json([
+                'data' => $room_data
+            ]);
+        }else{
+            return response()->json([
+                'message' => "No Data Found"
             ]);
         }
     }

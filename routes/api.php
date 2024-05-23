@@ -42,16 +42,15 @@ Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create
 Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking
 Route::post("update-advance-booking", [AdvanceBookingsController::class, 'update_advance_bookings']); //update Advance Booking
 Route::post("delete-advance-booking", [AdvanceBookingsController::class, 'delete_advance_bookings']); //delete Advance Booking
+Route::get("get-room-type", [BookingController::class, 'get_room_type']); //delete Advance Booking
+Route::post("get-rooms", [BookingController::class, 'get_rooms']); //delete Advance Booking
+
 
 //Counry,state,district,city
 Route::get("get-country", [BookingController::class, 'get_country']); //get Country
 Route::post("get-state", [BookingController::class, 'get_state']); //get state
 Route::post("get-district", [BookingController::class, 'get_district']); //get district
 Route::post("get-city", [BookingController::class, 'get_city']); //get city
-
-
-
-
 
 //crud for room type
 Route::post("create-room-type", [RoomTypeController::class, 'create_room_type']); //create room type
