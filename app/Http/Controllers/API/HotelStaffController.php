@@ -70,7 +70,7 @@ class HotelStaffController extends Controller
                 ->orderBy('id', 'desc')
                 ->get();
 
-            if ($staff) {
+            if ($staff->toArray()) {
                 return response()->json([
                     'data' => $staff
                 ], 200);
