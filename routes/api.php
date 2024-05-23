@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AdvanceBookingsController;
 use App\Http\Controllers\API\BookingController;
 use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\Api\HotelRegisterController;
+use App\Http\Controllers\API\HotelStaffController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
 use App\Http\Controllers\PriceRuleController;
@@ -60,10 +61,10 @@ Route::post("update-designation", [DesignationController::class, 'update_designa
 Route::post("delete-designation", [DesignationController::class, 'delete_designation']); //delete room type
 
 //crud for hotel-staff
-Route::post("add-hotel-staff", [DesignationController::class, 'create_staff']); //create room type
-Route::post("retrive-hotel-staff", [DesignationController::class, 'retrive_staff']); //retrive room type
-Route::post("update-hotel-staff", [DesignationController::class, 'update_staff']); //update room type
-Route::post("delete-hotel-staff", [DesignationController::class, 'delete_staff']); //delete room type
+Route::post("add-hotel-staff", [HotelStaffController::class, 'create_staff']); //create hotel staff
+Route::post("retrive-hotel-staff", [HotelStaffController::class, 'retrive_staff']); //retrive hotel staff
+Route::post("update-hotel-staff", [HotelStaffController::class, 'update_staff']); //update hotel staff
+Route::post("delete-hotel-staff", [HotelStaffController::class, 'delete_staff']); //delete hotel staff
 
 //crud for room type
 Route::post("create-room-type", [RoomTypeController::class, 'create_room_type']); //create room type
