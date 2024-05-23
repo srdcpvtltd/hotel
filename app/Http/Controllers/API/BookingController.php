@@ -38,7 +38,7 @@ class BookingController extends Controller
         $booking->mobile_number = $request->mobile_number;
         $booking->alter_mobile_number = $request->alter_mobile_number;
         $booking->age = $request->age;
-        $booking->user_id =Auth::id();
+        $booking->user_id = Auth::id();
         $booking->gender = $request->gender;
         $booking->email_id = $request->email_id;
         $booking->arrived_from = $request->arrived_from;
@@ -124,23 +124,43 @@ class BookingController extends Controller
         }
     }
 
-    public function get_checkin_details(){
+    public function get_checkin_details()
+    {
 
-        $bookings = Booking::with('rooms')->where('user_id',914)
-        ->whereHas('rooms', function($query){
-            $query->where('status',0);
-        })
-        ->get();
+        $bookings = Booking::with('rooms')->where('user_id', 914)
+            ->whereHas('rooms', function ($query) {
+                $query->where('status', 0);
+            })
+            ->get();
 
         return response()->json([
             'data' => $bookings
         ]);
     }
-    
-    public function check_out(Request $request){
-        
-        $booking_room = BookingRoom::where('id',$request->booking_room_id)
-        ->where('booking_id',$request->booking_id)->get();
-        dd($booking_room);
+
+    public function check_out(Request $request)
+    {
+
+        $booking_room = BookingRoom::where('id', $request->id)
+            ->where('booking_id', $request->booking_id)->first();
+        $room = Room::where('name', $booking_room->room_number)->first();
+        if ($booking_room->status == 0) {
+            // updating the fields after checkout
+            $booking_room->status = 1;
+            $booking_room->checkout_date = date('Y-m-d', time());
+            $booking_room->checkout_time = date('H:i', time());
+            $booking_room->save();
+
+            $room->status = 0;
+            $room->updated_at = date('Y-m-d H:i:s');
+            $room->save();
+            return response()->json([
+                'message' => "Checkout Successfull"
+            ]);
+        } else {
+            return response()->json([
+                'message' => "Already Checkedout"
+            ]);
+        }
     }
 }

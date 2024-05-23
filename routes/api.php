@@ -37,7 +37,7 @@ Route::post("login", [HotelRegisterController::class, 'login']);
 //Bookings
 Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
 Route::get("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
-Route::post("hotel-chckout", [BookingController::class, 'check_out']); //guest checkout
+Route::post("hotel-checkout", [BookingController::class, 'check_out']); //guest checkout
 Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create_advance_bookings']); //create Advance Booking
 Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking
 Route::post("update-advance-booking", [AdvanceBookingsController::class, 'update_advance_bookings']); //update Advance Booking
