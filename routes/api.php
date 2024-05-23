@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AdvanceBookingsController;
 use App\Http\Controllers\API\BookingController;
+use App\Http\Controllers\API\DesignationController;
 use App\Http\Controllers\Api\HotelRegisterController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
@@ -51,6 +52,18 @@ Route::get("get-country", [BookingController::class, 'get_country']); //get Coun
 Route::post("get-state", [BookingController::class, 'get_state']); //get state
 Route::post("get-district", [BookingController::class, 'get_district']); //get district
 Route::post("get-city", [BookingController::class, 'get_city']); //get city
+
+//crud for designation
+Route::post("create-designation", [DesignationController::class, 'create_designation']); //create room type
+Route::post("retrive-designation", [DesignationController::class, 'retrive_designation']); //retrive room type
+Route::post("update-designation", [DesignationController::class, 'update_designation']); //update room type
+Route::post("delete-designation", [DesignationController::class, 'delete_designation']); //delete room type
+
+//crud for hotel-staff
+Route::post("add-hotel-staff", [DesignationController::class, 'create_staff']); //create room type
+Route::post("retrive-hotel-staff", [DesignationController::class, 'retrive_staff']); //retrive room type
+Route::post("update-hotel-staff", [DesignationController::class, 'update_staff']); //update room type
+Route::post("delete-hotel-staff", [DesignationController::class, 'delete_staff']); //delete room type
 
 //crud for room type
 Route::post("create-room-type", [RoomTypeController::class, 'create_room_type']); //create room type
