@@ -174,6 +174,12 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('upgrade_plan')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Upgrade Plan')); ?>
+
+                    </a>
+                </li>
                 
             <?php endif; ?>
         <?php endif; ?>

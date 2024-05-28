@@ -41,18 +41,35 @@
                 <div class="form-group">
                     <?php echo e(Form::label('name', __('Modules'))); ?>
 
-                    <?php echo Form::textarea('modules', null, ['placeholder' => __('Modules'), 'class' => 'form-control', 'rows' => '4']); ?>
+                    <textarea name="modules" id="modules" class="form-control" cols="30" rows="10"></textarea>
 
                 </div>
                 <?php echo e(Form::submit(__('Submit'), ['class' => 'btn btn-primary'])); ?>
 
 
-                <a class="btn btn-secondary" href="<?php echo e(route('police_stations.index')); ?>"> <?php echo e(__('Back')); ?></a>
+                <a class="btn btn-secondary" href="<?php echo e(route('plans.index')); ?>"> <?php echo e(__('Back')); ?></a>
             </div>
         </div>
     </div>
     <?php echo Form::close(); ?>
 
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#modules',
+
+            height: 200,
+            setup: function(editor) {
+                editor.on('init change', function() {
+                    editor.save();
+                });
+            },
+
+            directionality: 'ltr',
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/plan/create.blade.php ENDPATH**/ ?>

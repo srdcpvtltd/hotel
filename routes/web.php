@@ -87,6 +87,9 @@ Route::resource('designation', DesignationController::class)->middleware(['auth'
 //Hotel Staff
 Route::resource('hotel_staff', HotelStaffController::class)->middleware(['auth','XSS','2fa',]);
 
+//Upgrade Plan
+Route::get('upgrade_plan', [PlanController::class, 'upgrade_plan'])->name('upgrade_plan')->middleware(['auth','XSS','2fa',]);
+
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);
