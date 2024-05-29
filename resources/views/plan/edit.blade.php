@@ -11,7 +11,7 @@
     {!! Form::model($plan, ['method' => 'PATCH', 'route' => ['plans.update', $plan->id]]) !!}
     <div class="col-md-10 m-auto">
         <div class="card">
-            <div class="card-header">{{ __('Edit District') }} </div>
+            <div class="card-header">{{ __('Edit Plan') }} </div>
             <div class="card-body">
                 <div class="form-group">
                     {{ Form::label('name', __('Name')) }}
@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('name', __('Modules')) }}
-                    {!! Form::textarea('modules', null, ['placeholder' => __('Modules'), 'class' => 'form-control', 'rows' => '4']) !!}
+                    {!! Form::textarea('modules', null, ['placeholder' => __('Modules'), 'class' => 'form-control', 'rows' => '4', 'id' => 'modules']) !!}
                 </div>
                 {{ Form::submit(__('Submit'), ['class' => 'btn btn-primary']) }}
 
@@ -43,4 +43,20 @@
         </div>
     </div>
     {!! Form::close() !!}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#modules',
+
+            height: 200,
+            setup: function(editor) {
+                editor.on('init change', function() {
+                    editor.save();
+                });
+            },
+
+            directionality: 'ltr',
+        });
+    </script>
 @endsection

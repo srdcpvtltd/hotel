@@ -34,13 +34,31 @@
                 </div>
                 <div class="form-group">
                     {{ Form::label('name', __('Modules')) }}
-                    {!! Form::textarea('modules', null, ['placeholder' => __('Modules'), 'class' => 'form-control', 'rows' => '4']) !!}
+                    <textarea name="modules" id="modules" class="form-control" cols="30" rows="10"></textarea>
+
                 </div>
                 {{ Form::submit(__('Submit'), ['class' => 'btn btn-primary']) }}
 
-                <a class="btn btn-secondary" href="{{ route('police_stations.index') }}"> {{ __('Back') }}</a>
+                <a class="btn btn-secondary" href="{{ route('plans.index') }}"> {{ __('Back') }}</a>
             </div>
         </div>
     </div>
     {!! Form::close() !!}
+    {{-- <script src="{{ asset('tinymce/tinymce/tinymce.min.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#modules',
+
+            height: 200,
+            setup: function(editor) {
+                editor.on('init change', function() {
+                    editor.save();
+                });
+            },
+
+            directionality: 'ltr',
+        });
+    </script>
 @endsection

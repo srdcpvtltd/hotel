@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
-    
+
     protected $PlanService;
 
     public function __construct(PlanService $PlanService)
@@ -37,7 +37,7 @@ class PlanController extends Controller
     public function create()
     {
         $roles = Role::all();
-        
+
         return view('plan.create', compact('roles'));
     }
 
@@ -49,12 +49,13 @@ class PlanController extends Controller
      */
     public function store(PlanRequest $request)
     {
-        $message='';
+        // dd($request->all());
+        $message = '';
         try {
             $PlanService = $this->PlanService->store($request, Plan::class);
-            $message='Plan saved successfully';
+            $message = 'Plan saved successfully';
         } catch (\Exception $exception) {
-            $message='Error has exit';
+            $message = 'Error has exit';
         }
         return redirect()->route('plans.index')
             ->with('message', __($message));
@@ -80,7 +81,7 @@ class PlanController extends Controller
     public function edit(Plan $plan)
     {
         $roles = Role::all();
-        return view('plan.edit', compact('plan','roles'));
+        return view('plan.edit', compact('plan', 'roles'));
     }
 
     /**
@@ -93,12 +94,12 @@ class PlanController extends Controller
     public function update(PlanRequest $request, Plan $plan)
     {
         try {
-            
+
             $this->PlanService->update($request, $plan);
 
-            $message='Plan Updated successfully';
+            $message = 'Plan Updated successfully';
         } catch (\Exception $exception) {
-            $message='Error has Update';
+            $message = 'Error has Update';
         }
         return redirect()->route('plans.index')
             ->with('message', __($message));
@@ -115,12 +116,16 @@ class PlanController extends Controller
         try {
             $this->PlanService->destroy($request, $plan);
 
-            $message='Plan Deleted successfully';
+            $message = 'Plan Deleted successfully';
         } catch (\Exception $exception) {
-            $message='Error has Deleted';
+            $message = 'Error has Deleted';
         }
         return redirect()->route('plans.index')
             ->with('message', __($message));
     }
 
+    public function upgrade_plan()
+    {
+        return view('upgrade_plan.upgrade_plan');
+    }
 }
