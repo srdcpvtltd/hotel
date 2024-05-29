@@ -367,7 +367,7 @@
                                                         <li class="false">Free Contacts</li>
                                                     </ul>
                                                     <div class="btn-box">
-                                                        <a href="https://codepen.io/anupkumar92" class="theme-btn">BUY
+                                                        <a href="" class="theme-btn">BUY
                                                             plan</a>
                                                     </div>
                                                 </div>
@@ -392,7 +392,7 @@
                                                         <li class="false">Free Contacts</li>
                                                     </ul>
                                                     <div class="btn-box">
-                                                        <a href="https://codepen.io/anupkumar92" class="theme-btn">BUY
+                                                        <a href="" class="theme-btn">BUY
                                                             plan</a>
                                                     </div>
                                                 </div>
@@ -417,7 +417,7 @@
                                                         <li class="true">Free Contacts</li>
                                                     </ul>
                                                     <div class="btn-box">
-                                                        <a href="https://codepen.io/anupkumar92" class="theme-btn">BUY
+                                                        <a href="" class="theme-btn">BUY
                                                             plan</a>
                                                     </div>
                                                 </div>

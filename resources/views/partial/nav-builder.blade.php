@@ -155,6 +155,11 @@
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Upgrade Plan') }}
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('stock_inventory') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
+                    </a>
+                </li>
                 {{-- @can('show-Designation')
                 <li class="c-sidebar-nav-item">
                     <a href="{{url('/designation')}}" class="c-sidebar-nav-link">

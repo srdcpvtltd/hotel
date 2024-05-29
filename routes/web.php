@@ -24,6 +24,7 @@ use App\Http\Controllers\CriminalsController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HotelStaffController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
@@ -89,6 +90,9 @@ Route::resource('hotel_staff', HotelStaffController::class)->middleware(['auth',
 
 //Upgrade Plan
 Route::get('upgrade_plan', [PlanController::class, 'upgrade_plan'])->name('upgrade_plan')->middleware(['auth','XSS','2fa',]);
+
+//Stock & Inventory
+Route::get('stock_inventory', [InventoryController::class, 'stock_inventory'])->name('stock_inventory')->middleware(['auth','XSS','2fa',]);
 
 
 //Advance booking check in (23/04/24)
