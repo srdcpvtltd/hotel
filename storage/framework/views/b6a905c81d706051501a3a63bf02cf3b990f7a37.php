@@ -55,39 +55,29 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-3 mt-3 mb-3">
-                                        <a href="<?php echo e(url('room_type')); ?>">
+                                        <a href="<?php echo e(url('product_category')); ?>">
                                             <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                <p class="mb-0"><i class="cil-room dgn"></i></p>
+                                                
                                                 <p class="mb-0">Products Category</p>
                                             </div>
                                         </a>
                                     </div>
                                     <div class="col-md-3 mt-3 mb-3">
-                                        <a href="<?php echo e(url('price_rule')); ?>">
+                                        <a href="<?php echo e(url('product')); ?>">
                                             <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                <p class="mb-0"><i class="cil-calculator dgn"></i></p>
+                                                
                                                 <p class="mb-0">Products</p>
                                             </div>
                                         </a>
                                     </div>
                                     <div class="col-md-3 mt-3 mb-3">
-                                        <a href="<?php echo e(url('rooms')); ?>">
+                                        <a href="<?php echo e(url('stock')); ?>">
                                             <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                <p class="mb-0"><i class="cil-bed dgn"></i></p>
-                                                <p class="mb-0">Stock In</p>
+                                                
+                                                <p class="mb-0">Stock</p>
                                             </div>
                                         </a>
                                     </div>
-                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Designation')): ?>
-                                        <div class="col-md-3 mt-3 mb-3">
-                                            <a href="<?php echo e(url('/designation')); ?>">
-                                                <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                    <p class="mb-0"><i class="cil-cog c-sidebar-nav-icon dgn"></i></p>
-                                                    <p class="mb-0">Stock Out</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

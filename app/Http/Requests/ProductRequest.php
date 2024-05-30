@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\BaseRequest;
-use App\Models\Hotel_staff;
+use App\Models\Product;
 
-class HotelstaffRequest extends BaseRequest
+class ProductRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,13 +14,13 @@ class HotelstaffRequest extends BaseRequest
      */
     public function authorize()
     {
-        $this->setModel(Hotel_staff::class);
+        $this->setModel(Product::class);
         $this->setModelActions();
         return true;
 
     }
     public function setModelActions(){
-        $model_name="hotel_staff";
+        $model_name="Product";
         $actions=$this->actions;
         foreach ($actions as $key => $action) {
             $actions[$key]=$model_name.'.'.$action;
@@ -35,25 +35,19 @@ class HotelstaffRequest extends BaseRequest
      */
     public function rules()
     {
-        $this->setModel(Hotel_staff::class);
+        $this->setModel(Product::class);
         $rules = parent::rules();
 
         if ($this->isStore()) {
             $rules = array_merge($rules, [
                 'name' => 'required',
-                'contact_no' => 'required',
-                'designation' => 'required',
-                'salary' => 'required',
-                'shift' => 'required',
+                'product_category_id' => 'required' 
             ]);
         }
         if ($this->isUpdate()) {
             $rules = array_merge($rules, [
                 'name' => 'required',
-                'contact_no' => 'required',
-                'designation_id' => 'required',
-                'salary' => 'required',
-                'shift' => 'required',
+                'product_category_id' => 'required'
             ]);
         }
 

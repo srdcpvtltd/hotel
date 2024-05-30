@@ -28,8 +28,11 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SystemManagementController;
 use App\Http\Controllers\SystemSettingController;
 use Illuminate\Support\Facades\Artisan;
@@ -92,8 +95,9 @@ Route::resource('hotel_staff', HotelStaffController::class)->middleware(['auth',
 Route::get('upgrade_plan', [PlanController::class, 'upgrade_plan'])->name('upgrade_plan')->middleware(['auth','XSS','2fa',]);
 
 //Stock & Inventory
-Route::get('stock_inventory', [InventoryController::class, 'stock_inventory'])->name('stock_inventory')->middleware(['auth','XSS','2fa',]);
-
+Route::get('stock_inventory', [HomeController::class, 'stock_inventory'])->name('stock_inventory')->middleware(['auth','XSS','2fa',]);
+Route::get('stock', [StockController::class, 'stock'])->name('stock')->middleware(['auth','XSS','2fa',]);
+Route::post('stock/store', [StockController::class, 'store'])->name('stock.store')->middleware(['auth','XSS','2fa',]);
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);
@@ -158,6 +162,8 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('rooms',RoomController::class);
     Route::resource('booking',BookingController::class);
     Route::resource('plans',PlanController::class);
+    Route::resource('product_category', ProductCategoryController::class);
+    Route::resource('product', ProductController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

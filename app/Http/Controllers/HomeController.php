@@ -133,4 +133,8 @@ class HomeController extends Controller
 
        return redirect('dashboard')->with('status', 'Password updated!');
     }
+    public function stock_inventory()
+    {
+        return view('inventory.index');
+    }
 }

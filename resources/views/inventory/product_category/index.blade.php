@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('title')
-    {{ __('Price Rules') }}
+    {{ __('Product Category') }}
 @endsection
 @section('breadcrumb')
     <a class="breadcrumb-item" href="{{ route('home') }}">{{ __('Home') }}</a><span
-        class="breadcrumb-item active">{{ __('Price Rules') }}</span>
+        class="breadcrumb-item active">{{ __('Product Category') }}</span>
 @endsection
 @section('css')
     @include('layouts.datatables_css')
@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header"><i class="fa fa-align-justify"></i>
-                            <h4>{{ __('Price Rules') }}</h4>
+                            <h4>{{ __('Product Category') }}</h4>
                         </div>
                         <div class="card-body">
                             {{ $dataTable->table(['width' => '100%', 'class' => 'table table-responsive-sm table-striped']) }}
