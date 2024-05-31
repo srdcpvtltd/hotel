@@ -24,6 +24,7 @@ use App\Http\Controllers\CriminalsController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HotelStaffController;
+use App\Http\Controllers\HousekeepingController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
@@ -98,6 +99,8 @@ Route::get('upgrade_plan', [PlanController::class, 'upgrade_plan'])->name('upgra
 Route::get('stock_inventory', [HomeController::class, 'stock_inventory'])->name('stock_inventory')->middleware(['auth','XSS','2fa',]);
 Route::get('stock', [StockController::class, 'stock'])->name('stock')->middleware(['auth','XSS','2fa',]);
 Route::post('stock/store', [StockController::class, 'store'])->name('stock.store')->middleware(['auth','XSS','2fa',]);
+Route::get('getProduct', [StockController::class, 'get_Product'])->name('getProduct')->middleware(['auth','XSS','2fa',]);
+Route::get('housekeeping', [HousekeepingController::class, 'index'])->name('housekeeping')->middleware(['auth','XSS','2fa',]);
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);

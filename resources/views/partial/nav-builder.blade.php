@@ -160,6 +160,11 @@
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('housekeeping') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
+                    </a>
+                </li>
                 {{-- @can('show-Designation')
                 <li class="c-sidebar-nav-item">
                     <a href="{{url('/designation')}}" class="c-sidebar-nav-link">

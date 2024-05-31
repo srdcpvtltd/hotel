@@ -18,7 +18,7 @@ class CreateStocksTable extends Migration
             $table->integer('hotel_id');
             $table->integer('product_category_id');
             $table->integer('product_id');
-            $table->integer('stock');
+            $table->string('stock');
             $table->integer('quantity');
             $table->timestamps();
         });

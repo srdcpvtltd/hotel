@@ -22,12 +22,16 @@ class StockController extends Controller
         $categories = Product_category::where('hotel_id', $hotel->id)->get();
         $products = Product::where('hotel_id', $hotel->id)->get();
 
-        return view('inventory.stock.create', compact('categories', 'products'));
+        return view('inventory.stock.create', compact('categories', 'products', 'hotel'));
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
         try {
             request()->validate([
                 'product_category_id' => 'required',
@@ -37,12 +41,23 @@ class StockController extends Controller
             ]);
 
             $stock = new Stock();
-            $stock->hotel_name = $request->hotel_name;
+            $stock->hotel_id = $hotel->id;
+            $stock->product_category_id = $request->product_category_id;
+            $stock->product_id = $request->product_id;
+            $stock->stock = $request->stock;
+            $stock->quantity = $request->quantity;
             $stock->save();
 
+            return redirect()->back()->with('message', __('Stock Added Successfully'));
         } catch (Exception $e) {
             request()->session()->flash('error', $e->getMessage());
             return back()->withInput($request->all());
         }
+    }
+
+    public function get_Product(Request $request)
+    {
+        $product = Product::where('product_category_id', $request->ProductCategory_id)->get();
+        return response()->json($product);
     }
 }
