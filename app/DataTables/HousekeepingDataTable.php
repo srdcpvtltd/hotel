@@ -2,16 +2,16 @@
 
 namespace App\DataTables;
 
-use App\Models\Hotel_staff;
 use App\Models\HotelProfile;
+use App\Models\Housekeeping;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Services\DataTable;
 
-class HotelstaffDataTable extends DataTable
+class HousekeepingDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,27 +23,30 @@ class HotelstaffDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('designation_id', function (Hotel_staff $hotel_staff) {
-                return ($hotel_staff->designation!=null)?$hotel_staff->designation->designation:'-';
+            ->editColumn('room_id', function (Housekeeping $housekeeping) {
+                return ($housekeeping->room != null) ? $housekeeping->room->name : '-';
             })
-            ->editColumn('status', function (Hotel_staff $hotel_staff) {
-                return ($hotel_staff->status === 1) ? '<span class="badge badge-danger" style="font-size: 14px;
-">Assigned</span>' : '<span class="badge badge-success" style="font-size: 14px;
-">Available</span>';
+            ->editColumn('assign_staff_id', function (Housekeeping $housekeeping) {
+                return ($housekeeping->staff != null) ? $housekeeping->staff->name : '-';
+            })
+            ->editColumn('status', function (Housekeeping $housekeeping) {
+                return ($housekeeping->status === 0) ? '<span class="badge badge-warning" style="font-size: 14px;color:#fff
+                ">In Process</span>' : '<span class="badge badge-success" style="font-size: 14px;
+                ">Complete</span>';
             })
             ->rawColumns(['status'])
-            ->addColumn('action', function (Hotel_staff $hotel_staff) {
-                return view('hotel_staff.action', compact('hotel_staff'));
+            ->addColumn('action', function (Housekeeping $housekeeping) {
+                return view('housekeeping.action', compact('housekeeping'));
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\HotelstaffDataTable $model
+     * @param \App\Models\Housekeeping $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Hotel_staff $model)
+    public function query(Housekeeping $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'ASC');
@@ -57,7 +60,7 @@ class HotelstaffDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('hotel_staffs-table')
+            ->setTableId('housekeeping-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -86,11 +89,8 @@ class HotelstaffDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-            Column::make('hotel_id')->title('Hotel'),
-            Column::make('name')->title('Name'),
-            Column::make('contact_no')->title('Contact No'),
-            Column::make('designation_id')->title('Designation'),
-            Column::make('shift')->title('Shift'),
+            Column::make('room_id')->title('Room'),
+            Column::make('assign_staff_id')->title('Assigned Staff'),
             Column::make('status')->title('Status'),
             Column::computed('action')
                 ->exportable(false)
@@ -106,6 +106,6 @@ class HotelstaffDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Hotelstaff_' . date('YmdHis');
+        return 'Housekeeping_' . date('YmdHis');
     }
 }

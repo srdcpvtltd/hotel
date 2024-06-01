@@ -187,7 +187,7 @@
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping')); ?>">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping.index')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Housekeeping')); ?>
 
                     </a>

@@ -29,7 +29,12 @@ class RoomDataTable extends DataTable
 ">Booked</span>' : '<span class="badge badge-success" style="font-size: 14px;
 ">Available</span>';
             })
-            ->rawColumns(['status'])
+            ->editColumn('room_clean_status', function (Room $room) {
+                return ($room->room_clean_status === 1) ? '<span class="badge badge-danger" style="font-size: 14px;
+">In process</span>' : '<span class="badge badge-success" style="font-size: 14px;
+">Complete</span>';
+            })
+            ->rawColumns(['room_clean_status','status'])
             ->addColumn('action', function (Room $room) {
                 return view('system_management.room.action', compact('room'));
             });
@@ -87,7 +92,8 @@ class RoomDataTable extends DataTable
             Column::make('name')->title('Room Name'),
             Column::make('room_type_id')->title('Room Type'),
             Column::make('price')->title('Price'),
-            Column::make('status')->title('status'),
+            Column::make('status')->title('Status'),
+            Column::make('room_clean_status')->title('Clean Status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

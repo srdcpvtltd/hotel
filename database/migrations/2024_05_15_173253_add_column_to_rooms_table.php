@@ -15,6 +15,7 @@ class AddColumnToRoomsTable extends Migration
     {
         Schema::table('rooms', function (Blueprint $table) {
             $table->integer('hotel_id')->after('id');
+            $table->integer('room_clean_status')->default('0')->after('status');
         });
     }
 
@@ -27,6 +28,7 @@ class AddColumnToRoomsTable extends Migration
     {
         Schema::table('rooms', function (Blueprint $table) {
             $table->dropColumn('hotel_id');
+            $table->dropColumn('room_clean_status');
         });
     }
 }

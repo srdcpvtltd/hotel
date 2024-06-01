@@ -4,7 +4,7 @@
 @endsection
 @section('breadcrumb')
 <a class="breadcrumb-item" href="{{ route('home') }}">{{ __('Home') }}</a>
-<a class="breadcrumb-item" href="{{ route('cities.index') }}">{{ __('Product') }}</a>
+<a class="breadcrumb-item" href="{{ route('product.index') }}">{{ __('Product') }}</a>
 <span class="breadcrumb-item active">{{ __('Edit') }}</span>
 
 @endsection

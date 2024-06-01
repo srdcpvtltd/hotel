@@ -46,7 +46,20 @@ class StockController extends Controller
             $stock->product_id = $request->product_id;
             $stock->stock = $request->stock;
             $stock->quantity = $request->quantity;
+            $stock->created_at = date('Y-m-d H:i:m');
             $stock->save();
+            
+            if($request->stock == "In"){
+                $product = Product::where('id',$request->product_id)->first();
+                $product->stock = $product->stock + $request->quantity;
+                $product->updated_at = date('Y-m-d H:i:m');
+                $product->update();
+            } else {
+                $product = Product::where('id',$request->product_id)->first();
+                $product->stock = $product->stock - $request->quantity;
+                $product->updated_at = date('Y-m-d H:i:m');
+                $product->update();
+            }
 
             return redirect()->back()->with('message', __('Stock Added Successfully'));
         } catch (Exception $e) {
@@ -59,5 +72,20 @@ class StockController extends Controller
     {
         $product = Product::where('product_category_id', $request->ProductCategory_id)->get();
         return response()->json($product);
+    }
+
+    public function get_Product_stock(Request $request)
+    {
+        $stockIn = Stock::where('product_id', $request->Product_id)
+            ->where('stock', 'In')
+            ->sum('quantity');
+
+        $stockOut = Stock::where('product_id', $request->Product_id)
+            ->where('stock', 'Out')
+            ->sum('quantity');
+
+        $total = $stockIn - $stockOut;
+
+        return response()->json($total);
     }
 }

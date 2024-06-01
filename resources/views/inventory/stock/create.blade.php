@@ -8,6 +8,7 @@
     <span class="breadcrumb-item active">{{ __('Create') }}</span>
 @endsection
 @section('content')
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     {!! Form::open(['route' => 'stock.store', 'method' => 'POST']) !!}
     <div class="col-md-12 m-auto">
         <div class="card">
@@ -40,8 +41,6 @@
                             {{ Form::label('name', __('Stock')) }}
                             <select name="stock" id="stock" class="form-control">
                                 <option value="">Select</option>
-                                <option value="In">In</option>
-                                <option value="Out">Out</option>
                             </select>
                         </div>
                     </div>
@@ -58,7 +57,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <table id="table" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>Sl No.</th>
@@ -69,24 +68,11 @@
                     </thead>
                     <tbody>
                         @foreach ($products as $key => $product)
-                            @php
-                                $stockIn = App\Models\Stock::where('hotel_id', $hotel->id)
-                                    ->where('product_id', $product->id)
-                                    ->where('stock', 'In')
-                                    ->sum('quantity');
-
-                                $stockOut = App\Models\Stock::where('hotel_id', $hotel->id)
-                                    ->where('product_id', $product->id)
-                                    ->where('stock', 'Out')
-                                    ->sum('quantity');
-
-                                $total = $stockIn - $stockOut;
-                            @endphp
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $product->category->name }}</td>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ $total }}</td>
+                                <td>{{ $product->stock }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -96,6 +82,8 @@
     </div>
     {!! Form::close() !!}
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.8/js/jquery.dataTables.min.js" defer="defer"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#product_category_id').on('change', function() {
@@ -112,6 +100,27 @@
                     }
                 });
             });
+
+            $('#product_id').on('change', function() {
+                var ProductId = this.value;
+                $.ajax({
+                    url: "{{ route('getProductStock') }}?Product_id=" + ProductId,
+                    type: 'get',
+                    success: function(res) {
+                        if (res > 0) {
+                            $('#stock').html(
+                                '<option value="">Select</option><option value="In">In</option><option value="Out">Out</option>'
+                            );
+                        } else {
+                            $('#stock').html(
+                                '<option value="">Select</option><option value="In">In</option>'
+                            );
+                        }
+                    }
+                });
+            });
+
+            $('#table').DataTable();
         });
     </script>
 @endsection

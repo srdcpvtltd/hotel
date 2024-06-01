@@ -161,7 +161,7 @@
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('housekeeping') }}">
+                    <a class="c-sidebar-nav-link" href="{{ route('housekeeping.index') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
                     </a>
                 </li>

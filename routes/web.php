@@ -100,7 +100,7 @@ Route::get('stock_inventory', [HomeController::class, 'stock_inventory'])->name(
 Route::get('stock', [StockController::class, 'stock'])->name('stock')->middleware(['auth','XSS','2fa',]);
 Route::post('stock/store', [StockController::class, 'store'])->name('stock.store')->middleware(['auth','XSS','2fa',]);
 Route::get('getProduct', [StockController::class, 'get_Product'])->name('getProduct')->middleware(['auth','XSS','2fa',]);
-Route::get('housekeeping', [HousekeepingController::class, 'index'])->name('housekeeping')->middleware(['auth','XSS','2fa',]);
+Route::get('getProductStock', [StockController::class, 'get_Product_stock'])->name('getProductStock')->middleware(['auth','XSS','2fa',]);
 
 //Advance booking check in (23/04/24)
 Route::get('/booking/proceed_check_in/{booking_id}', [BookingController::class, 'proceed_check_in'])->name('booking.proceed_check_in')->middleware(['auth','XSS','2fa',]);
@@ -167,6 +167,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('plans',PlanController::class);
     Route::resource('product_category', ProductCategoryController::class);
     Route::resource('product', ProductController::class);
+    Route::resource('housekeeping', HousekeepingController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);
