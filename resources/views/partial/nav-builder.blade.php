@@ -165,23 +165,9 @@
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
                     </a>
                 </li>
-                {{-- @can('show-Designation')
-                <li class="c-sidebar-nav-item">
-                    <a href="{{url('/designation')}}" class="c-sidebar-nav-link">
-                        <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('Designation') }}
-                    </a>
-                </li>
-                @endcan
-                @can('show-hotelstaff')
-                <li class="c-sidebar-nav-item">
-                    <a href="{{url('hotel_staff')}}" class="c-sidebar-nav-link">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Hotel Staff') }}
-                    </a>
-                </li>
-                @endcan --}}
             @endif
         @endrole
-        {{-- @role('user')
+        @role('user')
         <li class="c-sidebar-nav-item">
             @if ($checkIsHotelCreated)
             <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
@@ -193,7 +179,7 @@
             </a>
             @endif
         </li>
-        @endrole --}}
+        @endrole
         @include('layouts.menu')
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

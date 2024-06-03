@@ -195,7 +195,21 @@
                 
             <?php endif; ?>
         <?php endif; ?>
-        
+        <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+        <li class="c-sidebar-nav-item">
+            <?php if($checkIsHotelCreated): ?>
+            <a class="c-sidebar-nav-link" href="<?php echo e(asset(url('edit-hotel/'.$checkIsHotelCreated->id))); ?>">
+                <i class="cil-building c-sidebar-nav-icon"></i><?php echo e(__('Edit Hotel')); ?>
+
+            </a>
+            <?php else: ?>
+            <a class="c-sidebar-nav-link" href="<?php echo e(route('add-hotel')); ?>">
+                <i class="cil-building c-sidebar-nav-icon"></i><?php echo e(__('Add Hotel')); ?>
+
+            </a>
+            <?php endif; ?>
+        </li>
+        <?php endif; ?>
         <?php echo $__env->make('layouts.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

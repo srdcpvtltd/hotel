@@ -112,12 +112,12 @@
                                             </div>
                                         </a>
                                         @else
-                                        <a href="{{ route('add-hotel') }}">
+                                        {{-- <a href="{{ route('add-hotel') }}">
                                             <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
                                                 <p class="mb-0"><i class="cil-building c-sidebar-nav-icon dgn"></i></p>
                                                 <p class="mb-0">{{ __('Add Hotel') }}</p>
                                             </div>
-                                        </a>
+                                        </a> --}}
                                         @endif
                                     </div>
                                     @endrole
