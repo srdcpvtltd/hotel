@@ -99,40 +99,48 @@
                                         </div>
                                     <?php endif; ?>
                                     <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
-                                    <?php
-                                        $checkIsHotelCreated = DB::table('hotel_profiles')
-                                            ->where('user_id', Auth::id())
-                                            ->first();
-                                    ?>
-                                    <div class="col-md-3 mt-3 mb-3">
+                                        <?php
+                                            $checkIsHotelCreated = DB::table('hotel_profiles')
+                                                ->where('user_id', Auth::id())
+                                                ->first();
+                                        ?>
                                         <?php if($checkIsHotelCreated): ?>
-                                        <a href="<?php echo e(asset(url('edit-hotel/' . $checkIsHotelCreated->id))); ?>">
-                                            <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                <p class="mb-0"><i class="cil-building c-sidebar-nav-icon dgn"></i></p>
-                                                <p class="mb-0"><?php echo e(__('Edit Hotel')); ?></p>
+                                            <div class="col-md-3 mt-3 mb-3">
+                                                <a href="<?php echo e(asset(url('edit-hotel/' . $checkIsHotelCreated->id))); ?>">
+                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
+                                                        <p class="mb-0"><i class="cil-building c-sidebar-nav-icon dgn"></i>
+                                                        </p>
+                                                        <p class="mb-0"><?php echo e(__('Edit Hotel')); ?></p>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
-                                        <?php else: ?>
-                                        
-                                        <?php endif; ?>
-                                    </div>
-                                    <?php endif; ?>
+                                            <?php endif; ?>
+                                            <?php endif; ?>
+                                            <div class="col-md-3 mt-3 mb-3">
+                                                <a href="<?php echo e(asset(url('staff_attendance'))); ?>">
+                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
+                                                        <p class="mb-0"><i class="cil-user c-sidebar-nav-icon dgn"></i>
+                                                        </p>
+                                                        <p class="mb-0"><?php echo e(__('Staff Attendance')); ?></p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <!-- <div class="col-md-3 mt-3 mb-3">
+                                                <a href="">
+                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
+                                                        <p class="mb-0"><i class="cil-fastfood dgn"></i></p>
+                                                        <p class="mb-0">Menus / Services</p>
+                                                    </div>
+                                                </a>
+                                            </div> -->
                                     <!-- <div class="col-md-3 mt-3 mb-3">
-                                            <a href="">
-                                                <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                    <p class="mb-0"><i class="cil-fastfood dgn"></i></p>
-                                                    <p class="mb-0">Menus / Services</p>
-                                                </div>
-                                            </a>
-                                        </div> -->
-                                    <!-- <div class="col-md-3 mt-3 mb-3">
-                                            <a href="">
-                                                <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                    <p class="mb-0"><i class="cil-user-follow dgn"></i></p>
-                                                    <p class="mb-0">Secondary Accounts</p>
-                                                </div>
-                                            </a>
-                                        </div> -->
+                                                <a href="">
+                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
+                                                        <p class="mb-0"><i class="cil-user-follow dgn"></i></p>
+                                                        <p class="mb-0">Secondary Accounts</p>
+                                                    </div>
+                                                </a>
+                                            </div> -->
                                 </div>
                             </div>
                         </div>

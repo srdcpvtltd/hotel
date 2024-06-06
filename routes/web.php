@@ -91,6 +91,11 @@ Route::resource('designation', DesignationController::class)->middleware(['auth'
 
 //Hotel Staff
 Route::resource('hotel_staff', HotelStaffController::class)->middleware(['auth','XSS','2fa',]);
+//Staff Attendance
+Route::get('staff_attendance', [HotelStaffController::class, 'attendance'])->middleware(['auth','XSS','2fa',]);
+Route::get('staff_checkin/{id}', [HotelStaffController::class, 'checkin'])->middleware(['auth','XSS','2fa',]);
+Route::get('staff_checkout/{id}', [HotelStaffController::class, 'checkout'])->middleware(['auth','XSS','2fa',]);
+
 
 //Upgrade Plan
 Route::get('upgrade_plan', [PlanController::class, 'upgrade_plan'])->name('upgrade_plan')->middleware(['auth','XSS','2fa',]);

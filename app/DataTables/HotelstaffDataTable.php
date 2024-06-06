@@ -92,6 +92,8 @@ class HotelstaffDataTable extends DataTable
             Column::make('designation_id')->title('Designation'),
             Column::make('shift')->title('Shift'),
             Column::make('status')->title('Status'),
+            Column::make('shift_timing_start')->title('Shift Start'),
+            Column::make('shift_timing_end')->title('Shift End'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

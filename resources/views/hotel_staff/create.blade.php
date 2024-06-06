@@ -13,46 +13,56 @@
         <div class="card">
             <div class="card-header">{{ __('Create New Hotel Staff') }} </div>
             <div class="card-body">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{ Form::label('name', __('Hotel Staff Name')) }}
-                                {!! Form::text('name', null, ['placeholder' => __('Enter Name'), 'class' => 'form-control']) !!}
-                            </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Hotel Staff Name')) }}
+                            {!! Form::text('name', null, ['placeholder' => __('Enter Name'), 'class' => 'form-control']) !!}
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{ Form::label('name', __('Contact number')) }}
-                                {!! Form::text('contact_no', null, ['placeholder' => __('Enter Contact Number'), 'class' => 'form-control']) !!}
-                            </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Contact number')) }}
+                            {!! Form::text('contact_no', null, ['placeholder' => __('Enter Contact Number'), 'class' => 'form-control']) !!}
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{ Form::label('name', __('Designation')) }}
-                                <select name="designation" id="designation" class="form-control">
-                                    <option value="">Select</option>
-                                    @foreach($designation as $desg)
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Designation')) }}
+                            <select name="designation" id="designation" class="form-control">
+                                <option value="">Select</option>
+                                @foreach ($designation as $desg)
                                     <option value="{{ $desg->id }}">{{ $desg->designation }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{ Form::label('name', __('Salary')) }}
-                                {!! Form::text('salary', null, ['placeholder' => __('Enter Salary'), 'class' => 'form-control']) !!}
-                            </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Salary')) }}
+                            {!! Form::text('salary', null, ['placeholder' => __('Enter Salary'), 'class' => 'form-control']) !!}
                         </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                {{ Form::label('name', __('Shift')) }}
-                                <select name="shift" id="shift" class="form-control">
-                                    <option value="">Select</option>
-                                    <option value="Morning">Morning</option>
-                                    <option value="Night">Night</option>
-                                </select>
-                            </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Shift')) }}
+                            <select name="shift" id="shift" class="form-control">
+                                <option value="">Select</option>
+                                <option value="Morning">Morning</option>
+                                <option value="Night">Night</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Shift Timing Start')) }}
+                            <input type="time" name="shift_timing_start" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            {{ Form::label('name', __('Shift Timing End')) }}
+                            <input type="time" name="shift_timing_end" class="form-control To">
                         </div>
                     </div>
                 </div>

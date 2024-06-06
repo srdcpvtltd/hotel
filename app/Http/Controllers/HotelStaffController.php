@@ -8,6 +8,7 @@ use App\Http\Requests\HotelstaffRequest;
 use App\Models\Designation;
 use App\Models\Hotel_staff;
 use App\Models\HotelProfile;
+use App\Models\StaffAttendance;
 use App\Services\HotelstaffService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +65,8 @@ class HotelStaffController extends Controller
             $staff->designation_id = $request->designation;
             $staff->salary = $request->salary;
             $staff->shift = $request->shift;
+            $staff->shift_timing_start = $request->shift_timing_start;
+            $staff->shift_timing_end = $request->shift_timing_end;
             $staff->save();
             $message = 'Staff saved successfully';
         } catch (\Exception $exception) {
@@ -131,6 +134,65 @@ class HotelStaffController extends Controller
             $message = 'Error has Deleted';
         }
         return redirect()->route('hotel_staff.index')
+            ->with('message', __($message));
+    }
+
+    public function attendance()
+    {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
+
+        return view('system_management.attendance', compact('staffs'));
+    }
+
+    public function checkin($id)
+    {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        $message = "";
+        
+        try{
+            $staff = new StaffAttendance();
+            $staff->hotel_id = $hotel->id;
+            $staff->hotel_staff_id = $id;
+            $staff->checkin = date('Y-m-d H:i:m');
+            $staff->save();
+            $message = 'Check In successfully';
+
+
+        } catch (\Exception $exception) {
+            $message = 'Error has Checkin';
+        }
+        return redirect('staff_attendance')
+            ->with('message', __($message));
+    }
+
+    public function checkout($id)
+    {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        $message = "";
+        
+        try{
+            $staff = StaffAttendance::find($id);
+            $login_hour = date('G:i', strtotime(date('Y-m-d H:i:m')) - strtotime($staff->checkin));
+            $staff->checkout = date('Y-m-d H:i:m');
+            $staff->login_hour = $login_hour;
+            $staff->update();
+            $message = 'Check Out successfully';
+
+
+        } catch (\Exception $exception) {
+            $message = 'Error has Checkin';
+        }
+        return redirect('staff_attendance')
             ->with('message', __($message));
     }
 }

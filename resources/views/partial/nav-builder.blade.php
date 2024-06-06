@@ -170,9 +170,9 @@
         @role('user')
         <li class="c-sidebar-nav-item">
             @if ($checkIsHotelCreated)
-            <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
+            {{-- <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
                 <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Edit Hotel') }}
-            </a>
+            </a> --}}
             @else
             <a class="c-sidebar-nav-link" href="{{ route('add-hotel') }}">
                 <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Add Hotel') }}
