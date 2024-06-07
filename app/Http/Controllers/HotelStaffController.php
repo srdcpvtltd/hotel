@@ -150,21 +150,22 @@ class HotelStaffController extends Controller
 
     public function checkin($id)
     {
+        if (date('H:i:m') > "10:00:00") {
+            return redirect()->back()->with('message', "Please checkin before 10 AM.");
+        }
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
         $message = "";
-        
-        try{
+
+        try {
             $staff = new StaffAttendance();
             $staff->hotel_id = $hotel->id;
             $staff->hotel_staff_id = $id;
             $staff->checkin = date('Y-m-d H:i:m');
             $staff->save();
             $message = 'Check In successfully';
-
-
         } catch (\Exception $exception) {
             $message = 'Error has Checkin';
         }
@@ -174,21 +175,22 @@ class HotelStaffController extends Controller
 
     public function checkout($id)
     {
+        if (date('H:i:m') < "18:00:00") {
+            return redirect()->back()->with('message', "Please checkout after 6 PM.");
+        }
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
         $message = "";
-        
-        try{
+
+        try {
             $staff = StaffAttendance::find($id);
             $login_hour = date('G:i', strtotime(date('Y-m-d H:i:m')) - strtotime($staff->checkin));
             $staff->checkout = date('Y-m-d H:i:m');
             $staff->login_hour = $login_hour;
             $staff->update();
             $message = 'Check Out successfully';
-
-
         } catch (\Exception $exception) {
             $message = 'Error has Checkin';
         }

@@ -71,7 +71,7 @@
                                             <td><?php echo e($staff->shift); ?></td>
                                             <td colspan="2">
                                                 <?php
-                                                    $attendance = App\Models\StaffAttendance::where('hotel_staff_id',$staff->id,)
+                                                    $attendance = App\Models\StaffAttendance::where('hotel_staff_id',$staff->id)
                                                         ->orderBy('id', 'DESC')
                                                         ->first();
                                                 ?>
