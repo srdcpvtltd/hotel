@@ -31,6 +31,10 @@ class StockController extends Controller
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
+        $prduct = Product::where('id',$request->product_id)->first();
+        if($prduct->stock < $request->quantity && $request->stock == "Out"){
+            return redirect()->back()->with('error', __('Stock Not Available'));
+        }
 
         try {
             request()->validate([

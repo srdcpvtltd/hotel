@@ -30,6 +30,23 @@
                 {{ Form::label('name', __('Price')) }}
                 {!! Form::text('price', null, ['placeholder' => __('Price'),'id' => 'price', 'class' => 'form-control', 'readonly']) !!}
             </div>
+            <div class="form-group">
+                {{ Form::label('name', __('Room Status')) }}
+                <select name="status" id="status" class="form-control">
+                    <option value="">Select</option>
+                    <option value="0" {{ $room->status == '0' ? 'selected' : ''}}>Available</option>
+                    <option value="1" {{ $room->status == '1' ? 'selected' : ''}}>Booked</option>
+                </select>
+            </div>
+            <div class="form-group">
+                {{ Form::label('name', __('Clean Status')) }}
+                <select name="room_clean_status" id="room_clean_status" class="form-control">
+                    <option value="">Select</option>
+                    <option value="0" {{ $room->room_clean_status == '0' ? 'selected' : '' }}>Not Clean</option>
+                    <option value="1" {{ $room->room_clean_status == '1' ? 'selected' : '' }}>In Process</option>
+                    <option value="2" {{ $room->room_clean_status == '2' ? 'selected' : '' }}>Completed</option>
+                </select>
+            </div>
             {{ Form::submit(__('Submit'), ['class' => 'btn btn-primary','id' => 'submit']) }}
             <a class="btn btn-secondary" href="{{ route('rooms.index') }}"> {{ __('Back') }}</a>
         </div>

@@ -13,6 +13,7 @@ class PriceRule extends Model
 
 
     protected $fillable = [
+        'hotel_id',
         'room_type_id',
         'rent_by_hour',
         'rent_by_hour_price',

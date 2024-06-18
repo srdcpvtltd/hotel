@@ -154,7 +154,6 @@ class GuestController extends Controller
                 $room->save();
             }
         }
-        //dd($booking);
         return redirect('/dashboard')->with('success', "Booking created successfully.");
     }
 

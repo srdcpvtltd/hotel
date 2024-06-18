@@ -1,15 +1,15 @@
 
 <?php $__env->startSection('title'); ?>
-<?php echo e(__('Edit Room')); ?>
+<?php echo e(__('Create Room')); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('breadcrumb'); ?>
-<a class="breadcrumb-item" href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a><a class="breadcrumb-item" href="<?php echo e(route('cities.index')); ?>"><?php echo e(__('Room')); ?></a><span class="breadcrumb-item active"><?php echo e(__('Edit')); ?></span>
+<a class="breadcrumb-item" href="<?php echo e(route('home')); ?>"><?php echo e(__('Home')); ?></a><a class="breadcrumb-item" href="<?php echo e(route('room_type.index')); ?>"><?php echo e(__('Room')); ?></a><span class="breadcrumb-item active"><?php echo e(__('Create')); ?></span>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
-<?php echo Form::model($room, ['method' => 'PATCH', 'route' => ['rooms.update', $room->id]]); ?>
+<?php echo Form::open(['route' => 'rooms.store', 'method' => 'POST']); ?>
 
 <div class="col-md-4 m-auto">
     <div class="card">
@@ -27,7 +27,7 @@
                 <select name="room_type_id" id="room_type_id" class="form-control">
                     <option value="">Select</option>
                     <?php $__currentLoopData = $room_type; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $roomtype): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option value="<?php echo e($roomtype->id); ?>" <?php if($room->room_type_id == $roomtype->id): ?> selected <?php endif; ?>><?php echo e($roomtype->room_type); ?></option>
+                    <option value="<?php echo e($roomtype->id); ?>"><?php echo e($roomtype->room_type); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
             </div>
@@ -36,25 +36,6 @@
 
                 <?php echo Form::text('price', null, ['placeholder' => __('Price'),'id' => 'price', 'class' => 'form-control', 'readonly']); ?>
 
-            </div>
-            <div class="form-group">
-                <?php echo e(Form::label('name', __('Room Status'))); ?>
-
-                <select name="status" id="status" class="form-control">
-                    <option value="">Select</option>
-                    <option value="0" <?php echo e($room->status == '0' ? 'selected' : ''); ?>>Available</option>
-                    <option value="1" <?php echo e($room->status == '1' ? 'selected' : ''); ?>>Booked</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <?php echo e(Form::label('name', __('Clean Status'))); ?>
-
-                <select name="room_clean_status" id="room_clean_status" class="form-control">
-                    <option value="">Select</option>
-                    <option value="0" <?php echo e($room->room_clean_status == '0' ? 'selected' : ''); ?>>Not Clean</option>
-                    <option value="1" <?php echo e($room->room_clean_status == '1' ? 'selected' : ''); ?>>In Process</option>
-                    <option value="2" <?php echo e($room->room_clean_status == '2' ? 'selected' : ''); ?>>Completed</option>
-                </select>
             </div>
             <?php echo e(Form::submit(__('Submit'), ['class' => 'btn btn-primary','id' => 'submit'])); ?>
 
@@ -87,4 +68,4 @@
     });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/system_management/room/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/system_management/room/create.blade.php ENDPATH**/ ?>

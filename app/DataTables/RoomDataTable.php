@@ -30,11 +30,15 @@ class RoomDataTable extends DataTable
 ">Available</span>';
             })
             ->editColumn('room_clean_status', function (Room $room) {
-                return ($room->room_clean_status === 1) ? '<span class="badge badge-danger" style="font-size: 14px;
-">In process</span>' : '<span class="badge badge-success" style="font-size: 14px;
-">Complete</span>';
+                if ($room->room_clean_status === 1) {
+                    return '<span class="badge badge-warning" style="font-size: 14px;color:#fff">In process</span>';
+                } elseif ($room->room_clean_status === 2) {
+                    return '<span class="badge badge-success" style="font-size: 14px;">Complete</span>';
+                } else {
+                    return '<span class="badge badge-danger" style="font-size: 14px;">Not Clean</span>';
+                }
             })
-            ->rawColumns(['room_clean_status','status'])
+            ->rawColumns(['room_clean_status', 'status'])
             ->addColumn('action', function (Room $room) {
                 return view('system_management.room.action', compact('room'));
             });

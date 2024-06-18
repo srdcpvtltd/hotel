@@ -38,8 +38,6 @@
 
                 <a class="btn btn-secondary" href="{{ route('districts.index') }}"> {{ __('Back') }}</a>
             </div>
-            <div>
-            </div>
         </div>
     </div>
     {!! Form::close() !!}

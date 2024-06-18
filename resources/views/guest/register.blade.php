@@ -79,7 +79,7 @@
                                 type="number" maxlength="10" required class="form-control" placeholder="Mobile Number" />
                         </div>
                         <div class="col">
-                            <label>Alternative Moible Number</label>
+                            <label>Alternative Mobile Number</label>
                             <input name="alter_mobile_number"
                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                 type="number" maxlength="10" required class="form-control"
