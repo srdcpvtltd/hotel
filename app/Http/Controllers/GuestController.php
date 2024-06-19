@@ -217,6 +217,7 @@ class GuestController extends Controller
             $room->save();
 
             $rooom->status = 0;
+            $rooom->room_clean_status = 0;
             $rooom->updated_at = date('Y-m-d H:i:s');
             $rooom->save();
             return redirect()->back()->with('success', "Room Checkout Successfully");

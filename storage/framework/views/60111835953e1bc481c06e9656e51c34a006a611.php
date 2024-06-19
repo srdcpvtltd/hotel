@@ -126,7 +126,7 @@
                 </a>
             </li>
         <?php endif; ?>
-        <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+        <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
             <?php if($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null)): ?>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Booking')): ?>
                     <li class="c-sidebar-nav-item">
@@ -180,21 +180,25 @@
 
                     </a>
                 </li>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-inventory')): ?>
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('stock_inventory')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Stock & Inventory')); ?>
 
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-housekeeping')): ?>
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping.index')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Housekeeping')); ?>
 
                     </a>
                 </li>
+                <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
-        <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+        <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
         <li class="c-sidebar-nav-item">
             <?php if($checkIsHotelCreated): ?>
             

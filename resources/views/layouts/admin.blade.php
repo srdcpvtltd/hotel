@@ -1,7 +1,7 @@
 @php
-use App\Facades\UtilityFacades;
-$logo = asset(Storage::url('uploads/logo/'));
-$company_favicon = UtilityFacades::getValByName('company_favicon');
+    use App\Facades\UtilityFacades;
+    $logo = asset(Storage::url('uploads/logo/'));
+    $company_favicon = UtilityFacades::getValByName('company_favicon');
 @endphp
 <!DOCTYPE html>
 <html dir="{{ env('SITE_RTL') == 'on' ? 'rtl' : '' }}" lan="en">
@@ -12,9 +12,14 @@ $company_favicon = UtilityFacades::getValByName('company_favicon');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>@yield('title') | {{ config('app.name') }}</title>
-    <link rel="icon" href="{{ $logo . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}" type="image" sizes="16x16">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="icon"
+        href="{{ $logo . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}"
+        type="image" sizes="16x16">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+        integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+        integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/free.min.css') }}" rel="stylesheet">
@@ -31,7 +36,11 @@ $company_favicon = UtilityFacades::getValByName('company_favicon');
     @yield('css')
 
     <script type="text/javascript" src="{{ asset('js/webcam.min.js') }}"></script>
-
+    <style>
+        .toast-error {
+            background-color: #BD362F!important;
+        }
+    </style>
 </head>
 
 <body class="c-app">
@@ -72,7 +81,7 @@ $company_favicon = UtilityFacades::getValByName('company_favicon');
     <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
     <script src="{{ asset('js/coreui-utils.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
@@ -107,7 +116,7 @@ $company_favicon = UtilityFacades::getValByName('company_favicon');
                 "closeButton": true,
                 "progressBar": true
             }
-            toastr.error("{{  session('errors')->first()  }}");
+            toastr.error("{{ session('errors')->first() }}");
         </script>
     @endif
     @if (Session::has('error'))
@@ -116,7 +125,7 @@ $company_favicon = UtilityFacades::getValByName('company_favicon');
                 "closeButton": true,
                 "progressBar": true
             }
-            toastr.error("{{  session('error')  }}");
+            toastr.error("{{ session('error') }}");
         </script>
     @endif
     @if (Session::has('info'))

@@ -108,7 +108,7 @@ class HousekeepingController extends Controller
                 $staff->update();
                 
                 $room_clean = Room::findorfail($request->room_id);
-                $room_clean->room_clean_status = 0;
+                $room_clean->room_clean_status = 2;
                 $room_clean->update();
             }
 

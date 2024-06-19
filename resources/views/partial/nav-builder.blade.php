@@ -109,7 +109,7 @@
                 </a>
             </li>
         @endrole
-        @role('user')
+        @role('free')
             @if ($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null))
                 @can('show-Booking')
                     <li class="c-sidebar-nav-item">
@@ -155,19 +155,23 @@
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Upgrade Plan') }}
                     </a>
                 </li>
+                @can('show-inventory')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('stock_inventory') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
                     </a>
                 </li>
+                @endcan
+                @can('show-housekeeping')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('housekeeping.index') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
                     </a>
                 </li>
+                @endcan
             @endif
         @endrole
-        @role('user')
+        @role('free')
         <li class="c-sidebar-nav-item">
             @if ($checkIsHotelCreated)
             {{-- <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">

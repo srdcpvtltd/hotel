@@ -102,7 +102,6 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-
             'roles' => 'required'
         ]);
         $input = $request->except('password', 'confirm_password');

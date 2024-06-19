@@ -27,7 +27,7 @@ class RoleController extends Controller
         if (\Auth::user()->can('manage-role')) {
             return $dataTable->render('roles.index');
         } else {
-            return redirect()->back()->with('error', 'Permission denied.');
+            return redirect()->back()->with('error', __('Permission denied.'));
         }
     }
 

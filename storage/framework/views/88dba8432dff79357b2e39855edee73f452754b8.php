@@ -1,17 +1,19 @@
-@extends('layouts.admin')
-@section('breadcrumb')
-    <span class="breadcrumb-item active">{{ __('Guest Detail') }}</span>
-@endsection
-@section('title')
-    {{ __('Guest Details') }}
-@endsection
-@section('content')
+
+<?php $__env->startSection('breadcrumb'); ?>
+    <span class="breadcrumb-item active"><?php echo e(__('Guest Detail')); ?></span>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?>
+    <?php echo e(__('Guest Details')); ?>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="">
-        @if (session()->has('success'))
+        <?php if(session()->has('success')): ?>
             <div class="alert alert-success">
-                {{ session()->get('success') }}
+                <?php echo e(session()->get('success')); ?>
+
             </div>
-        @endif
+        <?php endif; ?>
 
         <div class="fade-in guest-register">
             <div class="container">
@@ -22,95 +24,108 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12 text-center" style="margin-bottom: 15px;">
-                                        <img src="{{ asset(url('storage/bookings/' . $booking->guest_image)) }}" />
+                                        <img src="<?php echo e(asset(url('storage/bookings/' . $booking->guest_image))); ?>" />
                                     </div>
                                     <div class="col-md-4 detil-item">
-                                        <b>Guest Name:</b> {{ $booking->gues_name }}
+                                        <b>Guest Name:</b> <?php echo e($booking->gues_name); ?>
+
                                     </div>
                                     <div class="col-md-4 detil-item">
-                                        <b>Mobile Number:</b> {{ $booking->mobile_number }}
+                                        <b>Mobile Number:</b> <?php echo e($booking->mobile_number); ?>
+
                                     </div>
 
                                     <div class="col-md-4 detil-item">
-                                        <b>Guest Email:</b> {{ $booking->email_id }}
+                                        <b>Guest Email:</b> <?php echo e($booking->email_id); ?>
+
                                     </div>
                                     <div class="col-md-4 detil-item">
-                                        <b>Arrived From:</b> {{ $booking->arrived_from }}
+                                        <b>Arrived From:</b> <?php echo e($booking->arrived_from); ?>
+
                                     </div>
                                     <div class="col-md-4 detil-item">
-                                        <b>Arrival Date:</b> {{ $booking->arrival_date }}
+                                        <b>Arrival Date:</b> <?php echo e($booking->arrival_date); ?>
+
                                     </div>
                                     <div class="col-md-4 detil-item">
-                                        <b>Arrival Time:</b> {{ $booking->arrival_time }}
+                                        <b>Arrival Time:</b> <?php echo e($booking->arrival_time); ?>
+
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @if (!empty($criminal))
+                    <?php if(!empty($criminal)): ?>
                         <div class="col-sm">
                             <div class="card">
                                 <div class="card-header">Criminal Detail</div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12 text-center" style="margin-bottom: 15px;">
-                                            <img src="{{ asset(url('storage/criminals/' . $criminal->photo)) }}" />
+                                            <img src="<?php echo e(asset(url('storage/criminals/' . $criminal->photo))); ?>" />
                                         </div>
                                         <div class="col-md-4 detil-item">
-                                            <b>Name:</b> {{ $criminal->name }}
+                                            <b>Name:</b> <?php echo e($criminal->name); ?>
+
                                         </div>
                                         <div class="col-md-4 detil-item">
-                                            <b>Mobile Number:</b> {{ $criminal->mobile }}
+                                            <b>Mobile Number:</b> <?php echo e($criminal->mobile); ?>
+
                                         </div>
                                         <div class="col-md-4 detil-item">
-                                            <b>Age:</b> {{ $criminal->age }}
+                                            <b>Age:</b> <?php echo e($criminal->age); ?>
+
                                         </div>
                                         <div class="col-md-4 detil-item">
-                                            <b>Gender:</b> {{ $criminal->gender }}
+                                            <b>Gender:</b> <?php echo e($criminal->gender); ?>
+
                                         </div>
                                         <div class="col-md-4 detil-item">
-                                            <b>Remarks:</b> {{ $criminal->remarks }}
+                                            <b>Remarks:</b> <?php echo e($criminal->remarks); ?>
+
                                         </div>
                                         <div class="col-md-4 detil-item">
                                             <a class="btn btn-danger btn-xs"
-                                                href="{{ asset(url('/mark/unsuspicious/' . $booking->id)) }}">Mark as Not
+                                                href="<?php echo e(asset(url('/mark/unsuspicious/' . $booking->id))); ?>">Mark as Not
                                                 Suspicious</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    <?php endif; ?>
                     <div class="col-sm">
                         <div class="card">
                             <div class="card-header">Booking Detail</div>
                             <div class="card-body">
-                                <h5><b>Room Booked :</b> {{ $booking->room_booked }}</h5>
-                                @foreach ($booking->rooms as $room)
+                                <h5><b>Room Booked :</b> <?php echo e($booking->room_booked); ?></h5>
+                                <?php $__currentLoopData = $booking->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $room): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="row">
                                         <div class="col-md-4 detil-item">
-                                            <b>Room Type:</b> {{ $room->room_type->room_type }}
+                                            <b>Room Type:</b> <?php echo e($room->room_type->room_type); ?>
+
                                         </div>
                                         <div class="col-md-4 detil-item">
-                                            <b>Room Number:</b> {{ $room->room_number }}
+                                            <b>Room Number:</b> <?php echo e($room->room_number); ?>
+
                                         </div>
 
                                         <div class="col-md-4 detil-item">
-                                            @role('user')
+                                            <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
                                                 <button
-                                                    class="btn btn-info">{{ $room->status ? 'Completed' : 'In Progress' }}</button>
+                                                    class="btn btn-info"><?php echo e($room->status ? 'Completed' : 'In Progress'); ?></button>
                                                 
-                                                    @if ($room->status == '0')
-                                                    <a href="{{ $room->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $room->id)) }}"
-                                                        style="{{ $room->status ? 'cursor: not-allowed; pointer-events:none' : '' }}"
+                                                    <?php if($room->status == '0'): ?>
+                                                    <a href="<?php echo e($room->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $room->id))); ?>"
+                                                        style="<?php echo e($room->status ? 'cursor: not-allowed; pointer-events:none' : ''); ?>"
                                                         class="btn btn-primary"
                                                         onclick="return disableDoubleClick()">Checkout</a>
-                                                    @endif
-                                            @endrole
+                                                    <?php endif; ?>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
                         </div>
                     </div>
@@ -139,4 +154,6 @@
             setTimeout("_linkEnabled=true", 1000);
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/guest/detail.blade.php ENDPATH**/ ?>

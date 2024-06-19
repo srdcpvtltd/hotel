@@ -87,7 +87,8 @@ class RegisterController extends Controller
                 'email_token' => base64_encode($data['email']),
 
             ]);
-            $role=Role::findByName('user');
+            // $role=Role::findByName('user');
+            $role=Role::findByName('free');
             if($role){
                 $user->assignRole($role->id);
             }
