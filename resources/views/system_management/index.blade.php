@@ -97,7 +97,7 @@
                                             </a>
                                         </div>
                                     @endcan
-                                    @role('user')
+                                    @role('free')
                                         @php
                                             $checkIsHotelCreated = DB::table('hotel_profiles')
                                                 ->where('user_id', Auth::id())

@@ -12,7 +12,7 @@
             <?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
                 <?php echo $__env->make('dashboard.adminuserblocks', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php endif; ?>
-            <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+            <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
                 <?php echo $__env->make('dashboard.userblocks', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php endif; ?>
         </div>

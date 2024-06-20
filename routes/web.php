@@ -26,6 +26,7 @@ use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HotelStaffController;
 use App\Http\Controllers\HousekeepingController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
@@ -173,6 +174,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('product_category', ProductCategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('housekeeping', HousekeepingController::class);
+    Route::resource('laundry', LaundryController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

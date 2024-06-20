@@ -11,7 +11,7 @@
             @role('admin')
                 @include('dashboard.adminuserblocks')
             @endrole
-            @role('user')
+            @role('free')
                 @include('dashboard.userblocks')
             @endrole
         </div>

@@ -41,7 +41,7 @@ $profile = asset(Storage::url('uploads/avatar'));
                         </svg> {{ __('Settings') }}
                     </a>
                     @endrole
-                     @role('user')
+                     @role('free')
                     <a class="dropdown-item" href="{{ route('changePasswordGet') }}">
                         <svg class="c-icon mr-2">
                             <use xlink:href="{{ asset('/icons/sprites/free.svg#cil-settings') }}"></use>

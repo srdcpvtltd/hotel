@@ -43,7 +43,7 @@ $profile = asset(Storage::url('uploads/avatar'));
 
                     </a>
                     <?php endif; ?>
-                     <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+                     <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
                     <a class="dropdown-item" href="<?php echo e(route('changePasswordGet')); ?>">
                         <svg class="c-icon mr-2">
                             <use xlink:href="<?php echo e(asset('/icons/sprites/free.svg#cil-settings')); ?>"></use>

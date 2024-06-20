@@ -181,34 +181,38 @@
                     </a>
                 </li>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-inventory')): ?>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('stock_inventory')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Stock & Inventory')); ?>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="<?php echo e(route('stock_inventory')); ?>">
+                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Stock & Inventory')); ?>
 
-                    </a>
-                </li>
+                        </a>
+                    </li>
                 <?php endif; ?>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-housekeeping')): ?>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping.index')); ?>">
+                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Housekeeping')); ?>
+
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping.index')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Housekeeping')); ?>
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('laundry.index')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Laundry')); ?>
 
                     </a>
                 </li>
-                <?php endif; ?>
             <?php endif; ?>
-        <?php endif; ?>
-        <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
-        <li class="c-sidebar-nav-item">
-            <?php if($checkIsHotelCreated): ?>
-            
-            <?php else: ?>
-            <a class="c-sidebar-nav-link" href="<?php echo e(route('add-hotel')); ?>">
-                <i class="cil-building c-sidebar-nav-icon"></i><?php echo e(__('Add Hotel')); ?>
+            <li class="c-sidebar-nav-item">
+                <?php if($checkIsHotelCreated): ?>
+                    
+                <?php else: ?>
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('add-hotel')); ?>">
+                        <i class="cil-building c-sidebar-nav-icon"></i><?php echo e(__('Add Hotel')); ?>
 
-            </a>
-            <?php endif; ?>
-        </li>
+                    </a>
+                <?php endif; ?>
+            </li>
         <?php endif; ?>
         <?php echo $__env->make('layouts.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </ul>

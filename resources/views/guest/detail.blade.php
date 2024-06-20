@@ -97,7 +97,7 @@
                                         </div>
 
                                         <div class="col-md-4 detil-item">
-                                            @role('user')
+                                            @role('free')
                                                 <button
                                                     class="btn btn-info">{{ $room->status ? 'Completed' : 'In Progress' }}</button>
                                                 

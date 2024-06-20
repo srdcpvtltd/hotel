@@ -156,33 +156,36 @@
                     </a>
                 </li>
                 @can('show-inventory')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('stock_inventory') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
-                    </a>
-                </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('stock_inventory') }}">
+                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
+                        </a>
+                    </li>
                 @endcan
                 @can('show-housekeeping')
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('housekeeping.index') }}">
+                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
+                        </a>
+                    </li>
+                @endcan
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('housekeeping.index') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
+                    <a class="c-sidebar-nav-link" href="{{ route('laundry.index') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Laundry') }}
                     </a>
                 </li>
-                @endcan
             @endif
-        @endrole
-        @role('free')
-        <li class="c-sidebar-nav-item">
-            @if ($checkIsHotelCreated)
-            {{-- <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
+            <li class="c-sidebar-nav-item">
+                @if ($checkIsHotelCreated)
+                    {{-- <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
                 <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Edit Hotel') }}
             </a> --}}
-            @else
-            <a class="c-sidebar-nav-link" href="{{ route('add-hotel') }}">
-                <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Add Hotel') }}
-            </a>
-            @endif
-        </li>
+                @else
+                    <a class="c-sidebar-nav-link" href="{{ route('add-hotel') }}">
+                        <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Add Hotel') }}
+                    </a>
+                @endif
+            </li>
         @endrole
         @include('layouts.menu')
     </ul>
