@@ -77,6 +77,8 @@ class LaundryDataTable extends DataTable
                 ->orderable(false),
             Column::make('room_id')->title('Room'),
             Column::make('assign_staff_id')->title('Assigned Staff'),
+            Column::make('item')->title('Item'),
+            Column::make('quantity')->title('Quantity'),
             Column::make('status')->title('Status'),
             Column::computed('action')
                 ->exportable(false)
