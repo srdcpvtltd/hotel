@@ -5,16 +5,20 @@
     <div class="dropdown-menu" x-placement="bottom-start">
         <a href="#" class="action-item" role="button" data-toggle="dropdown" aria-expanded="false"><i
                 class="fas fa-ellipsis-h"></i></a>
-        <a href="{{ route('housekeeping.edit', $housekeeping->id) }}" class=" dropdown-item"><i class="cil-pencil action-btn"></i>
-            {{ __('Edit') }}</a>
+        @can('edit-laundry')
+            <a href="{{ route('laundry.edit', $laundry->id) }}" class=" dropdown-item"><i class="cil-pencil action-btn"></i>
+                {{ __('Edit') }}</a>
+        @endcan
         <div class="dropdown-divider"></div>
-        <a href="{{ route('housekeeping.index') }}" class="dropdown-item  text-danger" data-toggle="tooltip"
-            data-original-title="{{ __('Delete') }}" onclick="delete_record('delete-form-{{ $housekeeping->id }}')"><i
-                class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
+        @can('delete-laundry')
+            <a href="{{ route('laundry.index') }}" class="dropdown-item  text-danger" data-toggle="tooltip"
+                data-original-title="{{ __('Delete') }}" onclick="delete_record('delete-form-{{ $laundry->id }}')"><i
+                    class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
+        @endcan
         {!! Form::open([
             'method' => 'DELETE',
-            'route' => ['housekeeping.destroy', $housekeeping->id],
-            'id' => 'delete-form-' . $housekeeping->id,
+            'route' => ['laundry.destroy', $laundry->id],
+            'id' => 'delete-form-' . $laundry->id,
         ]) !!}
         {!! Form::close() !!}
     </div>

@@ -27,7 +27,7 @@
                     <select name="assign_staff_id" id="assign_staff_id" class="form-control">
                         <option value="">Select</option>
                         @foreach ($staffs as $staff)
-                            <option value="{{ $staff->id }}">{{ $staff->name }}</option>
+                            <option value="{{ $staff->id }}">{{ $staff->name }} ({{ $staff->designation->designation }})</option>
                         @endforeach
                     </select>
                 </div>

@@ -23,7 +23,21 @@ class LaundryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'laundry.action');
+            ->editColumn('room_id', function (Laundry $laundry) {
+                return ($laundry->room != null) ? $laundry->room->name : '-';
+            })
+            ->editColumn('assign_staff_id', function (Laundry $laundry) {
+                return ($laundry->staff != null) ? $laundry->staff->name : '-';
+            })
+            ->editColumn('status', function (Laundry $laundry) {
+                return ($laundry->status === 0) ? '<span class="badge badge-warning" style="font-size: 14px;color:#fff
+                ">In Process</span>' : '<span class="badge badge-success" style="font-size: 14px;
+                ">Complete</span>';
+            })
+            ->rawColumns(['status'])
+            ->addColumn('action', function (Laundry $laundry) {
+                return view('laundry.action', compact('laundry'));
+            });
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\LaundryDataTable;
+use App\Http\Requests\LaundryRequest;
 use App\Models\Hotel_staff;
+use App\Models\Laundry;
 use App\Models\HotelProfile;
 use App\Models\Room;
 use App\Services\LaundryService;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LaundryController extends Controller
 {
-    
+
     protected $LaundryService;
 
     public function __construct(LaundryService $LaundryService)
@@ -34,102 +36,99 @@ class LaundryController extends Controller
 
         $rooms = Room::where('hotel_id', $hotel->id)->get();
         $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
-        
-        return view('laundry.create', compact('rooms','staffs'));
+
+        return view('laundry.create', compact('rooms', 'staffs'));
     }
 
-    // public function store(HousekeepingRequest $request)
-    // {
-    //     $hotel = HotelProfile::where('user_id', Auth::id())->first();
-    //     if (!$hotel) {
-    //         return redirect('/add-hotel')->with('success', "Please create hotel first.");
-    //     }
-    //     $hotel_id = [
-    //         'hotel_id' => $hotel->id,
-    //     ];
+    public function store(LaundryRequest $request)
+    {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
 
-    //     $message = '';
-    //     try {
-    //         $HousekeepingService = $this->HousekeepingService->store($request, Housekeeping::class, $hotel_id);
-    //         if($request->status == 0){
-    //             $staff = Hotel_staff::findorfail($request->assign_staff_id);
-    //             $staff->status = 1;
-    //             $staff->update();
-                
-    //             $room_clean = Room::findorfail($request->room_id);
-    //             $room_clean->room_clean_status = 1;
-    //             $room_clean->update();
-    //         } else {
-    //             $staff = Hotel_staff::findorfail($request->assign_staff_id);
-    //             $staff->status = 0;
-    //             $staff->update();
-                
-    //             $room_clean = Room::findorfail($request->room_id);
-    //             $room_clean->room_clean_status = 0;
-    //             $room_clean->update();
-    //         }
+        $message = '';
+        try {
+            $count = count($request->item);
+            // $LaundryService = $this->LaundryService->store($request, Laundry::class, $hotel_id);
+            for ($i = 0; $i < $count; $i++) {
+                $data = new Laundry;
+                $data->hotel_id = $hotel->id;
+                $data->room_id = $request->room_id;
+                $data->assign_staff_id = $request->assign_staff_id;
+                $data->item = $request->item[$i];
+                $data->quantity = $request->quantity[$i];
+                $data->status = $request->status;
+                $data->save();
+            }
 
-    //         $message = 'Housekeeping saved successfully';
-    //     } catch (\Exception $exception) {
-    //         $message = 'Error has exit';
-    //     }
-    //     return redirect()->route('housekeeping.index')
-    //         ->with('message', __($message));
-    // }
+            if ($request->status == 0) {
+                $staff = Hotel_staff::findorfail($request->assign_staff_id);
+                $staff->status = 1;
+                $staff->update();
+            } else {
+                $staff = Hotel_staff::findorfail($request->assign_staff_id);
+                $staff->status = 0;
+                $staff->update();
+            }
 
-    // public function edit(Housekeeping $housekeeping)
-    // {
-    //     $hotel = HotelProfile::where('user_id', Auth::id())->first();
-    //     if (!$hotel) {
-    //         return redirect('/add-hotel')->with('success', "Please create hotel first.");
-    //     }
-    //     $rooms = Room::where('hotel_id', $hotel->id)->get();
-    //     $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
-        
-    //     return view('housekeeping.edit', compact('housekeeping','rooms','staffs'));
-    // }
+            $message = 'Laundry order placed successfully';
+        } catch (\Exception $exception) {
+            $message = 'Error has exit';
+        }
+        return redirect()->route('laundry.index')
+            ->with('message', __($message));
+    }
 
-    // public function update(HousekeepingRequest $request, Housekeeping $housekeeping)
-    // {
-    //     try {
-    //         $this->HousekeepingService->update($request, $housekeeping);
-    //         if($request->status == 0){
-    //             $staff = Hotel_staff::findorfail($request->assign_staff_id);
-    //             $staff->status = 1;
-    //             $staff->update();
-                
-    //             $room_clean = Room::findorfail($request->room_id);
-    //             $room_clean->room_clean_status = 1;
-    //             $room_clean->update();
-    //         } else {
-    //             $staff = Hotel_staff::findorfail($request->assign_staff_id);
-    //             $staff->status = 0;
-    //             $staff->update();
-                
-    //             $room_clean = Room::findorfail($request->room_id);
-    //             $room_clean->room_clean_status = 2;
-    //             $room_clean->update();
-    //         }
+    public function edit(Laundry $laundry)
+    {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        $rooms = Room::where('hotel_id', $hotel->id)->get();
+        $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
 
-    //         $message = 'Room Updated successfully';
-    //     } catch (\Exception $exception) {
-    //         $message = 'Error has Update';
-    //     }
-    //     return redirect()->route('housekeeping.index')
-    //         ->with('message', __($message));
-    // }
+        return view('laundry.edit', compact('laundry', 'rooms', 'staffs'));
+    }
 
-    // public function destroy(HousekeepingRequest $request, Housekeeping $housekeeping)
-    // {
-    //     try {
-    //         $this->HousekeepingService->destroy($request, $housekeeping);
+    public function update(LaundryRequest $request, Laundry $laundry)
+    {
+        try {
+            $this->LaundryService->update($request, $laundry);
 
-    //         $message = 'Housekeeping Deleted successfully';
-    //     } catch (\Exception $exception) {
-    //         $message = 'Error has Deleted';
-    //     }
-    //     return redirect()->route('housekeeping.index')
-    //         ->with('message', __($message));
-    // }
+            $data = Laundry::where('assign_staff_id', $request->assign_staff_id)->where('status',0)->get();
 
+            if (count($data) == 0) {
+                if ($request->status == 0) {
+                    $staff = Hotel_staff::findorfail($request->assign_staff_id);
+                    $staff->status = 1;
+                    $staff->update();
+                } else {
+                    $staff = Hotel_staff::findorfail($request->assign_staff_id);
+                    $staff->status = 0;
+                    $staff->update();
+                }
+            }
+
+            $message = 'Laundry order Updated successfully';
+        } catch (\Exception $exception) {
+            $message = 'Error has Update';
+        }
+        return redirect()->route('laundry.index')
+            ->with('message', __($message));
+    }
+
+    public function destroy(LaundryRequest $request, Laundry $laundry)
+    {
+        try {
+            $this->LaundryService->destroy($request, $laundry);
+
+            $message = 'Laundry order Deleted successfully';
+        } catch (\Exception $exception) {
+            $message = 'Error has Deleted';
+        }
+        return redirect()->route('laundry.index')
+            ->with('message', __($message));
+    }
 }

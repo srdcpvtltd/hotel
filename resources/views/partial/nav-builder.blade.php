@@ -169,11 +169,13 @@
                         </a>
                     </li>
                 @endcan
+                @can('show-laundry')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('laundry.index') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Laundry') }}
                     </a>
                 </li>
+                @endcan
             @endif
             <li class="c-sidebar-nav-item">
                 @if ($checkIsHotelCreated)

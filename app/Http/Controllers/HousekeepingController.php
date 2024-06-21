@@ -112,7 +112,7 @@ class HousekeepingController extends Controller
                 $room_clean->update();
             }
 
-            $message = 'Room Updated successfully';
+            $message = 'Housekeeping Updated successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Update';
         }

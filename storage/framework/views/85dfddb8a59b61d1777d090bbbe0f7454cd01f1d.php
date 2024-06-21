@@ -98,7 +98,7 @@
                                             </a>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if(auth()->check() && auth()->user()->hasRole('user')): ?>
+                                    <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
                                         <?php
                                             $checkIsHotelCreated = DB::table('hotel_profiles')
                                                 ->where('user_id', Auth::id())

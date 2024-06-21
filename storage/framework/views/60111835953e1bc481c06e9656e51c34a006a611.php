@@ -196,12 +196,14 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-laundry')): ?>
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('laundry.index')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Laundry')); ?>
 
                     </a>
                 </li>
+                <?php endif; ?>
             <?php endif; ?>
             <li class="c-sidebar-nav-item">
                 <?php if($checkIsHotelCreated): ?>

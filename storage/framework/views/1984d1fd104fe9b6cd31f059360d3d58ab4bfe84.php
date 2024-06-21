@@ -31,7 +31,7 @@
                     <select name="assign_staff_id" id="assign_staff_id" class="form-control">
                         <option value="">Select</option>
                         <?php $__currentLoopData = $staffs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $staff): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($staff->id); ?>"><?php echo e($staff->name); ?></option>
+                            <option value="<?php echo e($staff->id); ?>"><?php echo e($staff->name); ?> (<?php echo e($staff->designation->designation); ?>)</option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
