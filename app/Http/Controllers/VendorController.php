@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\DataTables\VendorDataTable;
 use App\Models\Country;
+use App\Models\HotelProfile;
+use App\Models\Vendor;
 use App\Models\VendorCategory;
 use App\Services\VendorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
 {
@@ -53,7 +56,24 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+        
+        $hotel_id = [
+            'hotel_id' => $hotel->id,
+        ];
+
+        $message = '';
+        try {
+            $VendorService = $this->VendorService->store($request, Vendor::class, $hotel_id);
+            $message = 'Vendor saved successfully';
+        } catch (\Exception $exception) {
+            $message = 'Error has exit';
+        }
+        return redirect()->route('vendors.index')
+            ->with('message', __($message));
     }
 
     /**

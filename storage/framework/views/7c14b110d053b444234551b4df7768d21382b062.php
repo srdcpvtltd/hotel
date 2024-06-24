@@ -9,7 +9,7 @@
     <span class="breadcrumb-item active"><?php echo e(__('Create')); ?></span>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <?php echo Form::open(['route' => 'rooms.store', 'method' => 'POST']); ?>
+    <?php echo Form::open(['route' => 'vendors.store', 'method' => 'POST']); ?>
 
     <div class="col-md-12 m-auto">
         <div class="card">

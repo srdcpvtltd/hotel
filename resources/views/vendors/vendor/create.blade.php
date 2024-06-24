@@ -8,7 +8,7 @@
     <span class="breadcrumb-item active">{{ __('Create') }}</span>
 @endsection
 @section('content')
-    {!! Form::open(['route' => 'rooms.store', 'method' => 'POST']) !!}
+    {!! Form::open(['route' => 'vendors.store', 'method' => 'POST']) !!}
     <div class="col-md-12 m-auto">
         <div class="card">
             <div class="card-header">{{ __('Create New Vendor') }} </div>
