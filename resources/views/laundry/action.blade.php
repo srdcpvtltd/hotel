@@ -14,12 +14,13 @@
             <a href="{{ route('laundry.index') }}" class="dropdown-item  text-danger" data-toggle="tooltip"
                 data-original-title="{{ __('Delete') }}" onclick="delete_record('delete-form-{{ $laundry->id }}')"><i
                     class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
+
+            {!! Form::open([
+                'method' => 'DELETE',
+                'route' => ['laundry.destroy', $laundry->id],
+                'id' => 'delete-form-' . $laundry->id,
+            ]) !!}
+            {!! Form::close() !!}
         @endcan
-        {!! Form::open([
-            'method' => 'DELETE',
-            'route' => ['laundry.destroy', $laundry->id],
-            'id' => 'delete-form-' . $laundry->id,
-        ]) !!}
-        {!! Form::close() !!}
     </div>
 </div>

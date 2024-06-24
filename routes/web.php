@@ -37,6 +37,8 @@ use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SystemManagementController;
 use App\Http\Controllers\SystemSettingController;
+use App\Http\Controllers\Vendor_categoryController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -114,6 +116,8 @@ Route::post('/room_booking', [BookingController::class, 'room_booking'])->name('
 
 //uttam kumar  16/05/2024
 Route::post('/room_status', [BookingController::class, 'room_status'])->name('booking.room_status')->middleware(['auth','XSS','2fa',]);
+//uttam kumar 24/06/2024
+Route::get('vendors_management', [VendorController::class, 'management'])->name('vendors_management')->middleware(['auth','XSS','2fa',]);
 
 Route::get('/guest/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('guest.report')->middleware(['auth','XSS','2fa',]);
 Route::get('/guest/queries', [\App\Http\Controllers\ReportController::class, 'guest_queries'])->name('guest.queries')->middleware(['auth','XSS','2fa',]);
@@ -175,6 +179,8 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('product', ProductController::class);
     Route::resource('housekeeping', HousekeepingController::class);
     Route::resource('laundry', LaundryController::class);
+    Route::resource('vendors', VendorController::class);
+    Route::resource('vendor_category', Vendor_categoryController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

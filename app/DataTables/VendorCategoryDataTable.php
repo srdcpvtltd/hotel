@@ -2,16 +2,16 @@
 
 namespace App\DataTables;
 
-use App\Models\Designation;
 use App\Models\HotelProfile;
+use App\Models\VendorCategory;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Services\DataTable;
 
-class DesignationDataTable extends DataTable
+class VendorCategoryDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,26 +23,21 @@ class DesignationDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function (Designation $designation) {
-                return view('designation.action', compact('designation'));
+            ->addColumn('action', function (VendorCategory $category) {
+                return view('vendors.category.action', compact('category'));
             });
-            // ->filterColumn('designation', function($query, $keyword) {
-            //     $query->whereHas('name', function($q) use ($keyword) {
-            //         $q->where('name', 'like', "%$keyword%");
-            //     });
-            // });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Designation $model
+     * @param \App\Models\VendorCategory $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Designation $model)
+    public function query(VendorCategory $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'ASC');
+        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'DESC');
     }
 
     /**
@@ -53,7 +48,7 @@ class DesignationDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('designations-table')
+            ->setTableId('vendorcategory-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -82,8 +77,7 @@ class DesignationDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-            Column::make('hotel_id')->title('hotel'),
-            Column::make('designation')->title('designation'),
+            Column::make('name')->title('Name'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -98,6 +92,6 @@ class DesignationDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Designation_' . date('YmdHis');
+        return 'VendorCategory_' . date('YmdHis');
     }
 }

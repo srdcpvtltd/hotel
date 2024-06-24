@@ -53,7 +53,7 @@ class RoomDataTable extends DataTable
     public function query(Room $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'ASC');
+        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'DESC');
     }
 
     /**

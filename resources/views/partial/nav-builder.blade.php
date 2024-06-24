@@ -176,6 +176,11 @@
                     </a>
                 </li>
                 @endcan
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('vendors_management') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
+                    </a>
+                </li>
             @endif
             <li class="c-sidebar-nav-item">
                 @if ($checkIsHotelCreated)
