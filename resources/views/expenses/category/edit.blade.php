@@ -10,7 +10,7 @@
 @endsection
 @section('content')
 
-{!! Form::model($ExpenseCategory, ['method' => 'PATCH', 'route' => ['expenses_category.update', $ExpenseCategory->id]]) !!}
+{!! Form::model($expenses_category, ['method' => 'PATCH', 'route' => ['expenses_category.update', $expenses_category->id]]) !!}
 <div class="col-md-4 m-auto">
     <div class="card">
         <div class="card-header">{{ __('Edit Expenses Category') }} </div>

@@ -85,15 +85,14 @@ class ExpenseCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ExpenseCategory $ExpenseCategory)
+    public function edit(ExpenseCategory $expenses_category)
     {
-        dd($ExpenseCategory);
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
 
-        return view('expenses.category.edit')->with(compact('ExpenseCategory'));
+        return view('expenses.category.edit')->with(compact('expenses_category'));
     }
 
     /**
@@ -103,10 +102,10 @@ class ExpenseCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ExpenseCategoryRequest $request, ExpenseCategory $ExpenseCategory)
+    public function update(ExpenseCategoryRequest $request, ExpenseCategory $expenses_category)
     {
         try {
-            $this->ExpenseCategoryService->update($request, $ExpenseCategory);
+            $this->ExpenseCategoryService->update($request, $expenses_category);
 
             $message = 'Expense Category Updated successfully';
         } catch (\Exception $exception) {
@@ -122,10 +121,10 @@ class ExpenseCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpenseCategoryRequest $request, ExpenseCategory $ExpenseCategory)
+    public function destroy(ExpenseCategoryRequest $request, ExpenseCategory $expenses_category)
     {
         try {
-            $this->ExpenseCategoryService->destroy($request, $ExpenseCategory);
+            $this->ExpenseCategoryService->destroy($request, $expenses_category);
 
             $message = 'Expense Category Deleted successfully';
         } catch (\Exception $exception) {
