@@ -2,40 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\VendorDataTable;
-use App\Http\Requests\VendorRequest;
-use App\Models\Country;
-use App\Models\District;
+use App\DataTables\ExpenseCategoryDataTable;
+use App\Http\Requests\ExpenseCategoryRequest;
+use App\Models\ExpenseCategory;
 use App\Models\HotelProfile;
-use App\Models\State;
-use App\Models\Vendor;
-use App\Models\VendorCategory;
-use App\Services\VendorService;
+use App\Services\ExpenseCategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VendorController extends Controller
+class ExpenseCategoryController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    protected $VendorService;
+    protected $ExpenseCategoryService;
 
-    public function __construct(VendorService $VendorService)
+    public function __construct(ExpenseCategoryService $ExpenseCategoryService)
     {
-        $this->VendorService = $VendorService;
+        $this->ExpenseCategoryService = $ExpenseCategoryService;
     }
 
-    public function management()
+    public function index(ExpenseCategoryDataTable $table)
     {
-        return view('vendors.index');
-    }
-
-    public function index(VendorDataTable $table)
-    {
-        return $table->render('vendors.vendor.index');
+        return $table->render('expenses.category.index');
     }
 
     /**
@@ -45,10 +37,7 @@ class VendorController extends Controller
      */
     public function create()
     {
-        $category = VendorCategory::all();
-        $country = Country::all();
-
-        return view('vendors.vendor.create', compact('category','country'));
+        return view('expenses.category.create');
     }
 
     /**
@@ -57,26 +46,25 @@ class VendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(VendorRequest $request)
+    public function store(ExpenseCategoryRequest $request)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
-        
+
         $hotel_id = [
             'hotel_id' => $hotel->id,
         ];
 
         $message = '';
         try {
-            $VendorService = $this->VendorService->store($request, Vendor::class, $hotel_id);
-            $message = 'Vendor saved successfully';
+            $ExpenseCategoryService = $this->ExpenseCategoryService->store($request, ExpenseCategory::class, $hotel_id);
+            $message = 'Expense Category saved successfully';
         } catch (\Exception $exception) {
-            dd($exception);
             $message = 'Error has exit';
         }
-        return redirect()->route('vendors.index')
+        return redirect()->route('expenses_category.index')
             ->with('message', __($message));
     }
 
@@ -86,14 +74,9 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $Vendor)
+    public function show($id)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
-        }
-        
-        return view('vendors.vendor.show')->with(compact('Vendor'));
+        //
     }
 
     /**
@@ -102,19 +85,15 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendor $Vendor)
+    public function edit(ExpenseCategory $ExpenseCategory)
     {
+        dd($ExpenseCategory);
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
 
-        $category = VendorCategory::all();
-        $country = Country::all();
-        $states = State::all();
-        $districts = District::all();
-        
-        return view('vendors.vendor.edit')->with(compact('Vendor','category','country','states','districts'));
+        return view('expenses.category.edit')->with(compact('ExpenseCategory'));
     }
 
     /**
@@ -124,16 +103,16 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(VendorRequest $request, Vendor $Vendor)
+    public function update(ExpenseCategoryRequest $request, ExpenseCategory $ExpenseCategory)
     {
         try {
-            $this->VendorService->update($request, $Vendor);
+            $this->ExpenseCategoryService->update($request, $ExpenseCategory);
 
-            $message = 'Vendor Updated successfully';
+            $message = 'Expense Category Updated successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Update';
         }
-        return redirect()->route('vendors.index')
+        return redirect()->route('expenses_category.index')
             ->with('message', __($message));
     }
 
@@ -143,16 +122,16 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VendorRequest $request, Vendor $Vendor)
+    public function destroy(ExpenseCategoryRequest $request, ExpenseCategory $ExpenseCategory)
     {
         try {
-            $this->VendorService->destroy($request, $Vendor);
+            $this->ExpenseCategoryService->destroy($request, $ExpenseCategory);
 
-            $message = 'Vendor Deleted successfully';
+            $message = 'Expense Category Deleted successfully';
         } catch (\Exception $exception) {
             $message = 'Error has Deleted';
         }
-        return redirect()->route('vendors.index')
+        return redirect()->route('expenses_category.index')
             ->with('message', __($message));
     }
 }

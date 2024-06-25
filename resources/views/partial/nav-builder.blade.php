@@ -181,6 +181,11 @@
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
                     </a>
                 </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('expenses.management') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Expenses') }}
+                    </a>
+                </li>
             @endif
             <li class="c-sidebar-nav-item">
                 @if ($checkIsHotelCreated)

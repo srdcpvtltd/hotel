@@ -2,8 +2,8 @@
 
 namespace App\DataTables;
 
+use App\Models\ExpenseCategory;
 use App\Models\HotelProfile;
-use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -11,7 +11,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class VendorDataTable extends DataTable
+class ExpenseCategoryDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,21 +23,18 @@ class VendorDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('category_id', function(Vendor $vendor){
-                return ($vendor->category != null) ? $vendor->category->name : '-';
-            })
-            ->addColumn('action', function (Vendor $vendor) {
-                return view('vendors.vendor.action', compact('vendor'));
+            ->addColumn('action', function (ExpenseCategory $category) {
+                return view('expenses.category.action', compact('category'));
             });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Vendor $model
+     * @param \App\Models\ExpenseCategory $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Vendor $model)
+    public function query(ExpenseCategory $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'DESC');
@@ -51,8 +48,8 @@ class VendorDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('vendor-table')
-            ->columns($this->getColumns())
+                    ->setTableId('expensecategorydatatable-table')
+                    ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->orderBy(1)
@@ -65,7 +62,7 @@ class VendorDataTable extends DataTable
                     'create' => __('Create'),
                     'pageLength' => __('Show %d rows'),
                 ]
-            ]);
+            ]); 
     }
 
     /**
@@ -80,12 +77,7 @@ class VendorDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-            Column::make('category_id')->title('Category'),
             Column::make('name')->title('Name'),
-            Column::make('email')->title('Email'),
-            Column::make('mobile_no')->title('Mobile No.'),
-            Column::make('address')->title('Address'),
-            Column::make('city')->title('City'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -100,6 +92,6 @@ class VendorDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Vendor_' . date('YmdHis');
+        return 'ExpenseCategory_' . date('YmdHis');
     }
 }

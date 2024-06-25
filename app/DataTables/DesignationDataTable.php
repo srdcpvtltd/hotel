@@ -26,11 +26,6 @@ class DesignationDataTable extends DataTable
             ->addColumn('action', function (Designation $designation) {
                 return view('designation.action', compact('designation'));
             });
-            // ->filterColumn('designation', function($query, $keyword) {
-            //     $query->whereHas('name', function($q) use ($keyword) {
-            //         $q->where('name', 'like', "%$keyword%");
-            //     });
-            // });
     }
 
     /**
