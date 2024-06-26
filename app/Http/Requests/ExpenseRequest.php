@@ -41,19 +41,12 @@ class ExpenseRequest extends BaseRequest
 
         if ($this->isUpdate() || $this->isStore()) {
             $rules = array_merge($rules, [
-                'name'                      => 'required',
-                'category_id'               => 'required',
-                'email'                     => 'required',
-                'mobile_no'                 => 'required',
-                'address'                   => 'required',
-                'country_id'                => 'required',
-                'state_id'                  => 'required',
-                'district_id'               => 'required',
-                'city'                      => 'required',
-                'gst_no'                    => 'required',
-                'contact_person_name'       => 'required',
-                'contact_person_mobile'     => 'required',
-                'contact_person_email'      => 'required'
+                'category_id'   => 'required',
+                'purchase_type' => 'required',
+                'title'         => 'required',
+                'amount'        => 'required',
+                'date'          => 'required',
+                'payment_mode'  => 'required'
             ]);
         }
 

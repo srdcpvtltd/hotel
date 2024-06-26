@@ -24,8 +24,11 @@ class ExpenseDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', function (ExpenseCategory $category) {
-                return view('expenses.expenses.action', compact('category'));
+            ->editColumn('category_id', function (Expense $expense){
+                return($expense->category != null) ? $expense->category->name : '-';
+            })
+            ->addColumn('action', function (Expense $expense) {
+                return view('expenses.expenses.action', compact('expense'));
             });
     }
 
@@ -78,7 +81,12 @@ class ExpenseDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-            Column::make('name')->title('Name'),
+            Column::make('category_id')->title('Category'),
+            Column::make('title')->title('Title'),
+            Column::make('amount')->title('Amount'),
+            Column::make('date')->title('date'),
+            Column::make('remark')->title('Remark'),
+            Column::make('payment_mode')->title('payment_mode'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

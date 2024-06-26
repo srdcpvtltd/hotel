@@ -17,8 +17,8 @@ class CreateExpensesTable extends Migration
             $table->id();
             $table->integer('hotel_id');
             $table->integer('category_id');
-            $table->integer('purchase_type');
-            $table->integer('vender_id');
+            $table->string('purchase_type');
+            $table->integer('vendor_id');
             $table->string('title');
             $table->string('amount');
             $table->string('date');

@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 {{ Form::submit(__('Submit'), ['class' => 'btn btn-primary', 'id' => 'submit']) }}
-                <a class="btn btn-secondary" href="{{ route('rooms.index') }}"> {{ __('Back') }}</a>
+                <a class="btn btn-secondary" href="{{ route('vendors.index') }}"> {{ __('Back') }}</a>
             </div>
         </div>
     </div>
