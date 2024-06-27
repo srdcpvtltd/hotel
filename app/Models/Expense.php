@@ -28,4 +28,8 @@ class Expense extends Model
     public function vendor(){
         return $this->belongsTo(Vendor::class,'vendor_id');
     }
+    
+    public function staff(){
+        return $this->belongsTo(Hotel_staff::class,'vendor_id');
+    }
 }

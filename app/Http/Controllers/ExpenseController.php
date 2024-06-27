@@ -37,8 +37,13 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $category = ExpenseCategory::all();
-        $vendor = Vendor::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $category = ExpenseCategory::where('hotel_id', $hotel->id)->get();
+        $vendor = Vendor::where('hotel_id', $hotel->id)->get();
 
         return view('expenses.expenses.create', compact('category', 'vendor'));
     }
@@ -100,8 +105,8 @@ class ExpenseController extends Controller
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
 
-        $category = ExpenseCategory::all();
-        $vendor = Vendor::all();
+        $category = ExpenseCategory::where('hotel_id', $hotel->id)->get();
+        $vendor = Vendor::where('hotel_id', $hotel->id)->get();
 
         return view('expenses.expenses.edit')->with(compact('Expense','category','vendor'));
     }

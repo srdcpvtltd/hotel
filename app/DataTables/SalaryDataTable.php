@@ -9,7 +9,7 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 
-class ExpenseDataTable extends DataTable
+class SalaryDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,11 +21,11 @@ class ExpenseDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('category_id', function (Expense $expense){
-                return($expense->category != null) ? $expense->category->name : '-';
+            ->editColumn('vendor_id', function (Expense $salary){
+                return($salary->staff != null) ? $salary->staff->name : '-';
             })
-            ->addColumn('action', function (Expense $expense) {
-                return view('expenses.expenses.action', compact('expense'));
+            ->addColumn('action', function (Expense $salary) {
+                return view('expenses.salary.action', compact('salary'));
             });
     }
 
@@ -38,7 +38,9 @@ class ExpenseDataTable extends DataTable
     public function query(Expense $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'DESC');
+        return $model->newQuery()->where('hotel_id', $hotel->id)
+                                ->where('purchase_type', "Salary")
+                                ->orderBy('id', 'DESC');
     }
 
     /**
@@ -78,12 +80,8 @@ class ExpenseDataTable extends DataTable
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),
-            Column::make('category_id')->title('Category'),
-            Column::make('title')->title('Title'),
-            Column::make('amount')->title('Amount'),
-            Column::make('date')->title('date'),
-            Column::make('remark')->title('Remark'),
-            Column::make('payment_mode')->title('payment_mode'),
+            Column::make('vendor_id')->title('Staff'),
+            Column::make('amount')->title('Salary'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -98,6 +96,6 @@ class ExpenseDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Expense_' . date('YmdHis');
+        return 'Salary_' . date('YmdHis');
     }
 }

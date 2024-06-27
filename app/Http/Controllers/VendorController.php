@@ -45,7 +45,12 @@ class VendorController extends Controller
      */
     public function create()
     {
-        $category = VendorCategory::all();
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
+
+        $category = VendorCategory::where('hotel_id', $hotel->id)->get();
         $country = Country::all();
 
         return view('vendors.vendor.create', compact('category','country'));
@@ -109,7 +114,7 @@ class VendorController extends Controller
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
 
-        $category = VendorCategory::all();
+        $category = VendorCategory::where('hotel_id', $hotel->id)->get();
         $country = Country::all();
         $states = State::all();
         $districts = District::all();

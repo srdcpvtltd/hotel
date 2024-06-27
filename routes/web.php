@@ -36,6 +36,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SystemManagementController;
 use App\Http\Controllers\SystemSettingController;
@@ -187,6 +188,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('vendors', VendorController::class);
     Route::resource('expenses_category', ExpenseCategoryController::class);
     Route::resource('expenses', ExpenseController::class);
+    Route::resource('salary', SalaryController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);
