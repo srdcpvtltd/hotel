@@ -22,12 +22,15 @@
                             <td><?php echo e($Expense->purchase_type); ?></td>
                         </tr>
                         <tr>
+                            <th>Title</th>
+                            <td><?php echo e($Expense->title); ?></td>
                             <?php if($Expense->vendor_id != 0): ?>
                                 <th>Vendor</th>
                                 <td><?php echo e($Expense->vendor->name); ?></td>
+                            <?php else: ?>
+                            <th></th>
+                            <td></td>
                             <?php endif; ?>
-                            <th>Title</th>
-                            <td><?php echo e($Expense->title); ?></td>
                         </tr>
                         <tr>
                             <th>Amount</th>

@@ -21,12 +21,15 @@
                             <td>{{ $Expense->purchase_type }}</td>
                         </tr>
                         <tr>
+                            <th>Title</th>
+                            <td>{{ $Expense->title }}</td>
                             @if ($Expense->vendor_id != 0)
                                 <th>Vendor</th>
                                 <td>{{ $Expense->vendor->name }}</td>
+                            @else
+                            <th></th>
+                            <td></td>
                             @endif
-                            <th>Title</th>
-                            <td>{{ $Expense->title }}</td>
                         </tr>
                         <tr>
                             <th>Amount</th>

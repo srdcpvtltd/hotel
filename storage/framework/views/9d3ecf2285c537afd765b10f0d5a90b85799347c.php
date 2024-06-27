@@ -109,37 +109,6 @@
     </div>
     <?php echo Form::close(); ?>
 
-    <script src="<?php echo e(asset('js/jquery.min.js')); ?>"></script>
-    <script>
-        $('#country').on('change', function() {
-            var countryId = $(this).val();
-            $.ajax({
-                url: "<?php echo e(route('getStates')); ?>?country_id=" + countryId,
-                type: 'get',
-                success: function(res) {
-                    $('#state').html('<option value="">Select State</option>');
-                    $.each(res, function(key, value) {
-                        $('#state').append('<option value="' + value.id + '">' +
-                            value.name + '</option>');
-                    });
-                }
-            });
-        });
-        $('#state').on('change', function() {
-            var stateId = $(this).val();
-            $.ajax({
-                url: "<?php echo e(route('getDistricts')); ?>?state_id=" + stateId,
-                type: 'get',
-                success: function(res) {
-                    $('#district').html('<option value="">Select District</option>');
-                    $.each(res, function(key, value) {
-                        $('#district').append('<option value="' + value.id + '">' +
-                            value.name + '</option>');
-                    });
-                }
-            });
-        });
-    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hotel\resources\views/expenses/expenses/edit.blade.php ENDPATH**/ ?>
