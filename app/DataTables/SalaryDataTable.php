@@ -21,8 +21,8 @@ class SalaryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('vendor_id', function (Expense $salary){
-                return($salary->staff != null) ? $salary->staff->name : '-';
+            ->editColumn('vendor_id', function (Expense $salary) {
+                return ($salary->staff != null) ? $salary->staff->name : '-';
             })
             ->addColumn('action', function (Expense $salary) {
                 return view('expenses.salary.action', compact('salary'));
@@ -38,9 +38,24 @@ class SalaryDataTable extends DataTable
     public function query(Expense $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        return $model->newQuery()->where('hotel_id', $hotel->id)
-                                ->where('purchase_type', "Salary")
-                                ->orderBy('id', 'DESC');
+        // return $model->newQuery()->where('hotel_id', $hotel->id)
+        //     ->where('purchase_type', "Salary")
+        //     ->orderBy('id', 'DESC');
+
+        $query = Expense::with('staff')
+            ->where('hotel_id', $hotel->id)
+            ->where('purchase_type', 'Salary');
+
+        $searchValue = request()->input('search.value');
+        if (!empty($searchValue)) {
+            $searchValue = strtolower($searchValue);
+            $query->whereHas('staff', function ($query) use ($searchValue) {
+                $query->whereRaw("LOWER(name) LIKE ?", ["%{$searchValue}%"]);
+            })
+                ->orWhereRaw("LOWER(amount) LIKE ?", ["%{$searchValue}%"]);
+        }
+
+        return $this->applyScopes($query);
     }
 
     /**
@@ -76,7 +91,7 @@ class SalaryDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('row_number')
+            Column::make('id')
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),

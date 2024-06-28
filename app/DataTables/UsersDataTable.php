@@ -4,11 +4,8 @@ namespace App\DataTables;
 
 use App\Facades\UtilityFacades;
 use App\Models\User;
-use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable
@@ -19,10 +16,10 @@ class UsersDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', function (User $user) {
-                return  UtilityFacades::dateFormat($user->created_at);
+                return UtilityFacades::dateFormat($user->created_at);
             })
             ->editColumn('role', function (User $user) {
-                return (count($user->roles))?$user->roles->first()->name:'-';
+                return (count($user->roles)) ? $user->roles->first()->name : '-';
             })
             ->addColumn('action', function (User $user) {
                 return view('users.action', compact('user'));
@@ -32,7 +29,7 @@ class UsersDataTable extends DataTable
 
     public function query(User $model)
     {
-        return $model->newQuery()->where('id','!=',1)->orderBy('id', 'ASC');
+        return $model->newQuery()->where('id', '!=', 1)->orderBy('id', 'ASC');
     }
 
 
@@ -52,16 +49,16 @@ class UsersDataTable extends DataTable
                 Button::make('reload')->className('btn-light '),
                 Button::make('pageLength')->className('btn-light ')
 
-            ) ->language([
-                'buttons'=>[
-                    'create'=>__('Create'),
-                    'export'=>__('Export'),
-                    'print'=>__('Print'),
-                    'reset'=>__('Reset'),
-                    'reload'=>__('Reload'),
-                    'excel'=>__('Excel'),
-                    'csv'=>__('CSV'),
-                    'pageLength'=>__('Show %d rows'),
+            )->language([
+                'buttons' => [
+                    'create' => __('Create'),
+                    'export' => __('Export'),
+                    'print' => __('Print'),
+                    'reset' => __('Reset'),
+                    'reload' => __('Reload'),
+                    'excel' => __('Excel'),
+                    'csv' => __('CSV'),
+                    'pageLength' => __('Show %d rows'),
                 ]
             ]);
     }
