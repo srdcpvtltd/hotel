@@ -38,7 +38,7 @@ class ExpenseDataTable extends DataTable
     public function query(Expense $model)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        return $model->newQuery()->where('hotel_id', $hotel->id)->orderBy('id', 'DESC');
+        return $model->newQuery()->where('hotel_id', $hotel->id)->where('purchase_type','!=', 'Salary')->orderBy('id', 'DESC');
     }
 
     /**
