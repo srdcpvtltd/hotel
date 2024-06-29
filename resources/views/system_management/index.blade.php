@@ -113,33 +113,25 @@
                                                     </div>
                                                 </a>
                                             </div>
-                                            @endif
-                                            @endrole
-                                            <div class="col-md-3 mt-3 mb-3">
-                                                <a href="{{ asset(url('staff_attendance')) }}">
-                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                        <p class="mb-0"><i class="cil-user c-sidebar-nav-icon dgn"></i>
-                                                        </p>
-                                                        <p class="mb-0">{{ __('Staff Attendance') }}</p>
-                                                    </div>
-                                                </a>
+                                        @endif
+                                    @endrole
+                                    <div class="col-md-3 mt-3 mb-3">
+                                        <a href="{{ asset(url('staff_attendance')) }}">
+                                            <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
+                                                <p class="mb-0"><i class="cil-user c-sidebar-nav-icon dgn"></i>
+                                                </p>
+                                                <p class="mb-0">{{ __('Staff Attendance') }}</p>
                                             </div>
-                                            <!-- <div class="col-md-3 mt-3 mb-3">
-                                                <a href="">
-                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                        <p class="mb-0"><i class="cil-fastfood dgn"></i></p>
-                                                        <p class="mb-0">Menus / Services</p>
-                                                    </div>
-                                                </a>
-                                            </div> -->
+                                        </a>
+                                    </div>
                                     <!-- <div class="col-md-3 mt-3 mb-3">
-                                                <a href="">
-                                                    <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
-                                                        <p class="mb-0"><i class="cil-user-follow dgn"></i></p>
-                                                        <p class="mb-0">Secondary Accounts</p>
-                                                    </div>
-                                                </a>
-                                            </div> -->
+                                        <a href="">
+                                            <div class="border pt_10 pb_10 text-center align-middle bos_shadow">
+                                                <p class="mb-0"><i class="cil-user-follow dgn"></i></p>
+                                                <p class="mb-0">Secondary Accounts</p>
+                                            </div>
+                                        </a>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

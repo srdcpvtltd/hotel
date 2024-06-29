@@ -150,6 +150,13 @@
                         </a>
                     </li>
                 @endcan
+                @can('show-food')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('food.management') }}">
+                        <i class="cil-fastfood c-sidebar-nav-icon"></i>{{ __('Food') }}
+                    </a>
+                </li>
+                @endcan
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('upgrade_plan') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Upgrade Plan') }}
@@ -176,16 +183,20 @@
                     </a>
                 </li>
                 @endcan
+                @can('show-vendor')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('vendors_management') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
                     </a>
                 </li>
+                @endcan
+                @can('show-expense')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('expenses.management') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Expenses') }}
                     </a>
                 </li>
+                @endcan
             @endif
             <li class="c-sidebar-nav-item">
                 @if ($checkIsHotelCreated)

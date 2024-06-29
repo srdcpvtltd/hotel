@@ -25,9 +25,10 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\FoodCategoryController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\HotelStaffController;
 use App\Http\Controllers\HousekeepingController;
-use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
@@ -122,6 +123,7 @@ Route::post('/room_status', [BookingController::class, 'room_status'])->name('bo
 //uttam kumar 24/06/2024
 Route::get('vendors_management', [VendorController::class, 'management'])->name('vendors_management')->middleware(['auth','XSS','2fa',]);
 Route::get('expense_management', [ExpenseController::class, 'management'])->name('expenses.management')->middleware(['auth','XSS','2fa',]);
+Route::get('food_management', [FoodController::class, 'management'])->name('food.management')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/guest/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('guest.report')->middleware(['auth','XSS','2fa',]);
@@ -189,6 +191,8 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('expenses_category', ExpenseCategoryController::class);
     Route::resource('expenses', ExpenseController::class);
     Route::resource('salary', SalaryController::class);
+    Route::resource('food_category', FoodCategoryController::class);
+    Route::resource('food', FoodController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

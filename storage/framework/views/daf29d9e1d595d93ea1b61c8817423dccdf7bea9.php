@@ -5,22 +5,30 @@
     <div class="dropdown-menu" x-placement="bottom-start">
         <a href="#" class="action-item" role="button" data-toggle="dropdown" aria-expanded="false"><i
                 class="fas fa-ellipsis-h"></i></a>
-        <a href="<?php echo e(route('vendors.show', $vendor->id)); ?>" class="dropdown-item"><i class="cil-eye action-btn"></i>
-            <?php echo e(__('Show')); ?></a>
-        <a href="<?php echo e(route('vendors.edit', $vendor->id)); ?>" class="dropdown-item"><i class="cil-pencil action-btn"></i>
-            <?php echo e(__('Edit')); ?></a>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-vendor')): ?>
+            <a href="<?php echo e(route('vendors.show', $vendor->id)); ?>" class="dropdown-item"><i class="cil-eye action-btn"></i>
+                <?php echo e(__('Show')); ?></a>
+        <?php endif; ?>
+
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-vendor')): ?>
+            <a href="<?php echo e(route('vendors.edit', $vendor->id)); ?>" class="dropdown-item"><i class="cil-pencil action-btn"></i>
+                <?php echo e(__('Edit')); ?></a>
+        <?php endif; ?>
+
         <div class="dropdown-divider"></div>
-        <a href="<?php echo e(route('vendors.index')); ?>" class="dropdown-item  text-danger" data-toggle="tooltip"
-            data-original-title="<?php echo e(__('Delete')); ?>" onclick="delete_record('delete-form-<?php echo e($vendor->id); ?>')"><i
-                class="cil-trash action-btn"></i><?php echo e(__('Delete')); ?></a>
-        <?php echo Form::open([
-            'method' => 'DELETE',
-            'route' => ['vendors.destroy', $vendor->id],
-            'id' => 'delete-form-' . $vendor->id,
-        ]); ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-vendor')): ?>
+            <a href="<?php echo e(route('vendors.index')); ?>" class="dropdown-item  text-danger" data-toggle="tooltip"
+                data-original-title="<?php echo e(__('Delete')); ?>" onclick="delete_record('delete-form-<?php echo e($vendor->id); ?>')"><i
+                    class="cil-trash action-btn"></i><?php echo e(__('Delete')); ?></a>
+            <?php echo Form::open([
+                'method' => 'DELETE',
+                'route' => ['vendors.destroy', $vendor->id],
+                'id' => 'delete-form-' . $vendor->id,
+            ]); ?>
 
-        <?php echo Form::close(); ?>
+            <?php echo Form::close(); ?>
 
+        <?php endif; ?>
     </div>
 </div>
 <?php /**PATH C:\xampp\htdocs\hotel\resources\views/vendors/vendor/action.blade.php ENDPATH**/ ?>

@@ -26,7 +26,11 @@ class Vendor_categoryController extends Controller
 
     public function index(VendorCategoryDataTable $table)
     {
-        return $table->render('vendors.category.index');
+        if (\Auth::user()->can('manage-vendor')) {
+            return $table->render('vendors.category.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -36,7 +40,11 @@ class Vendor_categoryController extends Controller
      */
     public function create()
     {
-        return view('vendors.category.create');
+        if (\Auth::user()->can('create-vendor')) {
+            return view('vendors.category.create');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -51,7 +59,7 @@ class Vendor_categoryController extends Controller
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
-        
+
         $hotel_id = [
             'hotel_id' => $hotel->id,
         ];
@@ -68,17 +76,6 @@ class Vendor_categoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -86,12 +83,17 @@ class Vendor_categoryController extends Controller
      */
     public function edit(VendorCategory $VendorCategory)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('edit-vendor')) {
+
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+
+            return view('vendors.category.edit')->with(compact('VendorCategory'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        
-        return view('vendors.category.edit')->with(compact('VendorCategory'));
     }
 
     /**
@@ -122,14 +124,20 @@ class Vendor_categoryController extends Controller
      */
     public function destroy(VendorCategoryRequest $request, VendorCategory $VendorCategory)
     {
-        try {
-            $this->Vendor_categoryService->destroy($request, $VendorCategory);
+        if (\Auth::user()->can('delete-vendor')) {
 
-            $message = 'Vendor Category Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+            try {
+                $this->Vendor_categoryService->destroy($request, $VendorCategory);
+
+                $message = 'Vendor Category Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('vendor_category.index')
+                ->with('message', __($message));
+
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('vendor_category.index')
-            ->with('message', __($message));
     }
 }

@@ -24,20 +24,29 @@ class LaundryController extends Controller
 
     public function index(LaundryDataTable $table)
     {
-        return $table->render('laundry.index');
+        if (\Auth::user()->can('manage-laundry')) {
+            return $table->render('laundry.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function create()
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('create-laundry')) {
+
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+
+            $rooms = Room::where('hotel_id', $hotel->id)->get();
+            $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
+
+            return view('laundry.create', compact('rooms', 'staffs'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-
-        $rooms = Room::where('hotel_id', $hotel->id)->get();
-        $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
-
-        return view('laundry.create', compact('rooms', 'staffs'));
     }
 
     public function store(LaundryRequest $request)
@@ -82,14 +91,19 @@ class LaundryController extends Controller
 
     public function edit(Laundry $laundry)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
-        }
-        $rooms = Room::where('hotel_id', $hotel->id)->get();
-        $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
+        if (\Auth::user()->can('edit-laundry')) {
 
-        return view('laundry.edit', compact('laundry', 'rooms', 'staffs'));
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+            $rooms = Room::where('hotel_id', $hotel->id)->get();
+            $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
+
+            return view('laundry.edit', compact('laundry', 'rooms', 'staffs'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function update(LaundryRequest $request, Laundry $laundry)
@@ -97,7 +111,7 @@ class LaundryController extends Controller
         try {
             $this->LaundryService->update($request, $laundry);
 
-            $data = Laundry::where('assign_staff_id', $request->assign_staff_id)->where('status',0)->get();
+            $data = Laundry::where('assign_staff_id', $request->assign_staff_id)->where('status', 0)->get();
 
             if (count($data) == 0) {
                 if ($request->status == 0) {
@@ -121,14 +135,18 @@ class LaundryController extends Controller
 
     public function destroy(LaundryRequest $request, Laundry $laundry)
     {
-        try {
-            $this->LaundryService->destroy($request, $laundry);
+        if (\Auth::user()->can('delete-laundry')) {
+            try {
+                $this->LaundryService->destroy($request, $laundry);
 
-            $message = 'Laundry order Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+                $message = 'Laundry order Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('laundry.index')
+                ->with('message', __($message));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('laundry.index')
-            ->with('message', __($message));
     }
 }

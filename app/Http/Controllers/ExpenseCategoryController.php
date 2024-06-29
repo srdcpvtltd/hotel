@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ExpenseCategoryDataTable;
-use App\Http\Requests\ExpenseCategoryRequest;
+use App\Http\Requests\FoodCategoryRequest;
 use App\Models\ExpenseCategory;
 use App\Models\HotelProfile;
 use App\Services\ExpenseCategoryService;
@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpenseCategoryController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +26,11 @@ class ExpenseCategoryController extends Controller
 
     public function index(ExpenseCategoryDataTable $table)
     {
-        return $table->render('expenses.category.index');
+        if (\Auth::user()->can('manage-expense')) {
+            return $table->render('expenses.category.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -37,7 +40,11 @@ class ExpenseCategoryController extends Controller
      */
     public function create()
     {
-        return view('expenses.category.create');
+        if (\Auth::user()->can('create-expense')) {
+            return view('expenses.category.create');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -46,7 +53,7 @@ class ExpenseCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ExpenseCategoryRequest $request)
+    public function store(FoodCategoryRequest $request)
     {
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
@@ -69,17 +76,6 @@ class ExpenseCategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -87,12 +83,18 @@ class ExpenseCategoryController extends Controller
      */
     public function edit(ExpenseCategory $expenses_category)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
-        }
+        if (\Auth::user()->can('edit-expense')) {
+            
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+    
+            return view('expenses.category.edit')->with(compact('expenses_category'));
 
-        return view('expenses.category.edit')->with(compact('expenses_category'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -102,7 +104,7 @@ class ExpenseCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ExpenseCategoryRequest $request, ExpenseCategory $expenses_category)
+    public function update(FoodCategoryRequest $request, ExpenseCategory $expenses_category)
     {
         try {
             $this->ExpenseCategoryService->update($request, $expenses_category);
@@ -121,16 +123,22 @@ class ExpenseCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpenseCategoryRequest $request, ExpenseCategory $expenses_category)
+    public function destroy(FoodCategoryRequest $request, ExpenseCategory $expenses_category)
     {
-        try {
-            $this->ExpenseCategoryService->destroy($request, $expenses_category);
+        if (\Auth::user()->can('delete-expense')) {
 
-            $message = 'Expense Category Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+            try {
+                $this->ExpenseCategoryService->destroy($request, $expenses_category);
+    
+                $message = 'Expense Category Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('expenses_category.index')
+                ->with('message', __($message));
+
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('expenses_category.index')
-            ->with('message', __($message));
     }
 }

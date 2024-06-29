@@ -29,7 +29,11 @@ class HotelStaffController extends Controller
      */
     public function index(HotelstaffDataTable $table)
     {
-        return $table->render('hotel_staff.index');
+        if (\Auth::user()->can('manage-hotelstaff')) {
+            return $table->render('hotel_staff.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -39,9 +43,12 @@ class HotelStaffController extends Controller
      */
     public function create()
     {
-        $designation = Designation::all();
-
-        return view('hotel_staff.create', compact('designation'));
+        if (\Auth::user()->can('create-hotelstaff')) {
+            $designation = Designation::all();
+            return view('hotel_staff.create', compact('designation'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -77,17 +84,6 @@ class HotelStaffController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -95,8 +91,12 @@ class HotelStaffController extends Controller
      */
     public function edit(Hotel_staff $hotel_staff)
     {
-        $designation = Designation::all();
-        return view('hotel_staff.edit', compact('hotel_staff', 'designation'));
+        if (\Auth::user()->can('edit-hotelstaff')) {
+            $designation = Designation::all();
+            return view('hotel_staff.edit', compact('hotel_staff', 'designation'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -126,15 +126,19 @@ class HotelStaffController extends Controller
      */
     public function destroy(HotelstaffRequest $request, Hotel_staff $hotel_staff)
     {
-        try {
-            $this->HotelstaffService->destroy($request, $hotel_staff);
+        if (\Auth::user()->can('delete-hotelstaff')) {
+            try {
+                $this->HotelstaffService->destroy($request, $hotel_staff);
 
-            $message = 'Staff Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+                $message = 'Staff Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('hotel_staff.index')
+                ->with('message', __($message));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('hotel_staff.index')
-            ->with('message', __($message));
     }
 
     public function attendance()

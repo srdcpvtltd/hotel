@@ -35,11 +35,11 @@ class HomeController extends Controller
             $languages = count(UtilityFacades::languages());
 
             //only check In book 
-            $bookings = Booking::where('user_id',Auth::id())->whereHas('rooms', function($q){
-                $q->where('status','0');
-            })->orderBy('created_at','DESC')->paginate(20);
+            $bookings = Booking::where('user_id', Auth::id())->whereHas('rooms', function ($q) {
+                $q->where('status', '0');
+            })->orderBy('created_at', 'DESC')->paginate(20);
             Session::forget('loginError');
-            return view('dashboard.homepage', compact('user', 'modual', 'role', 'languages','bookings'));
+            return view('dashboard.homepage', compact('user', 'modual', 'role', 'languages', 'bookings'));
         }
     }
 
@@ -101,24 +101,27 @@ class HomeController extends Controller
             return response()->json(['lable' => $arrLable, 'value' => $arrValue], 200);
         }
     }
-    public function all_notification(){
+    public function all_notification()
+    {
         $InvalidUsers = new \App\Services\Dashboard\InvalidUsers();
         $data = $InvalidUsers->getUsers();
         return view('notification.all_notification', compact('data'));
     }
-    public function showChangePasswordGet() {
+    public function showChangePasswordGet()
+    {
         return view('auth.passwords.change-password');
     }
 
-    public function changePasswordPost(Request $request) {
+    public function changePasswordPost(Request $request)
+    {
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
-            return redirect()->back()->with("error","Your current password does not matches with the password.");
+            return redirect()->back()->with("error", "Your current password does not matches with the password.");
         }
 
-        if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
+        if (strcmp($request->get('current-password'), $request->get('new-password')) == 0) {
             // Current password and new password same
-            return redirect()->back()->with("error","New Password cannot be same as your current password.");
+            return redirect()->back()->with("error", "New Password cannot be same as your current password.");
         }
 
         $validatedData = $request->validate([
@@ -131,10 +134,14 @@ class HomeController extends Controller
         $user->password = bcrypt($request->get('new-password'));
         $user->save();
 
-       return redirect('dashboard')->with('status', 'Password updated!');
+        return redirect('dashboard')->with('status', 'Password updated!');
     }
     public function stock_inventory()
     {
-        return view('inventory.index');
+        if (\Auth::user()->can('manage-inventory')) {
+            return view('inventory.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 }

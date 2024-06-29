@@ -5,19 +5,28 @@
     <div class="dropdown-menu" x-placement="bottom-start">
         <a href="#" class="action-item" role="button" data-toggle="dropdown" aria-expanded="false"><i
                 class="fas fa-ellipsis-h"></i></a>
-        <a href="{{ route('expenses.show', $expense->id) }}" class="dropdown-item"><i class="cil-eye action-btn"></i>
-            {{ __('Show') }}</a>
-        <a href="{{ route('expenses.edit', $expense->id) }}" class="dropdown-item"><i class="cil-pencil action-btn"></i>
-            {{ __('Edit') }}</a>
+        @can('show-expense')
+            <a href="{{ route('expenses.show', $expense->id) }}" class="dropdown-item"><i class="cil-eye action-btn"></i>
+                {{ __('Show') }}</a>
+        @endcan
+
+        @can('edit-expense')
+            <a href="{{ route('expenses.edit', $expense->id) }}" class="dropdown-item"><i class="cil-pencil action-btn"></i>
+                {{ __('Edit') }}</a>
+        @endcan
+
         <div class="dropdown-divider"></div>
-        <a href="{{ route('expenses.index') }}" class="dropdown-item  text-danger" data-toggle="tooltip"
-            data-original-title="{{ __('Delete') }}" onclick="delete_record('delete-form-{{ $expense->id }}')"><i
-                class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
-        {!! Form::open([
-            'method' => 'DELETE',
-            'route' => ['expenses.destroy', $expense->id],
-            'id' => 'delete-form-' . $expense->id,
-        ]) !!}
-        {!! Form::close() !!}
+
+        @can('delete-expense')
+            <a href="{{ route('expenses.index') }}" class="dropdown-item  text-danger" data-toggle="tooltip"
+                data-original-title="{{ __('Delete') }}" onclick="delete_record('delete-form-{{ $expense->id }}')"><i
+                    class="cil-trash action-btn"></i>{{ __('Delete') }}</a>
+            {!! Form::open([
+                'method' => 'DELETE',
+                'route' => ['expenses.destroy', $expense->id],
+                'id' => 'delete-form-' . $expense->id,
+            ]) !!}
+            {!! Form::close() !!}
+        @endcan
     </div>
 </div>

@@ -22,12 +22,20 @@ class ExpenseController extends Controller
     }
     public function management()
     {
-        return view('expenses.index');
+        if (\Auth::user()->can('manage-expense')) {
+            return view('expenses.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function index(ExpenseDataTable $table)
     {
-        return $table->render('expenses.expenses.index');
+        if (\Auth::user()->can('manage-expense')) {
+            return $table->render('expenses.expenses.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -37,15 +45,21 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('create-expense')) {
+
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+    
+            $category = ExpenseCategory::where('hotel_id', $hotel->id)->get();
+            $vendor = Vendor::where('hotel_id', $hotel->id)->get();
+    
+            return view('expenses.expenses.create', compact('category', 'vendor'));
+
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-
-        $category = ExpenseCategory::where('hotel_id', $hotel->id)->get();
-        $vendor = Vendor::where('hotel_id', $hotel->id)->get();
-
-        return view('expenses.expenses.create', compact('category', 'vendor'));
     }
 
     /**
@@ -84,12 +98,18 @@ class ExpenseController extends Controller
      */
     public function show(Expense $Expense)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
-        }
+        if (\Auth::user()->can('show-expense')) {
 
-        return view('expenses.expenses.show')->with(compact('Expense'));
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+    
+            return view('expenses.expenses.show')->with(compact('Expense'));
+
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -100,15 +120,21 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $Expense)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('edit-expense')) {
+
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+    
+            $category = ExpenseCategory::where('hotel_id', $hotel->id)->get();
+            $vendor = Vendor::where('hotel_id', $hotel->id)->get();
+    
+            return view('expenses.expenses.edit')->with(compact('Expense','category','vendor'));
+
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-
-        $category = ExpenseCategory::where('hotel_id', $hotel->id)->get();
-        $vendor = Vendor::where('hotel_id', $hotel->id)->get();
-
-        return view('expenses.expenses.edit')->with(compact('Expense','category','vendor'));
     }
 
     /**
@@ -139,14 +165,20 @@ class ExpenseController extends Controller
      */
     public function destroy(ExpenseRequest $request, Expense $expenses)
     {
-        try {
-            $this->ExpenseService->destroy($request, $expenses);
+        if (\Auth::user()->can('delete-expense')) {
+            
+            try {
+                $this->ExpenseService->destroy($request, $expenses);
+    
+                $message = 'Expense Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('expenses.index')
+                ->with('message', __($message));
 
-            $message = 'Expense Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('expenses.index')
-            ->with('message', __($message));
     }
 }

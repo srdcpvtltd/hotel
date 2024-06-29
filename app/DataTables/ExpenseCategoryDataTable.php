@@ -48,8 +48,8 @@ class ExpenseCategoryDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('expensecategorydatatable-table')
-                    ->columns($this->getColumns())
+            ->setTableId('expensecategory-table')
+            ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
             ->orderBy(1)
@@ -62,7 +62,7 @@ class ExpenseCategoryDataTable extends DataTable
                     'create' => __('Create'),
                     'pageLength' => __('Show %d rows'),
                 ]
-            ]); 
+            ]);
     }
 
     /**

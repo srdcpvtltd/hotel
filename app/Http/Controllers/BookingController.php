@@ -29,19 +29,27 @@ class BookingController extends Controller
 
     public function index(BookingDataTable $table)
     {
-        return $table->render('booking.index');
+        if (\Auth::user()->can('manage-Booking')) {
+            return $table->render('booking.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function create()
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('create-Booking')) {
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+    
+            $room_types = RoomType::where('hotel_id', $hotel->id)->get();
+    
+            return view('booking.create', compact('room_types'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-
-        $room_types = RoomType::where('hotel_id', $hotel->id)->get();
-
-        return view('booking.create', compact('room_types'));
     }
 
     public function store(BookingRequest $request)
@@ -69,14 +77,18 @@ class BookingController extends Controller
 
     public function edit(AdvanceBooking $booking)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('edit-Booking')) {
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+    
+            $room_types = RoomType::where('hotel_id', $hotel->id)->get();
+    
+            return view('booking.edit')->with(compact('booking', 'room_types'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-
-        $room_types = RoomType::where('hotel_id', $hotel->id)->get();
-
-        return view('booking.edit')->with(compact('booking', 'room_types'));
     }
 
     public function update(BookingRequest $request, AdvanceBooking $booking)
@@ -94,15 +106,19 @@ class BookingController extends Controller
 
     public function destroy(BookingRequest $request, AdvanceBooking $booking)
     {
-        try {
-            $this->BookingService->destroy($request, $booking);
-
-            $message = 'Booking Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+        if (\Auth::user()->can('delete-Booking')) {
+            try {
+                $this->BookingService->destroy($request, $booking);
+    
+                $message = 'Booking Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('booking.index')
+                ->with('message', __($message));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('booking.index')
-            ->with('message', __($message));
     }
 
     public function proceed_check_in($id)

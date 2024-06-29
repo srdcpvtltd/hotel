@@ -23,20 +23,29 @@ class HousekeepingController extends Controller
 
     public function index(HousekeepingDataTable $table)
     {
-        return $table->render('housekeeping.index');
+        if (\Auth::user()->can('manage-housekeeping')) {
+            return $table->render('housekeeping.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function create()
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
-        }
+        if (\Auth::user()->can('create-housekeeping')) {
 
-        $rooms = Room::where('hotel_id', $hotel->id)->get();
-        $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
-        
-        return view('housekeeping.create', compact('rooms','staffs'));
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+
+            $rooms = Room::where('hotel_id', $hotel->id)->get();
+            $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
+
+            return view('housekeeping.create', compact('rooms', 'staffs'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function store(HousekeepingRequest $request)
@@ -52,11 +61,11 @@ class HousekeepingController extends Controller
         $message = '';
         try {
             $HousekeepingService = $this->HousekeepingService->store($request, Housekeeping::class, $hotel_id);
-            if($request->status == 0){
+            if ($request->status == 0) {
                 $staff = Hotel_staff::findorfail($request->assign_staff_id);
                 $staff->status = 1;
                 $staff->update();
-                
+
                 $room_clean = Room::findorfail($request->room_id);
                 $room_clean->room_clean_status = 1;
                 $room_clean->update();
@@ -64,7 +73,7 @@ class HousekeepingController extends Controller
                 $staff = Hotel_staff::findorfail($request->assign_staff_id);
                 $staff->status = 0;
                 $staff->update();
-                
+
                 $room_clean = Room::findorfail($request->room_id);
                 $room_clean->room_clean_status = 0;
                 $room_clean->update();
@@ -80,25 +89,30 @@ class HousekeepingController extends Controller
 
     public function edit(Housekeeping $housekeeping)
     {
-        $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        if (!$hotel) {
-            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        if (\Auth::user()->can('edit-housekeeping')) {
+
+            $hotel = HotelProfile::where('user_id', Auth::id())->first();
+            if (!$hotel) {
+                return redirect('/add-hotel')->with('success', "Please create hotel first.");
+            }
+            $rooms = Room::where('hotel_id', $hotel->id)->get();
+            $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
+
+            return view('housekeeping.edit', compact('housekeeping', 'rooms', 'staffs'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        $rooms = Room::where('hotel_id', $hotel->id)->get();
-        $staffs = Hotel_staff::where('hotel_id', $hotel->id)->get();
-        
-        return view('housekeeping.edit', compact('housekeeping','rooms','staffs'));
     }
 
     public function update(HousekeepingRequest $request, Housekeeping $housekeeping)
     {
         try {
             $this->HousekeepingService->update($request, $housekeeping);
-            if($request->status == 0){
+            if ($request->status == 0) {
                 $staff = Hotel_staff::findorfail($request->assign_staff_id);
                 $staff->status = 1;
                 $staff->update();
-                
+
                 $room_clean = Room::findorfail($request->room_id);
                 $room_clean->room_clean_status = 1;
                 $room_clean->update();
@@ -106,7 +120,7 @@ class HousekeepingController extends Controller
                 $staff = Hotel_staff::findorfail($request->assign_staff_id);
                 $staff->status = 0;
                 $staff->update();
-                
+
                 $room_clean = Room::findorfail($request->room_id);
                 $room_clean->room_clean_status = 2;
                 $room_clean->update();
@@ -122,14 +136,20 @@ class HousekeepingController extends Controller
 
     public function destroy(HousekeepingRequest $request, Housekeeping $housekeeping)
     {
-        try {
-            $this->HousekeepingService->destroy($request, $housekeeping);
+        if (\Auth::user()->can('delete-housekeeping')) {
 
-            $message = 'Housekeeping Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+            try {
+                $this->HousekeepingService->destroy($request, $housekeeping);
+
+                $message = 'Housekeeping Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('housekeeping.index')
+                ->with('message', __($message));
+
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('housekeeping.index')
-            ->with('message', __($message));
     }
 }

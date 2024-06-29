@@ -174,6 +174,14 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-food')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('food.management')); ?>">
+                        <i class="cil-fastfood c-sidebar-nav-icon"></i><?php echo e(__('Food')); ?>
+
+                    </a>
+                </li>
+                <?php endif; ?>
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('upgrade_plan')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Upgrade Plan')); ?>
@@ -204,18 +212,22 @@
                     </a>
                 </li>
                 <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-vendor')): ?>
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('vendors_management')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Vendors')); ?>
 
                     </a>
                 </li>
+                <?php endif; ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-expense')): ?>
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('expenses.management')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Expenses')); ?>
 
                     </a>
                 </li>
+                <?php endif; ?>
             <?php endif; ?>
             <li class="c-sidebar-nav-item">
                 <?php if($checkIsHotelCreated): ?>

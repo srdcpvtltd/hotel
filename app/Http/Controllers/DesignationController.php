@@ -27,7 +27,11 @@ class DesignationController extends Controller
      */
     public function index(DesignationDataTable $table)
     {
-        return $table->render('designation.index');
+        if (\Auth::user()->can('manage-Designation')) {
+            return $table->render('designation.index');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -37,7 +41,11 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        return view('designation.create');
+        if (\Auth::user()->can('create-Designation')) {
+            return view('designation.create');
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -67,17 +75,6 @@ class DesignationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -85,7 +82,11 @@ class DesignationController extends Controller
      */
     public function edit(Designation $designation)
     {
-        return view('designation.edit', compact('designation'));
+        if (\Auth::user()->can('edit-Designation')) {
+            return view('designation.edit', compact('designation'));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -115,14 +116,18 @@ class DesignationController extends Controller
      */
     public function destroy(DesignationRequest $request, Designation $designation)
     {
-        try {
-            $this->DesignationService->destroy($request, $designation);
+        if (\Auth::user()->can('delete-Designation')) {
+            try {
+                $this->DesignationService->destroy($request, $designation);
 
-            $message = 'Designation Deleted successfully';
-        } catch (\Exception $exception) {
-            $message = 'Error has Deleted';
+                $message = 'Designation Deleted successfully';
+            } catch (\Exception $exception) {
+                $message = 'Error has Deleted';
+            }
+            return redirect()->route('designation.index')
+                ->with('message', __($message));
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
         }
-        return redirect()->route('designation.index')
-            ->with('message', __($message));
     }
 }

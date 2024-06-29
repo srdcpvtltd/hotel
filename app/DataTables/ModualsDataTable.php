@@ -67,7 +67,10 @@ class ModualsDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
+            Column::make('id')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
             Column::make('name'),
             Column::make('created_at'),
             Column::computed('action')
