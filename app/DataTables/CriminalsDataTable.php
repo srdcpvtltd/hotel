@@ -41,10 +41,10 @@ class CriminalsDataTable extends DataTable
                 Button::make('create')->className('btn-primary '),
                 Button::make('pageLength')->className('btn-light ')
 
-            ) ->language([
-                'buttons'=>[
-                    'create'=>__('Create'),
-                    'pageLength'=>__('Show %d rows'),
+            )->language([
+                'buttons' => [
+                    'create' => __('Create'),
+                    'pageLength' => __('Show %d rows'),
                 ]
             ]);
     }
@@ -54,9 +54,11 @@ class CriminalsDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
+            Column::make('id')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
             Column::make('name'),
-            // Column::make('mobile'),
             Column::make('age'),
             Column::make('gender'),
             Column::make('remarks'),

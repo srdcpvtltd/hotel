@@ -40,10 +40,10 @@ class CountriesDataTable extends DataTable
                 Button::make('create')->className('btn-primary '),
                 Button::make('pageLength')->className('btn-light ')
 
-            ) ->language([
-                'buttons'=>[
-                    'create'=>__('Create'),
-                    'pageLength'=>__('Show %d rows'),
+            )->language([
+                'buttons' => [
+                    'create' => __('Create'),
+                    'pageLength' => __('Show %d rows'),
                 ]
             ]);
     }
@@ -53,7 +53,10 @@ class CountriesDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
+            Column::make('id')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
             Column::make('sortname'),
             Column::make('name'),
             Column::computed('action')

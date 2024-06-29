@@ -25,7 +25,6 @@ class DistrictsDataTable extends DataTable
 
     public function query(District $model)
     {
-        //$query=$model->with('country');
         return $model->newQuery()->orderBy('id', 'ASC');
     }
 
@@ -55,7 +54,10 @@ class DistrictsDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
+            Column::make('id')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
             Column::make('state_id')->title('State'),
             Column::make('name')->title('District'),
             Column::computed('action')

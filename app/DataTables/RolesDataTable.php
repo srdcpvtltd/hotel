@@ -29,7 +29,7 @@ class RolesDataTable extends DataTable
 
     public function query(Role $model)
     {
-        return $model->newQuery()->where('name','!=','admin')->orderBy('id', 'ASC');
+        return $model->newQuery()->where('name', '!=', 'admin')->orderBy('id', 'ASC');
     }
 
 
@@ -48,16 +48,16 @@ class RolesDataTable extends DataTable
                 Button::make('reset')->className('btn-light '),
                 Button::make('reload')->className('btn-light '),
                 Button::make('pageLength')->className('btn-light ')
-            ) ->language([
-                'buttons'=>[
-                    'create'=>__('Create'),
-                    'export'=>__('Export'),
-                    'print'=>__('Print'),
-                    'reset'=>__('Reset'),
-                    'reload'=>__('Reload'),
-                    'excel'=>__('Excel'),
-                    'csv'=>__('CSV'),
-                    'pageLength'=>__('Show %d rows'),
+            )->language([
+                'buttons' => [
+                    'create' => __('Create'),
+                    'export' => __('Export'),
+                    'print' => __('Print'),
+                    'reset' => __('Reset'),
+                    'reload' => __('Reload'),
+                    'excel' => __('Excel'),
+                    'csv' => __('CSV'),
+                    'pageLength' => __('Show %d rows'),
                 ]
             ]);
     }
@@ -67,7 +67,10 @@ class RolesDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
+            Column::make('id')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
             Column::make('name'),
             Column::make('created_at'),
             Column::computed('action')

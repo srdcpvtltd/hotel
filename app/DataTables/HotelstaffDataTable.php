@@ -82,7 +82,7 @@ class HotelstaffDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('row_number')
+            Column::make('id')
                 ->title('Sl No.')
                 ->render('meta.row + meta.settings._iDisplayStart + 1;')
                 ->orderable(false),

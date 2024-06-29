@@ -15,7 +15,7 @@ class StatesDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('country_id', function (State $state) {
-                return ($state->country!=null)?$state->country->name:'-';
+                return ($state->country != null) ? $state->country->name : '-';
             })
             ->addColumn('action', function (State $state) {
                 return view('states.action', compact('state'));
@@ -42,10 +42,10 @@ class StatesDataTable extends DataTable
                 Button::make('create')->className('btn-primary '),
                 Button::make('pageLength')->className('btn-light ')
 
-            ) ->language([
-                'buttons'=>[
-                    'create'=>__('Create'),
-                    'pageLength'=>__('Show %d rows'),
+            )->language([
+                'buttons' => [
+                    'create' => __('Create'),
+                    'pageLength' => __('Show %d rows'),
                 ]
             ]);
     }
@@ -55,7 +55,10 @@ class StatesDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
+            Column::make('id')
+                ->title('Sl No.')
+                ->render('meta.row + meta.settings._iDisplayStart + 1;')
+                ->orderable(false),
             Column::make('country_id')->title('Country'),
             Column::make('name')->title('State'),
             Column::computed('action')
