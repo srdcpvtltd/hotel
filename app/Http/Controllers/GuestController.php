@@ -10,6 +10,7 @@ use App\Models\CriminalBookingMatch;
 use App\Models\HotelProfile;
 use App\Models\Room;
 use App\Models\RoomType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -166,7 +167,11 @@ class GuestController extends Controller
     {
         $booking = Booking::where('user_id', Auth::id())->where('id', $bookingId)->with(['country', 'state', 'city', 'rooms', 'accompanies', 'nationalityName', 'p_country', 'p_city', 'p_state'])->first();
 
-        return view('guest.detail')->with('booking', $booking);
+        $advance_booking = AdvanceBooking::where('hotel_id', Auth::id())->where('from_date', $booking->arrival_date)->where('name', $booking->gues_name)->where('phone_number', $booking->mobile_number)->orderBy('id', 'DESC')->first();
+
+        // dd($advance_booking);
+
+        return view('guest.detail', compact('booking', 'advance_booking'));
     }
 
     public function mark_suspicious($bookingId)
