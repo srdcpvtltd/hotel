@@ -201,7 +201,7 @@
                                     @php
                                         $sgst = $price*9/100;
                                         $cgst = $price*9/100;
-
+                                        $total_amount = $price + ($cgst + $sgst);
                                     @endphp
                                     <tr>
                                         <th class="text-right">SGST (9%) <input id="total_room_amount_gst"
@@ -247,7 +247,7 @@
                                         <th class="text-right">Total Amount <input id="total_room_final_amount"
                                                 name="amount[total_room_final_amount]" type="hidden" value="51000.00">
                                         </th>
-                                        <td width="20%" id="td_room_final_amount" class="text-right">₹ 51000.00</td>
+                                        <td width="20%" id="td_room_final_amount" class="text-right">₹ {{ $total_amount }}.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -316,23 +316,6 @@
                                         <th class="text-right">Total Amount <input id="total_order_final_amount"
                                                 name="amount[order_final_amount]" type="hidden" value="0.00"></th>
                                         <td width="15%" id="td_order_final_amount" class="text-right">₹ 0.00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr class="bg-default">
-                                        <th class="text-right">
-                                            <input class="form-control col-md-7 col-xs-12" id="additional_amount_reason"
-                                                placeholder="Reason of Additional Amount" name="additional_amount_reason"
-                                                type="text">
-                                        </th>
-                                        <td width="15%" id="td_additional_amount" class="text-right">
-                                            <input class="form-control col-md-7 col-xs-12" id="additional_amount"
-                                                placeholder="Additional Amount" min="0" name="additional_amount"
-                                                type="number" value="0">
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
