@@ -129,6 +129,11 @@
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('order.index') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Order') }}
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('messages') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Messages ') }}
                     </a>

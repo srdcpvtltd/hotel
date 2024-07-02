@@ -16,6 +16,9 @@ class AddColumnToBookingsTable extends Migration
         Schema::table('bookings', function (Blueprint $table) {
             $table->integer('district_id')->after('state_id');
             $table->integer('p_district_id')->after('p_state_id');
+            $table->string('total_amount')->after('suspicious_check');
+            $table->string('payment_method')->after('total_amount');
+            $table->string('payment_status')->after('payment_method');
         });
     }
 
@@ -29,6 +32,9 @@ class AddColumnToBookingsTable extends Migration
         Schema::table('bookings', function (Blueprint $table) {
             $table->dropColumn('district_id');
             $table->dropColumn('p_district_id');
+            $table->dropColumn('total_amount');
+            $table->dropColumn('payment_method');
+            $table->dropColumn('payment_status');
         });
     }
 }

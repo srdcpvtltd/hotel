@@ -30,6 +30,7 @@ use App\Http\Controllers\FoodController;
 use App\Http\Controllers\HotelStaffController;
 use App\Http\Controllers\HousekeepingController;
 use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
@@ -62,6 +63,8 @@ Route::get('get-cities', [CountryDropdownController::class, 'getCities'])->name(
 Route::get('get-guest-details/', [GuestController::class, 'getGuestDetail'])->name('getGuestDetail')->middleware(['auth','XSS','2fa',]);
 Route::get('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->middleware(['auth','XSS','2fa',]);
 Route::get('get-room', [BookingController::class, 'getRoom'])->name('getRoom')->middleware(['auth','XSS','2fa',]);
+Route::get('get-food', [OrderController::class, 'getFood'])->name('getFood')->middleware(['auth','XSS','2fa',]);
+Route::get('get-food-price', [OrderController::class, 'getFoodPrice'])->name('getFoodPrice')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/', [FrontEndController::class, 'index']);
@@ -193,6 +196,7 @@ Route::group(['middleware' => ['auth','XSS']], function ()
     Route::resource('salary', SalaryController::class);
     Route::resource('food_category', FoodCategoryController::class);
     Route::resource('food', FoodController::class);
+    Route::resource('order', OrderController::class);
 });
 
 Route::delete('/user/{id}', [UserController::class,'destroy'])->name('users.destroy')->middleware(['auth','XSS']);

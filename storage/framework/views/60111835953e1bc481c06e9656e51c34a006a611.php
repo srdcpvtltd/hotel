@@ -149,6 +149,12 @@
                     </a>
                 </li>
                 <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('order.index')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Order')); ?>
+
+                    </a>
+                </li>
+                <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="<?php echo e(route('messages')); ?>">
                         <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Messages ')); ?>
 
