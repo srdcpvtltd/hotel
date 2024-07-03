@@ -26,6 +26,10 @@ class RoomTypeController extends Controller
 
     public function create()
     {
+        $hotel = HotelProfile::where('user_id', Auth::id())->first();
+        if (!$hotel) {
+            return redirect('/add-hotel')->with('success', "Please create hotel first.");
+        }
         return view('system_management.room_type.create');
     }
 

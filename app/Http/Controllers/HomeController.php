@@ -46,6 +46,10 @@ class HomeController extends Controller
                 $room_type = RoomType::where('hotel_id', $bookings[0]->hotel_id)->get();
                 $price = PriceRule::where('hotel_id', $bookings[0]->hotel_id)->get();
                 $room = Room::where('hotel_id', $bookings[0]->hotel_id)->get();
+            } else {
+                $room_type = [];
+                $price = [];
+                $room = [];
             }
             return view('dashboard.homepage', compact('user', 'modual', 'role', 'languages', 'bookings', 'room_type', 'price', 'room'));
         }

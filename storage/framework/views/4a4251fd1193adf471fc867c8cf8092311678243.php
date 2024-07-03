@@ -8,21 +8,21 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid">
-        <?php if(count($room_type) == 0): ?>
+        <?php if(count($room_type) == 0 && $room_type == []): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <a href="<?php echo e(route('room_type.create')); ?>" style="color:#772b35!important">
                     <strong>Please Add Room Types</strong>
                 </a>
             </div>
         <?php endif; ?>
-        <?php if(count($price) == 0): ?>
+        <?php if(count($price) == 0 && $price == []): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <a href="<?php echo e(route('price_rule.create')); ?>" style="color:#772b35!important">
                     <strong>Please Add Price for Room Types</strong>
                 </a>
             </div>
         <?php endif; ?>
-        <?php if(count($room) == 0): ?>
+        <?php if(count($room) == 0 && $room == []): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <a href="<?php echo e(route('rooms.create')); ?>" style="color:#772b35!important">
                     <strong>Please Add Room</strong>
