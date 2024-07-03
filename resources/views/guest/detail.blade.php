@@ -167,25 +167,37 @@
                                                                                 @endphp
                                                                                 @for ($i = 0; $i < $days; $i++)
                                                                                     @php
-                                                                                    if ($advance_booking == null) {
-                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay($i);
-                                                                                    }else{
-                                                                                        $anchor = Carbon\Carbon::yesterday()->addDay($i);
-                                                                                    }
-                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
+                                                                                        if ($advance_booking == null) {
+                                                                                            $anchor = Carbon\Carbon::create($booking->arrival_date)->subDay(
+                                                                                                $i,
+                                                                                            );
+                                                                                        } else {
+                                                                                            $anchor = Carbon\Carbon::create($booking->arrival_date)->addDay(
+                                                                                                $i,
+                                                                                            );
+                                                                                        }
+                                                                                        $date[] = date(
+                                                                                            'Y-m-d',
+                                                                                            strtotime($anchor),
+                                                                                        );
                                                                                         $tot[] = $p;
                                                                                     @endphp
                                                                                     <tr>
                                                                                         <td class="text-center">
                                                                                             {{ $date[$i] }}
                                                                                         </td>
-                                                                                        @if ($date[$i] != date('Y-m-d'))
-                                                                                            <td class="text-right">₹
-                                                                                                {{ $room_price->price }}.00
-                                                                                            </td>
+                                                                                        @if ($advance_booking != null)
+                                                                                        <td>₹ {{ $room_price->price }}.00</td>
                                                                                         @else
-                                                                                            <td class="text-right">₹ 0.00
-                                                                                            </td>
+                                                                                            @if ($date[$i] != date('Y-m-d'))
+                                                                                                <td class="text-right">₹
+                                                                                                    {{ $room_price->price }}.00
+                                                                                                </td>
+                                                                                            @else
+                                                                                                <td class="text-right">₹
+                                                                                                    0.00
+                                                                                                </td>
+                                                                                            @endif
                                                                                         @endif
                                                                                     </tr>
                                                                                 @endfor
