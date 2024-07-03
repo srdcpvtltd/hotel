@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Models\Booking;
+use App\Models\PriceRule;
+use App\Models\Room;
+use App\Models\RoomType;
 use Hash;
 use Session;
 
@@ -39,7 +42,12 @@ class HomeController extends Controller
                 $q->where('status', '0');
             })->orderBy('created_at', 'DESC')->paginate(20);
             Session::forget('loginError');
-            return view('dashboard.homepage', compact('user', 'modual', 'role', 'languages', 'bookings'));
+            if(count($bookings) > 0){
+                $room_type = RoomType::where('hotel_id', $bookings[0]->hotel_id)->get();
+                $price = PriceRule::where('hotel_id', $bookings[0]->hotel_id)->get();
+                $room = Room::where('hotel_id', $bookings[0]->hotel_id)->get();
+            }
+            return view('dashboard.homepage', compact('user', 'modual', 'role', 'languages', 'bookings', 'room_type', 'price', 'room'));
         }
     }
 

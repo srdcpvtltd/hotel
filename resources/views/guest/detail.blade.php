@@ -163,16 +163,16 @@
                                                                                         ->first('price');
                                                                                     $p = $room_price->price;
                                                                                     $price = $p * $days;
+                                                                                    $tot = [];
                                                                                 @endphp
                                                                                 @for ($i = 0; $i < $days; $i++)
                                                                                     @php
-                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay(
-                                                                                            $i,
-                                                                                        );
-                                                                                        $date[] = date(
-                                                                                            'Y-m-d',
-                                                                                            strtotime($anchor),
-                                                                                        );
+                                                                                    if ($advance_booking == null) {
+                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay($i);
+                                                                                    }else{
+                                                                                        $anchor = Carbon\Carbon::yesterday()->addDay($i);
+                                                                                    }
+                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
                                                                                         $tot[] = $p;
                                                                                     @endphp
                                                                                     <tr>
@@ -208,9 +208,11 @@
                                         </tr>
                                     @endforeach
                                     @php
-                                        $count = count($tot);
-                                        for ($i = 0; $i < $count; $i++) {
-                                            $subtotal += $tot[$i];
+                                        if ($tot != null) {
+                                            $count = count($tot);
+                                            for ($i = 0; $i < $count; $i++) {
+                                                $subtotal += $tot[$i];
+                                            }
                                         }
                                     @endphp
                                 </tbody>
@@ -441,7 +443,7 @@
                                     </div>
                                 </form>
                             @else
-                            <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
+                                <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
                             @endif
                         </div>
                     </div>
