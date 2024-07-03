@@ -109,7 +109,7 @@
                 </a>
             </li>
         @endrole
-        @role('free')
+        {{-- @role('free') --}}
             @if ($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null))
                 @can('show-Booking')
                     <li class="c-sidebar-nav-item">
@@ -128,11 +128,13 @@
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Guest Check Out') }}
                     </a>
                 </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('order.index') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Order') }}
-                    </a>
-                </li>
+                @can('show-order')
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('order.index') }}">
+                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Order') }}
+                        </a>
+                    </li>
+                @endcan
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('messages') }}">
                         <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Messages ') }}
@@ -156,11 +158,11 @@
                     </li>
                 @endcan
                 @can('show-food')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('food.management') }}">
-                        <i class="cil-fastfood c-sidebar-nav-icon"></i>{{ __('Food') }}
-                    </a>
-                </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('food.management') }}">
+                            <i class="cil-fastfood c-sidebar-nav-icon"></i>{{ __('Food') }}
+                        </a>
+                    </li>
                 @endcan
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link" href="{{ route('upgrade_plan') }}">
@@ -182,25 +184,25 @@
                     </li>
                 @endcan
                 @can('show-laundry')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('laundry.index') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Laundry') }}
-                    </a>
-                </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('laundry.index') }}">
+                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Laundry') }}
+                        </a>
+                    </li>
                 @endcan
                 @can('show-vendor')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('vendors_management') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
-                    </a>
-                </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('vendors_management') }}">
+                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
+                        </a>
+                    </li>
                 @endcan
                 @can('show-expense')
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('expenses.management') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Expenses') }}
-                    </a>
-                </li>
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" href="{{ route('expenses.management') }}">
+                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Expenses') }}
+                        </a>
+                    </li>
                 @endcan
             @endif
             <li class="c-sidebar-nav-item">
@@ -214,7 +216,7 @@
                     </a>
                 @endif
             </li>
-        @endrole
+        {{-- @endrole --}}
         @include('layouts.menu')
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

@@ -38,7 +38,15 @@
     <script type="text/javascript" src="{{ asset('js/webcam.min.js') }}"></script>
     <style>
         .toast-error {
-            background-color: #BD362F!important;
+            background-color: #BD362F !important;
+        }
+
+        .c-app .modal-open {
+            padding-right: 0px !important;
+        }
+
+        body {
+            padding-right: 0px !important;
         }
     </style>
 </head>

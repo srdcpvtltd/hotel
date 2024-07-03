@@ -43,9 +43,9 @@ class BookingController extends Controller
             if (!$hotel) {
                 return redirect('/add-hotel')->with('success', "Please create hotel first.");
             }
-    
+
             $room_types = RoomType::where('hotel_id', $hotel->id)->get();
-    
+
             return view('booking.create', compact('room_types'));
         } else {
             return redirect()->back()->with('error', 'Permission denied.');
@@ -82,9 +82,9 @@ class BookingController extends Controller
             if (!$hotel) {
                 return redirect('/add-hotel')->with('success', "Please create hotel first.");
             }
-    
+
             $room_types = RoomType::where('hotel_id', $hotel->id)->get();
-    
+
             return view('booking.edit')->with(compact('booking', 'room_types'));
         } else {
             return redirect()->back()->with('error', 'Permission denied.');
@@ -109,7 +109,7 @@ class BookingController extends Controller
         if (\Auth::user()->can('delete-Booking')) {
             try {
                 $this->BookingService->destroy($request, $booking);
-    
+
                 $message = 'Booking Deleted successfully';
             } catch (\Exception $exception) {
                 $message = 'Error has Deleted';
@@ -155,5 +155,16 @@ class BookingController extends Controller
             'room_type' => $room_type,
             'room' => $room
         ]);
+    }
+
+    public function payment(Request $request)
+    {
+        $payment = Booking::where('id', $request->booking_id)->first();
+        $payment->total_amount = $request->total_amount;
+        $payment->payment_method = $request->payment_method;
+        $payment->payment_status = $request->payment_status;
+        $payment->save();
+
+        return redirect()->back();
     }
 }

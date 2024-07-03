@@ -7,11 +7,11 @@
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-<style>
-    .pd_0{
-        padding:0;
-    }
-</style>
+    <style>
+        .pd_0 {
+            padding: 0;
+        }
+    </style>
     <div class="">
         <?php if(session()->has('success')): ?>
             <div class="alert alert-success">
@@ -137,10 +137,11 @@
                                             </th>
                                             <td class="text-center">
                                                 <span class="error base_price_err_msg"></span>
-                                                <button type="button" class="btn btn-xs btn-info"
-                                                    data-toggle="modal" data-target="#room_price_model_<?php echo e($room->id); ?>">Price
+                                                <button type="button" class="btn btn-xs btn-info" data-toggle="modal"
+                                                    data-target="#room_price_model_<?php echo e($room->id); ?>">Price
                                                     Break</button>
-                                                <div id="room_price_model_<?php echo e($room->id); ?>" class="modal fade" role="dialog">
+                                                <div id="room_price_model_<?php echo e($room->id); ?>" class="modal fade"
+                                                    role="dialog" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -164,34 +165,48 @@
                                                                             </thead>
                                                                             <tbody class="">
                                                                                 <?php
-                                                                                    $room_price = App\Models\Room::where('hotel_id', $hotel->id)
-                                                                                                            ->where('name', $room->room_number)
-                                                                                                            ->first('price');
+                                                                                    $room_price = App\Models\Room::where(
+                                                                                        'hotel_id',
+                                                                                        $hotel->id,
+                                                                                    )
+                                                                                        ->where(
+                                                                                            'name',
+                                                                                            $room->room_number,
+                                                                                        )
+                                                                                        ->first('price');
                                                                                     $p = $room_price->price;
                                                                                     $price = $p * $days;
-                                                                                    ?>
+                                                                                ?>
                                                                                 <?php for($i = 0; $i < $days; $i++): ?>
                                                                                     <?php
-                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay($i);
-                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
+                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay(
+                                                                                            $i,
+                                                                                        );
+                                                                                        $date[] = date(
+                                                                                            'Y-m-d',
+                                                                                            strtotime($anchor),
+                                                                                        );
                                                                                         $tot[] = $p;
                                                                                     ?>
                                                                                     <tr>
-                                                                                        <td class="text-center"><?php echo e($date[$i]); ?>
+                                                                                        <td class="text-center">
+                                                                                            <?php echo e($date[$i]); ?>
 
                                                                                         </td>
                                                                                         <?php if($date[$i] != date('Y-m-d')): ?>
-                                                                                        <td class="text-right">₹ <?php echo e($room_price->price); ?>.00
-                                                                                        </td>
+                                                                                            <td class="text-right">₹
+                                                                                                <?php echo e($room_price->price); ?>.00
+                                                                                            </td>
                                                                                         <?php else: ?>
-                                                                                        <td class="text-right">₹ 0.00
-                                                                                        </td>
+                                                                                            <td class="text-right">₹ 0.00
+                                                                                            </td>
                                                                                         <?php endif; ?>
                                                                                     </tr>
                                                                                 <?php endfor; ?>
                                                                                 <tr>
                                                                                     <td></td>
-                                                                                    <td class="text-right"><b>₹ <?php echo e($price); ?>.00</b>
+                                                                                    <td class="text-right"><b>₹
+                                                                                            <?php echo e($price); ?>.00</b>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -208,7 +223,7 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php
                                         $count = count($tot);
-                                        for($i=0;$i<$count;$i++){
+                                        for ($i = 0; $i < $count; $i++) {
                                             $subtotal += $tot[$i];
                                         }
                                     ?>
@@ -218,24 +233,30 @@
                                 <tbody>
                                     <tr>
                                         <th class="text-right">Subtotal <input id="total_room_amount"
-                                                name="amount[total_room_amount]" type="hidden" value="<?php echo e($subtotal); ?>.00"></th>
-                                        <td width="20%" class="text-right td_total_room_amount">₹ <?php echo e($subtotal); ?>.00</td>
+                                                name="amount[total_room_amount]" type="hidden"
+                                                value="<?php echo e($subtotal); ?>.00"></th>
+                                        <td width="20%" class="text-right td_total_room_amount">₹ <?php echo e($subtotal); ?>.00
+                                        </td>
                                     </tr>
                                     <?php
-                                        $sgst = $subtotal * 9/100;
-                                        $cgst = $subtotal * 9/100;
+                                        $sgst = ($subtotal * 9) / 100;
+                                        $cgst = ($subtotal * 9) / 100;
                                         $total_amount = $subtotal + ($cgst + $sgst);
                                     ?>
                                     <tr>
                                         <th class="text-right">SGST (9%) <input id="total_room_amount_gst"
-                                                name="amount[total_room_amount_gst]" type="hidden" value="<?php echo e($sgst); ?>"></th>
-                                        <td width="20%" id="td_total_room_amount_gst" class="text-right">₹ <?php echo e($sgst); ?>.00
+                                                name="amount[total_room_amount_gst]" type="hidden"
+                                                value="<?php echo e($sgst); ?>"></th>
+                                        <td width="20%" id="td_total_room_amount_gst" class="text-right">₹
+                                            <?php echo e($sgst); ?>.00
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <th class="text-right">CGST (9%) <input id="total_room_amount_cgst"
-                                                name="amount[total_room_amount_cgst]" type="hidden" value="<?php echo e($cgst); ?>"></th>
-                                        <td width="20%" id="td_total_room_amount_cgst" class="text-right">₹ <?php echo e($cgst); ?>.00
+                                                name="amount[total_room_amount_cgst]" type="hidden"
+                                                value="<?php echo e($cgst); ?>"></th>
+                                        <td width="20%" id="td_total_room_amount_cgst" class="text-right">₹
+                                            <?php echo e($cgst); ?>.00
                                         </td>
                                     </tr>
                                     
@@ -244,7 +265,8 @@
                                         <th class="text-right">Total Amount <input id="total_room_final_amount"
                                                 name="amount[total_room_final_amount]" type="hidden" value="51000.00">
                                         </th>
-                                        <td width="20%" id="td_room_final_amount" class="text-right">₹ <?php echo e($total_amount); ?>.00</td>
+                                        <td width="20%" id="td_room_final_amount" class="text-right">₹
+                                            <?php echo e($total_amount); ?>.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -266,31 +288,44 @@
                                 <tbody>
                                     <?php
                                         $tot_price = 0;
+                                        $i = 0;
                                     ?>
-                                    <?php $__currentLoopData = $booking->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$bookin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <?php
-                                        $rooms = App\Models\Room::where('hotel_id', $hotel->id)
-                                                            ->where('name', $bookin->room_number)
-                                                            ->first();
+                                    <?php if(count($booking->rooms) > 0): ?>
+                                        <?php $__currentLoopData = $booking->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bookin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php
+                                                $rooms = App\Models\Room::where('hotel_id', $hotel->id)
+                                                    ->where('name', $bookin->room_number)
+                                                    ->first();
 
-                                        $order = App\Models\Order::where('room_id', $rooms->id)->first();
-                                        $tot_price += $order->total_price;
-                                    ?>
+                                                $orders = App\Models\Order::where('room_id', $rooms->id)
+                                                    ->where('status', 1)
+                                                    ->get();
+                                            ?>
+                                            <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php
+                                                    $tot_price += $order->total_price;
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo e($i + 1); ?></td>
+                                                    <td>
+                                                        <?php echo e($order->food->name); ?> <br>
+                                                        (Room No.: <?php echo e($order->room->name); ?>)
+                                                    </td>
+                                                    <td><?php echo e(date('d-m-Y', strtotime($order->created_at))); ?></td>
+                                                    <td class="text-center"><?php echo e($order->quantity); ?></td>
+                                                    <td class="text-right">₹ <?php echo e($order->price); ?>.00</td>
+                                                    <td class="text-right">₹ <?php echo e($order->total_price); ?>.00</td>
+                                                </tr>
+                                                <?php
+                                                    $i++;
+                                                ?>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php else: ?>
                                         <tr>
-                                            <td><?php echo e($key + 1); ?></td>
-                                            <td>
-                                                <?php echo e($order->food->name); ?> <br>
-                                                (Room No.: <?php echo e($order->room->name); ?>)
-                                            </td>
-                                            <td><?php echo e(date('d-m-Y',strtotime($order->created_at))); ?></td>
-                                            <td class="text-center"><?php echo e($order->quantity); ?></td>
-                                            <td class="text-right">₹ <?php echo e($order->price); ?>.00</td>
-                                            <td class="text-right">₹ <?php echo e($order->total_price); ?>.00</td>
+                                            <td colspan="6">No Orders</td>
                                         </tr>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <tr>
-                                        <td colspan="6">No Orders</td>
-                                    </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
 
@@ -298,30 +333,38 @@
                                 <tbody>
                                     <tr>
                                         <th class="text-right">Subtotal <input id="total_order_amount"
-                                                name="amount[order_amount]" type="hidden" value="<?php echo e($tot_price); ?>"></th>
-                                        <td width="15%" id="td_total_order_amount" class="text-right">₹ <?php echo e($tot_price); ?></td>
+                                                name="amount[order_amount]" type="hidden" value="<?php echo e($tot_price); ?>">
+                                        </th>
+                                        <td width="15%" id="td_total_order_amount" class="text-right">₹
+                                            <?php echo e($tot_price); ?></td>
                                     </tr>
                                     <?php
-                                        $sgst1 = $tot_price * 9/100;
-                                        $cgst1 = $tot_price * 9/100;
+                                        $sgst1 = ($tot_price * 9) / 100;
+                                        $cgst1 = ($tot_price * 9) / 100;
                                         $total_amount1 = $tot_price + ($cgst1 + $sgst1);
                                         $grand_total = $total_amount1 + $total_amount;
                                     ?>
                                     <tr>
                                         <th class="text-right">SGST (9%) <input id="total_order_amount_gst"
-                                                name="amount[order_amount_gst]" type="hidden" value="<?php echo e($sgst1); ?>"></th>
-                                        <td width="15%" id="td_order_amount_gst" class="text-right">₹ <?php echo e($sgst1); ?></td>
+                                                name="amount[order_amount_gst]" type="hidden"
+                                                value="<?php echo e($sgst1); ?>"></th>
+                                        <td width="15%" id="td_order_amount_gst" class="text-right">₹
+                                            <?php echo e($sgst1); ?></td>
                                     </tr>
                                     <tr class="">
                                         <th class="text-right">CGST (9%) <input id="total_order_amount_cgst"
-                                                name="amount[order_amount_cgst]" type="hidden" value="<?php echo e($cgst1); ?>"></th>
-                                        <td width="15%" id="td_order_amount_cgst" class="text-right">₹ <?php echo e($cgst1); ?></td>
+                                                name="amount[order_amount_cgst]" type="hidden"
+                                                value="<?php echo e($cgst1); ?>"></th>
+                                        <td width="15%" id="td_order_amount_cgst" class="text-right">₹
+                                            <?php echo e($cgst1); ?></td>
                                     </tr>
                                     
                                     <tr class="bg-warning">
                                         <th class="text-right">Total Amount <input id="total_order_final_amount"
-                                                name="amount[order_final_amount]" type="hidden" value="<?php echo e($total_amount1); ?>"></th>
-                                        <td width="15%" id="td_order_final_amount" class="text-right">₹ <?php echo e($total_amount1); ?></td>
+                                                name="amount[order_final_amount]" type="hidden"
+                                                value="<?php echo e($total_amount1); ?>"></th>
+                                        <td width="15%" id="td_order_final_amount" class="text-right">₹
+                                            <?php echo e($total_amount1); ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -330,11 +373,45 @@
                                 <tbody>
                                     <tr class="bg-success">
                                         <th class="text-right">Grand Total <input id="total_final_amount"
-                                                name="amount[total_final_amount]" type="hidden" value="<?php echo e($grand_total); ?>.00"></th>
-                                        <td width="15%" id="td_final_amount" class="text-right">₹ <?php echo e($grand_total); ?>.00</td>
+                                                name="amount[total_final_amount]" type="hidden"
+                                                value="<?php echo e($grand_total); ?>.00"></th>
+                                        <td width="15%" id="td_final_amount" class="text-right">₹
+                                            <?php echo e(number_format($grand_total, 2)); ?></td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <?php if($booking->payment_status != 'Paid'): ?>
+                                <form action="<?php echo e(route('payment')); ?>" method="post">
+                                    <?php echo csrf_field(); ?>
+                                    <div class="row">
+                                        <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
+                                        <input type="hidden" name="total_amount" value="<?php echo e($grand_total); ?>">
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Method</label>
+                                            <select class="form-control" name="payment_method">
+                                                <option value="">Select</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Card">Card</option>
+                                                <option value="bank_transfer">Bank Transfer</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Status</label>
+                                            <select class="form-control" name="payment_status">
+                                                <option value="">Select</option>
+                                                <option value="Paid">Paid</option>
+                                                <option value="Unpaid">Unpaid</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3" style="margin-top: 32px;">
+                                            <button type="submit" class="btn btn-primary">save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php else: ?>
+                            <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -348,30 +425,12 @@
                             <div class="row">
                                 <div class="col-md-3 detil-item">
                                     <b>Room Type:</b> <?php echo e($roomm->room_type->room_type); ?><br>
+                                </div>
+                                <div class="col-md-3 detil-item">
                                     <b>Room Number:</b> <?php echo e($roomm->room_number); ?>
 
                                 </div>
-                                <input type="hidden" value="<?php echo e($grand_total); ?>">
                                 <div class="col-md-3 detil-item">
-                                    <label for="">Payment Method</label>
-                                    <select class="form-control" name="payment_method">
-                                        <option value="">Select</option>
-                                        <option value="UPI">UPI</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Card">Card</option>
-                                        <option value="bank_transfer">Bank Transfer</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 detil-item">
-                                    <label for="">Payment Status</label>
-                                    <select class="form-control" name="payment_status">
-                                        <option value="">Select</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Unpaid">Unpaid</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3 detil-item" style="margin-top: 32px;">
                                     <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
                                         <?php if($roomm->status == '0'): ?>
                                             <a href="<?php echo e($roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id))); ?>"

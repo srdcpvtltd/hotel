@@ -134,7 +134,7 @@
                 var tot = price * qnt;
                 console.log(tot);
                 $('#total_price').val(tot);
-            })
+            });
         });
     </script>
 <?php $__env->stopSection(); ?>

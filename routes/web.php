@@ -65,6 +65,7 @@ Route::get('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->
 Route::get('get-room', [BookingController::class, 'getRoom'])->name('getRoom')->middleware(['auth','XSS','2fa',]);
 Route::get('get-food', [OrderController::class, 'getFood'])->name('getFood')->middleware(['auth','XSS','2fa',]);
 Route::get('get-food-price', [OrderController::class, 'getFoodPrice'])->name('getFoodPrice')->middleware(['auth','XSS','2fa',]);
+Route::post('payment', [BookingController::class, 'payment'])->name('payment')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/', [FrontEndController::class, 'index']);

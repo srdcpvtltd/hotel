@@ -24,11 +24,11 @@ class OrderController extends Controller
 
     public function index(OrderDataTable $table)
     {
-        // if (\Auth::user()->can('manage-food')) {
+        if (\Auth::user()->can('manage-order')) {
         return $table->render('order.index');
-        // } else {
-        //     return redirect()->back()->with('error', 'Permission denied.');
-        // }
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -38,7 +38,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        // if (\Auth::user()->can('create-food')) {
+        if (\Auth::user()->can('create-order')) {
 
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
@@ -49,9 +49,9 @@ class OrderController extends Controller
         $rooms = Room::where('hotel_id', $hotel->id)->get();
 
         return view('order.create', compact('categories', 'rooms'));
-        // } else {
-        //     return redirect()->back()->with('error', 'Permission denied.');
-        // }
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -90,7 +90,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        // if (\Auth::user()->can('edit-food')) {
+        if (\Auth::user()->can('edit-order')) {
 
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
@@ -102,9 +102,9 @@ class OrderController extends Controller
         $rooms = Room::where('hotel_id', $hotel->id)->get();
 
         return view('order.edit')->with(compact('foods','categories','rooms','order'));
-        // } else {
-        //     return redirect()->back()->with('error', 'Permission denied.');
-        // }
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     /**
@@ -135,7 +135,7 @@ class OrderController extends Controller
      */
     public function destroy(OrderRequest $request, Order $order)
     {
-        // if (\Auth::user()->can('delete-food')) {
+        if (\Auth::user()->can('delete-order')) {
 
         try {
             $this->OrderService->destroy($request, $order);
@@ -146,9 +146,9 @@ class OrderController extends Controller
         }
         return redirect()->route('order.index')
             ->with('message', __($message));
-        // } else {
-        //     return redirect()->back()->with('error', 'Permission denied.');
-        // }
+        } else {
+            return redirect()->back()->with('error', 'Permission denied.');
+        }
     }
 
     public function getFood(Request $request)

@@ -6,11 +6,11 @@
     {{ __('Guest Details') }}
 @endsection
 @section('content')
-<style>
-    .pd_0{
-        padding:0;
-    }
-</style>
+    <style>
+        .pd_0 {
+            padding: 0;
+        }
+    </style>
     <div class="">
         @if (session()->has('success'))
             <div class="alert alert-success">
@@ -124,10 +124,11 @@
                                             </th>
                                             <td class="text-center">
                                                 <span class="error base_price_err_msg"></span>
-                                                <button type="button" class="btn btn-xs btn-info"
-                                                    data-toggle="modal" data-target="#room_price_model_{{ $room->id }}">Price
+                                                <button type="button" class="btn btn-xs btn-info" data-toggle="modal"
+                                                    data-target="#room_price_model_{{ $room->id }}">Price
                                                     Break</button>
-                                                <div id="room_price_model_{{ $room->id }}" class="modal fade" role="dialog">
+                                                <div id="room_price_model_{{ $room->id }}" class="modal fade"
+                                                    role="dialog" tabindex="-1">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -151,33 +152,47 @@
                                                                             </thead>
                                                                             <tbody class="">
                                                                                 @php
-                                                                                    $room_price = App\Models\Room::where('hotel_id', $hotel->id)
-                                                                                                            ->where('name', $room->room_number)
-                                                                                                            ->first('price');
+                                                                                    $room_price = App\Models\Room::where(
+                                                                                        'hotel_id',
+                                                                                        $hotel->id,
+                                                                                    )
+                                                                                        ->where(
+                                                                                            'name',
+                                                                                            $room->room_number,
+                                                                                        )
+                                                                                        ->first('price');
                                                                                     $p = $room_price->price;
                                                                                     $price = $p * $days;
-                                                                                    @endphp
+                                                                                @endphp
                                                                                 @for ($i = 0; $i < $days; $i++)
                                                                                     @php
-                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay($i);
-                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
+                                                                                        $anchor = Carbon\Carbon::yesterday()->subDay(
+                                                                                            $i,
+                                                                                        );
+                                                                                        $date[] = date(
+                                                                                            'Y-m-d',
+                                                                                            strtotime($anchor),
+                                                                                        );
                                                                                         $tot[] = $p;
                                                                                     @endphp
                                                                                     <tr>
-                                                                                        <td class="text-center">{{ $date[$i] }}
+                                                                                        <td class="text-center">
+                                                                                            {{ $date[$i] }}
                                                                                         </td>
-                                                                                        @if($date[$i] != date('Y-m-d'))
-                                                                                        <td class="text-right">₹ {{ $room_price->price }}.00
-                                                                                        </td>
+                                                                                        @if ($date[$i] != date('Y-m-d'))
+                                                                                            <td class="text-right">₹
+                                                                                                {{ $room_price->price }}.00
+                                                                                            </td>
                                                                                         @else
-                                                                                        <td class="text-right">₹ 0.00
-                                                                                        </td>
+                                                                                            <td class="text-right">₹ 0.00
+                                                                                            </td>
                                                                                         @endif
                                                                                     </tr>
                                                                                 @endfor
                                                                                 <tr>
                                                                                     <td></td>
-                                                                                    <td class="text-right"><b>₹ {{ $price }}.00</b>
+                                                                                    <td class="text-right"><b>₹
+                                                                                            {{ $price }}.00</b>
                                                                                     </td>
                                                                                 </tr>
                                                                             </tbody>
@@ -194,7 +209,7 @@
                                     @endforeach
                                     @php
                                         $count = count($tot);
-                                        for($i=0;$i<$count;$i++){
+                                        for ($i = 0; $i < $count; $i++) {
                                             $subtotal += $tot[$i];
                                         }
                                     @endphp
@@ -204,24 +219,30 @@
                                 <tbody>
                                     <tr>
                                         <th class="text-right">Subtotal <input id="total_room_amount"
-                                                name="amount[total_room_amount]" type="hidden" value="{{ $subtotal }}.00"></th>
-                                        <td width="20%" class="text-right td_total_room_amount">₹ {{ $subtotal }}.00</td>
+                                                name="amount[total_room_amount]" type="hidden"
+                                                value="{{ $subtotal }}.00"></th>
+                                        <td width="20%" class="text-right td_total_room_amount">₹ {{ $subtotal }}.00
+                                        </td>
                                     </tr>
                                     @php
-                                        $sgst = $subtotal * 9/100;
-                                        $cgst = $subtotal * 9/100;
+                                        $sgst = ($subtotal * 9) / 100;
+                                        $cgst = ($subtotal * 9) / 100;
                                         $total_amount = $subtotal + ($cgst + $sgst);
                                     @endphp
                                     <tr>
                                         <th class="text-right">SGST (9%) <input id="total_room_amount_gst"
-                                                name="amount[total_room_amount_gst]" type="hidden" value="{{ $sgst }}"></th>
-                                        <td width="20%" id="td_total_room_amount_gst" class="text-right">₹ {{ $sgst }}.00
+                                                name="amount[total_room_amount_gst]" type="hidden"
+                                                value="{{ $sgst }}"></th>
+                                        <td width="20%" id="td_total_room_amount_gst" class="text-right">₹
+                                            {{ $sgst }}.00
                                         </td>
                                     </tr>
                                     <tr class="">
                                         <th class="text-right">CGST (9%) <input id="total_room_amount_cgst"
-                                                name="amount[total_room_amount_cgst]" type="hidden" value="{{ $cgst }}"></th>
-                                        <td width="20%" id="td_total_room_amount_cgst" class="text-right">₹ {{ $cgst }}.00
+                                                name="amount[total_room_amount_cgst]" type="hidden"
+                                                value="{{ $cgst }}"></th>
+                                        <td width="20%" id="td_total_room_amount_cgst" class="text-right">₹
+                                            {{ $cgst }}.00
                                         </td>
                                     </tr>
                                     {{-- <tr>
@@ -256,7 +277,8 @@
                                         <th class="text-right">Total Amount <input id="total_room_final_amount"
                                                 name="amount[total_room_final_amount]" type="hidden" value="51000.00">
                                         </th>
-                                        <td width="20%" id="td_room_final_amount" class="text-right">₹ {{ $total_amount }}.00</td>
+                                        <td width="20%" id="td_room_final_amount" class="text-right">₹
+                                            {{ $total_amount }}.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -278,31 +300,44 @@
                                 <tbody>
                                     @php
                                         $tot_price = 0;
+                                        $i = 0;
                                     @endphp
-                                    @foreach ($booking->rooms as $key=>$bookin)
-                                    @php
-                                        $rooms = App\Models\Room::where('hotel_id', $hotel->id)
-                                                            ->where('name', $bookin->room_number)
-                                                            ->first();
+                                    @if (count($booking->rooms) > 0)
+                                        @foreach ($booking->rooms as $bookin)
+                                            @php
+                                                $rooms = App\Models\Room::where('hotel_id', $hotel->id)
+                                                    ->where('name', $bookin->room_number)
+                                                    ->first();
 
-                                        $order = App\Models\Order::where('room_id', $rooms->id)->first();
-                                        $tot_price += $order->total_price;
-                                    @endphp
+                                                $orders = App\Models\Order::where('room_id', $rooms->id)
+                                                    ->where('status', 1)
+                                                    ->get();
+                                            @endphp
+                                            @foreach ($orders as $order)
+                                                @php
+                                                    $tot_price += $order->total_price;
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $i + 1 }}</td>
+                                                    <td>
+                                                        {{ $order->food->name }} <br>
+                                                        (Room No.: {{ $order->room->name }})
+                                                    </td>
+                                                    <td>{{ date('d-m-Y', strtotime($order->created_at)) }}</td>
+                                                    <td class="text-center">{{ $order->quantity }}</td>
+                                                    <td class="text-right">₹ {{ $order->price }}.00</td>
+                                                    <td class="text-right">₹ {{ $order->total_price }}.00</td>
+                                                </tr>
+                                                @php
+                                                    $i++;
+                                                @endphp
+                                            @endforeach
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>
-                                                {{ $order->food->name }} <br>
-                                                (Room No.: {{ $order->room->name }})
-                                            </td>
-                                            <td>{{ date('d-m-Y',strtotime($order->created_at)) }}</td>
-                                            <td class="text-center">{{ $order->quantity }}</td>
-                                            <td class="text-right">₹ {{ $order->price }}.00</td>
-                                            <td class="text-right">₹ {{ $order->total_price }}.00</td>
+                                            <td colspan="6">No Orders</td>
                                         </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td colspan="6">No Orders</td>
-                                    </tr>
+                                    @endif
                                 </tbody>
                             </table>
 
@@ -310,24 +345,30 @@
                                 <tbody>
                                     <tr>
                                         <th class="text-right">Subtotal <input id="total_order_amount"
-                                                name="amount[order_amount]" type="hidden" value="{{ $tot_price }}"></th>
-                                        <td width="15%" id="td_total_order_amount" class="text-right">₹ {{ $tot_price }}</td>
+                                                name="amount[order_amount]" type="hidden" value="{{ $tot_price }}">
+                                        </th>
+                                        <td width="15%" id="td_total_order_amount" class="text-right">₹
+                                            {{ $tot_price }}</td>
                                     </tr>
                                     @php
-                                        $sgst1 = $tot_price * 9/100;
-                                        $cgst1 = $tot_price * 9/100;
+                                        $sgst1 = ($tot_price * 9) / 100;
+                                        $cgst1 = ($tot_price * 9) / 100;
                                         $total_amount1 = $tot_price + ($cgst1 + $sgst1);
                                         $grand_total = $total_amount1 + $total_amount;
                                     @endphp
                                     <tr>
                                         <th class="text-right">SGST (9%) <input id="total_order_amount_gst"
-                                                name="amount[order_amount_gst]" type="hidden" value="{{ $sgst1 }}"></th>
-                                        <td width="15%" id="td_order_amount_gst" class="text-right">₹ {{ $sgst1 }}</td>
+                                                name="amount[order_amount_gst]" type="hidden"
+                                                value="{{ $sgst1 }}"></th>
+                                        <td width="15%" id="td_order_amount_gst" class="text-right">₹
+                                            {{ $sgst1 }}</td>
                                     </tr>
                                     <tr class="">
                                         <th class="text-right">CGST (9%) <input id="total_order_amount_cgst"
-                                                name="amount[order_amount_cgst]" type="hidden" value="{{ $cgst1 }}"></th>
-                                        <td width="15%" id="td_order_amount_cgst" class="text-right">₹ {{ $cgst1 }}</td>
+                                                name="amount[order_amount_cgst]" type="hidden"
+                                                value="{{ $cgst1 }}"></th>
+                                        <td width="15%" id="td_order_amount_cgst" class="text-right">₹
+                                            {{ $cgst1 }}</td>
                                     </tr>
                                     {{-- <tr>
                                         <th class="text-right">Discount</th>
@@ -351,8 +392,10 @@
                                     </tr> --}}
                                     <tr class="bg-warning">
                                         <th class="text-right">Total Amount <input id="total_order_final_amount"
-                                                name="amount[order_final_amount]" type="hidden" value="{{ $total_amount1 }}"></th>
-                                        <td width="15%" id="td_order_final_amount" class="text-right">₹ {{ $total_amount1 }}</td>
+                                                name="amount[order_final_amount]" type="hidden"
+                                                value="{{ $total_amount1 }}"></th>
+                                        <td width="15%" id="td_order_final_amount" class="text-right">₹
+                                            {{ $total_amount1 }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -361,11 +404,45 @@
                                 <tbody>
                                     <tr class="bg-success">
                                         <th class="text-right">Grand Total <input id="total_final_amount"
-                                                name="amount[total_final_amount]" type="hidden" value="{{ $grand_total }}.00"></th>
-                                        <td width="15%" id="td_final_amount" class="text-right">₹ {{ $grand_total }}.00</td>
+                                                name="amount[total_final_amount]" type="hidden"
+                                                value="{{ $grand_total }}.00"></th>
+                                        <td width="15%" id="td_final_amount" class="text-right">₹
+                                            {{ number_format($grand_total, 2) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
+                            @if ($booking->payment_status != 'Paid')
+                                <form action="{{ route('payment') }}" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                                        <input type="hidden" name="total_amount" value="{{ $grand_total }}">
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Method</label>
+                                            <select class="form-control" name="payment_method">
+                                                <option value="">Select</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Card">Card</option>
+                                                <option value="bank_transfer">Bank Transfer</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Status</label>
+                                            <select class="form-control" name="payment_status">
+                                                <option value="">Select</option>
+                                                <option value="Paid">Paid</option>
+                                                <option value="Unpaid">Unpaid</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3" style="margin-top: 32px;">
+                                            <button type="submit" class="btn btn-primary">save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @else
+                            <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -379,29 +456,11 @@
                             <div class="row">
                                 <div class="col-md-3 detil-item">
                                     <b>Room Type:</b> {{ $roomm->room_type->room_type }}<br>
+                                </div>
+                                <div class="col-md-3 detil-item">
                                     <b>Room Number:</b> {{ $roomm->room_number }}
                                 </div>
-                                <input type="hidden" name="total_amount" value="{{ $grand_total }}">
                                 <div class="col-md-3 detil-item">
-                                    <label for="">Payment Method</label>
-                                    <select class="form-control" name="payment_method">
-                                        <option value="">Select</option>
-                                        <option value="UPI">UPI</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Card">Card</option>
-                                        <option value="bank_transfer">Bank Transfer</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 detil-item">
-                                    <label for="">Payment Status</label>
-                                    <select class="form-control" name="payment_status">
-                                        <option value="">Select</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Unpaid">Unpaid</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3 detil-item" style="margin-top: 32px;">
                                     @role('free')
                                         @if ($roomm->status == '0')
                                             <a href="{{ $roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id)) }}"
