@@ -4,14 +4,8 @@
     <p class="h3 text-center"><u>HOTEL REGISTRATION FORM</u></p>
 
     <div class="container-fluid" style=" padding-bottom: 50px;">
-        @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div>
-        @endif
         <div class="row">
             <div class="alert alert-danger alert-dismissible" id="alertmessageDiv" role="alert" style="display:none;">
-                <!-- Alert for error -->
                 <div id="alertmessage"></div>
             </div>
             <div id="page-wrapper">

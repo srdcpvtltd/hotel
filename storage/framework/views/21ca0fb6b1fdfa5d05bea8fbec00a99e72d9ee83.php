@@ -4,15 +4,8 @@
     <p class="h3 text-center"><u>HOTEL REGISTRATION FORM</u></p>
 
     <div class="container-fluid" style=" padding-bottom: 50px;">
-        <?php if(session()->has('success')): ?>
-            <div class="alert alert-success">
-                <?php echo e(session()->get('success')); ?>
-
-            </div>
-        <?php endif; ?>
         <div class="row">
             <div class="alert alert-danger alert-dismissible" id="alertmessageDiv" role="alert" style="display:none;">
-                <!-- Alert for error -->
                 <div id="alertmessage"></div>
             </div>
             <div id="page-wrapper">
