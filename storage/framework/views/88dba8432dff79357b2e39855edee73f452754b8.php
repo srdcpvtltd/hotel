@@ -125,6 +125,8 @@
                                                 <?php
                                                     if ($advance_booking != null) {
                                                         $checkout_date = $advance_booking->to_date;
+                                                    } elseif($room->status == 1){
+                                                        $checkout_date = $room->checkout_date;
                                                     } else {
                                                         $checkout_date = date('Y-m-d');
                                                     }
@@ -176,24 +178,13 @@
                                                                                         ->first('price');
                                                                                     $p = $room_price->price;
                                                                                     $price = $p * $days;
-                                                                                    $tot = [];
+                                                                                    $tot[] = $price;
                                                                                 ?>
                                                                                 <?php for($i = 0; $i < $days; $i++): ?>
                                                                                     <?php
-                                                                                        if ($advance_booking == null) {
-                                                                                            $anchor = Carbon\Carbon::create($booking->arrival_date)->subDay(
-                                                                                                $i,
-                                                                                            );
-                                                                                        } else {
-                                                                                            $anchor = Carbon\Carbon::create($booking->arrival_date)->addDay(
-                                                                                                $i,
-                                                                                            );
-                                                                                        }
-                                                                                        $date[] = date(
-                                                                                            'Y-m-d',
-                                                                                            strtotime($anchor),
-                                                                                        );
-                                                                                        $tot[] = $p;
+                                                                                        $anchor = Carbon\Carbon::create($booking->arrival_date)->addDay($i);
+                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
+                                                                                        
                                                                                     ?>
                                                                                     <tr>
                                                                                         <td class="text-center">
@@ -273,12 +264,8 @@
                                             <?php echo e($cgst); ?>.00
                                         </td>
                                     </tr>
-                                    
-                                    
                                     <tr class="bg-warning">
-                                        <th class="text-right">Total Amount <input id="total_room_final_amount"
-                                                name="amount[total_room_final_amount]" type="hidden" value="51000.00">
-                                        </th>
+                                        <th class="text-right">Total Amount</th>
                                         <td width="20%" id="td_room_final_amount" class="text-right">₹
                                             <?php echo e($total_amount); ?>.00</td>
                                     </tr>
@@ -302,25 +289,11 @@
                                 <tbody>
                                     <?php
                                         $tot_price = 0;
-                                        $i = 0;
                                     ?>
-                                    <?php if(count($booking->rooms) > 0): ?>
-                                        <?php $__currentLoopData = $booking->rooms; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bookin): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php
-                                                $rooms = App\Models\Room::where('hotel_id', $hotel->id)
-                                                    ->where('name', $bookin->room_number)
-                                                    ->first();
-
-                                                $orders = App\Models\Order::where('room_id', $rooms->id)
-                                                    ->where('status', 1)
-                                                    ->get();
-                                            ?>
-                                            <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php
-                                                    $tot_price += $order->total_price;
-                                                ?>
+                                    <?php if(count($orders) > 0): ?>
+                                        <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr>
-                                                    <td><?php echo e($i + 1); ?></td>
+                                                    <td><?php echo e($key + 1); ?></td>
                                                     <td>
                                                         <?php echo e($order->food->name); ?> <br>
                                                         (Room No.: <?php echo e($order->room->name); ?>)
@@ -331,9 +304,8 @@
                                                     <td class="text-right">₹ <?php echo e($order->total_price); ?>.00</td>
                                                 </tr>
                                                 <?php
-                                                    $i++;
+                                                    $tot_price += $order->total_price;
                                                 ?>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php else: ?>
                                         <tr>
@@ -372,7 +344,6 @@
                                         <td width="15%" id="td_order_amount_cgst" class="text-right">₹
                                             <?php echo e($cgst1); ?></td>
                                     </tr>
-                                    
                                     <tr class="bg-warning">
                                         <th class="text-right">Total Amount <input id="total_order_final_amount"
                                                 name="amount[order_final_amount]" type="hidden"
@@ -425,6 +396,7 @@
                                 </form>
                             <?php else: ?>
                                 <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
+                                <h5>Invoice : <a href="<?php echo e(route('download_invoice',$booking->id)); ?>"><span class="badge badge-primary">Download</span></a></h5>
                             <?php endif; ?>
                         </div>
                     </div>

@@ -7,6 +7,7 @@
 @endsection
 @section('content')
     <div class="container-fluid">
+        @role('free')
         @if (count($room_type) == 0 && $room_type == [])
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <a href="{{ route('room_type.create') }}" style="color:#772b35!important">
@@ -28,6 +29,7 @@
                 </a>
             </div>
         @endif
+        @endrole
         <div class="fade-in">
             @role('admin')
                 @include('dashboard.adminuserblocks')

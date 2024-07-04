@@ -31,6 +31,7 @@ use App\Http\Controllers\HotelStaffController;
 use App\Http\Controllers\HousekeepingController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PoliceStationController;
 use App\Http\Controllers\PriceRuleController;
@@ -66,6 +67,7 @@ Route::get('get-room', [BookingController::class, 'getRoom'])->name('getRoom')->
 Route::get('get-food', [OrderController::class, 'getFood'])->name('getFood')->middleware(['auth','XSS','2fa',]);
 Route::get('get-food-price', [OrderController::class, 'getFoodPrice'])->name('getFoodPrice')->middleware(['auth','XSS','2fa',]);
 Route::post('payment', [BookingController::class, 'payment'])->name('payment')->middleware(['auth','XSS','2fa',]);
+Route::get('download_invoice/{id}', [PDFController::class, 'download_invoice'])->name('download_invoice')->middleware(['auth','XSS','2fa',]);
 
 
 Route::get('/', [FrontEndController::class, 'index']);

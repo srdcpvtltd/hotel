@@ -109,7 +109,6 @@
                 </a>
             </li>
         @endrole
-        {{-- @role('free') --}}
             @if ($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null))
                 @can('show-Booking')
                     <li class="c-sidebar-nav-item">
@@ -216,7 +215,6 @@
                     </a>
                 @endif
             </li>
-        {{-- @endrole --}}
         @include('layouts.menu')
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

@@ -25,6 +25,7 @@
                                     <option value="<?php echo e($room->id); ?>"><?php echo e($room->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
+                            <input type="hidden" name="room_name" id="room_name">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -134,6 +135,12 @@
                 var tot = price * qnt;
                 console.log(tot);
                 $('#total_price').val(tot);
+            });
+            $('#room_id').on('change', function() {
+                $('#room_name').val('');
+                var room = $('#room_id :selected').text();
+                console.log(room);
+                $('#room_name').val(room);
             });
         });
     </script>

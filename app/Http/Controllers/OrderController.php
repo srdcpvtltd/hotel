@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\OrderDataTable;
 use App\Http\Requests\OrderRequest;
+use App\Models\BookingRoom;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\HotelProfile;
@@ -46,7 +47,7 @@ class OrderController extends Controller
         }
 
         $categories = FoodCategory::where('hotel_id', $hotel->id)->get();
-        $rooms = Room::where('hotel_id', $hotel->id)->get();
+        $rooms = Room::where('hotel_id', $hotel->id)->where('status', 1)->get();
 
         return view('order.create', compact('categories', 'rooms'));
         } else {
@@ -62,13 +63,19 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
+        
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
 
+        if($request->room_name != null){
+            $booking = BookingRoom::where('room_number',$request->room_name)->orderBy('id','DESC')->first();
+        }
+
         $hotel_id = [
             'hotel_id' => $hotel->id,
+            'booking_id' => $booking->booking_id,
         ];
 
         $message = '';

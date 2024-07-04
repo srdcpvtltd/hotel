@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
     protected $guarded = ['id'];
     protected $fillable = [
+        'booking_id',
         'hotel_id',
         'room_id',
         'food_category_id',

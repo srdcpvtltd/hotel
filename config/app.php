@@ -182,6 +182,7 @@ return [
 
         App\Providers\UtilityFacadesServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -235,12 +236,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Utility' => App\Facades\UtilityFacades::class,
-
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
-
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

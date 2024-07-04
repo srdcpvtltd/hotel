@@ -8,6 +8,7 @@ use App\Models\BookingRoom;
 use App\Models\Criminal;
 use App\Models\CriminalBookingMatch;
 use App\Models\HotelProfile;
+use App\Models\Order;
 use App\Models\Room;
 use App\Models\RoomType;
 use Carbon\Carbon;
@@ -174,8 +175,10 @@ class GuestController extends Controller
         $booking = Booking::where('user_id', Auth::id())->where('id', $bookingId)->with(['country', 'state', 'city', 'rooms', 'accompanies', 'nationalityName', 'p_country', 'p_city', 'p_state'])->first();
 
         $advance_booking = AdvanceBooking::where('hotel_id', $hotel->id)->where('from_date', $booking->arrival_date)->where('name', $booking->gues_name)->where('phone_number', $booking->mobile_number)->orderBy('id', 'DESC')->first();
-        // dd($advance_booking);
-        return view('guest.detail', compact('booking', 'advance_booking','hotel'));
+        
+        $orders = Order::where('hotel_id', $hotel->id)->where('booking_id', $bookingId)->where('status', 1)->get();
+
+        return view('guest.detail', compact('booking', 'advance_booking','hotel','orders'));
     }
 
     public function mark_suspicious($bookingId)

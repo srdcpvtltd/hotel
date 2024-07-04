@@ -112,6 +112,8 @@
                                                 @php
                                                     if ($advance_booking != null) {
                                                         $checkout_date = $advance_booking->to_date;
+                                                    } elseif($room->status == 1){
+                                                        $checkout_date = $room->checkout_date;
                                                     } else {
                                                         $checkout_date = date('Y-m-d');
                                                     }
@@ -163,24 +165,13 @@
                                                                                         ->first('price');
                                                                                     $p = $room_price->price;
                                                                                     $price = $p * $days;
-                                                                                    $tot = [];
+                                                                                    $tot[] = $price;
                                                                                 @endphp
                                                                                 @for ($i = 0; $i < $days; $i++)
                                                                                     @php
-                                                                                        if ($advance_booking == null) {
-                                                                                            $anchor = Carbon\Carbon::create($booking->arrival_date)->subDay(
-                                                                                                $i,
-                                                                                            );
-                                                                                        } else {
-                                                                                            $anchor = Carbon\Carbon::create($booking->arrival_date)->addDay(
-                                                                                                $i,
-                                                                                            );
-                                                                                        }
-                                                                                        $date[] = date(
-                                                                                            'Y-m-d',
-                                                                                            strtotime($anchor),
-                                                                                        );
-                                                                                        $tot[] = $p;
+                                                                                        $anchor = Carbon\Carbon::create($booking->arrival_date)->addDay($i);
+                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
+                                                                                        
                                                                                     @endphp
                                                                                     <tr>
                                                                                         <td class="text-center">
@@ -259,38 +250,8 @@
                                             {{ $cgst }}.00
                                         </td>
                                     </tr>
-                                    {{-- <tr>
-                                        <th class="text-right">Advance Amount <input
-                                                name="amount[total_room_advance_amount]" type="hidden" value="5000">
-                                        </th>
-                                        <td width="20%" id="td_room_advance_amount" class="text-right">₹ 5000</td>
-                                    </tr> --}}
-                                    {{-- <tr>
-                                        <th class="text-right">Discount</th>
-                                        <td width="20%" id="td_advance_amount" class="text-right">
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 pd_0">
-                                                        <input class="form-control" id="discount"
-                                                            placeholder="Enter Any Discount" min="0"
-                                                            name="discount_amount" type="number" value="0">
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6 col-xs-12 pd_0">
-                                                        <select class="form-control" id="room_discount_in"
-                                                            name="room_discount_in">
-                                                            <option value="amt" selected="selected">Amount</option>
-                                                            <option value="perc">%</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <span class="error discount_room_err_msg"></span>
-                                        </td>
-                                    </tr> --}}
                                     <tr class="bg-warning">
-                                        <th class="text-right">Total Amount <input id="total_room_final_amount"
-                                                name="amount[total_room_final_amount]" type="hidden" value="51000.00">
-                                        </th>
+                                        <th class="text-right">Total Amount</th>
                                         <td width="20%" id="td_room_final_amount" class="text-right">₹
                                             {{ $total_amount }}.00</td>
                                     </tr>
@@ -314,25 +275,11 @@
                                 <tbody>
                                     @php
                                         $tot_price = 0;
-                                        $i = 0;
                                     @endphp
-                                    @if (count($booking->rooms) > 0)
-                                        @foreach ($booking->rooms as $bookin)
-                                            @php
-                                                $rooms = App\Models\Room::where('hotel_id', $hotel->id)
-                                                    ->where('name', $bookin->room_number)
-                                                    ->first();
-
-                                                $orders = App\Models\Order::where('room_id', $rooms->id)
-                                                    ->where('status', 1)
-                                                    ->get();
-                                            @endphp
-                                            @foreach ($orders as $order)
-                                                @php
-                                                    $tot_price += $order->total_price;
-                                                @endphp
+                                    @if (count($orders) > 0)
+                                        @foreach ($orders as $key=>$order)
                                                 <tr>
-                                                    <td>{{ $i + 1 }}</td>
+                                                    <td>{{ $key + 1 }}</td>
                                                     <td>
                                                         {{ $order->food->name }} <br>
                                                         (Room No.: {{ $order->room->name }})
@@ -343,9 +290,8 @@
                                                     <td class="text-right">₹ {{ $order->total_price }}.00</td>
                                                 </tr>
                                                 @php
-                                                    $i++;
+                                                    $tot_price += $order->total_price;
                                                 @endphp
-                                            @endforeach
                                         @endforeach
                                     @else
                                         <tr>
@@ -384,26 +330,6 @@
                                         <td width="15%" id="td_order_amount_cgst" class="text-right">₹
                                             {{ $cgst1 }}</td>
                                     </tr>
-                                    {{-- <tr>
-                                        <th class="text-right">Discount</th>
-                                        <td width="15%" id="td_advance_amount" class="text-right">
-                                            <div class="col-md-12 col-sm-12 col-xs-12 p-left-0 p-right-0">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 p-left-0 p-right-0">
-                                                    <input class="form-control col-md-7 col-xs-12" id="order_discount"
-                                                        placeholder="Enter Any Discount" min="0"
-                                                        name="discount_order_amount" type="number" value="0">
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 p-left-0 p-right-0">
-                                                    <select class="form-control" id="order_discount_in"
-                                                        name="order_discount_in">
-                                                        <option value="amt" selected="selected">Amount</option>
-                                                        <option value="perc">%</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <span class="error discount_order_err_msg"></span>
-                                        </td>
-                                    </tr> --}}
                                     <tr class="bg-warning">
                                         <th class="text-right">Total Amount <input id="total_order_final_amount"
                                                 name="amount[order_final_amount]" type="hidden"
@@ -456,6 +382,7 @@
                                 </form>
                             @else
                                 <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
+                                <h5>Invoice : <a href="{{ route('download_invoice',$booking->id) }}"><span class="badge badge-primary">Download</span></a></h5>
                             @endif
                         </div>
                     </div>

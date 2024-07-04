@@ -126,7 +126,6 @@
                 </a>
             </li>
         <?php endif; ?>
-        
             <?php if($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null)): ?>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Booking')): ?>
                     <li class="c-sidebar-nav-item">
@@ -247,7 +246,6 @@
                     </a>
                 <?php endif; ?>
             </li>
-        
         <?php echo $__env->make('layouts.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"
