@@ -1,18 +1,13 @@
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
-    <tr>
-        <td height="20"></td>
-    </tr>
+<style>
+    .fullTable {
+        margin-left: -25px;
+    }
+</style>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
     <tr>
         <td>
             <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
                 bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
-                <tr class="hiddenMobile">
-                    <td height="40"></td>
-                </tr>
-                <tr class="visibleMobile">
-                    <td height="30"></td>
-                </tr>
-
                 <tr>
                     <td>
                         <table width="480" border="0" cellpadding="0" cellspacing="0" align="center"
@@ -30,9 +25,6 @@
                                                             border="0" /></td>
                                                 </tr>
                                                 <tr class="hiddenMobile">
-                                                    <td height="40"></td>
-                                                </tr>
-                                                <tr class="visibleMobile">
                                                     <td height="20"></td>
                                                 </tr>
                                                 <tr>
@@ -42,16 +34,13 @@
                                                     </td>
                                                 </tr>
                                                 <tr class="visibleMobile">
-                                                    <td height="20"></td>
+                                                    <td height="10"></td>
                                                 </tr>
                                                 <tr>
                                                     <td
-                                                        style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                                                        style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; text-decoration:underline;margin-bottom:10px">
                                                         <strong>PAYMENT METHOD</strong>
                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="100%" height="10"></td>
                                                 </tr>
                                                 <tr>
                                                     <td
@@ -72,10 +61,13 @@
                                                         Payment Status : <?php echo e($booking->payment_status); ?><br>
                                                     </td>
                                                 </tr>
+                                                <tr class="hiddenMobile">
+                                                    <td height="40"></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                         <table width="220" border="0" cellpadding="0" cellspacing="0"
-                                            align="right" class="col">
+                                            align="right" class="col" style="margin-top: -40%;">
                                             <tbody>
                                                 <tr class="visibleMobile">
                                                     <td height="20"></td>
@@ -91,12 +83,8 @@
                                                 </tr>
                                                 <tr>
                                                 <tr class="hiddenMobile">
-                                                    <td height="50"></td>
+                                                    <td height="100"></td>
                                                 </tr>
-                                                <tr class="visibleMobile">
-                                                    <td height="20"></td>
-                                                </tr>
-
                                             </tbody>
                                         </table>
                                     </td>
@@ -110,20 +98,17 @@
     </tr>
 </table>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
     <tbody>
         <tr>
             <td>
                 <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
                     bgcolor="#ffffff">
                     <tbody>
-                        <tr class="visibleMobile">
-                            <td height="30"></td>
-                        </tr>
                         <tr>
                             <td>
                                 <div
-                                    style="margin-left: 60px;margin-bottom: 10px;color: #686868;text-decoration: underline;">
+                                    style="margin-left: 80px;margin-bottom: 10px;color: #686868;text-decoration: underline;">
                                     Payment Information</div>
 
                                 <table width="480" border="0" cellpadding="0" cellspacing="0" align="center">
@@ -196,8 +181,7 @@
     </tbody>
 </table>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-    bgcolor="#e1e1e1">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
     <tbody>
         <tr>
             <td>
@@ -265,11 +249,13 @@
                 </table>
             </td>
         </tr>
+        <tr class="hiddenMobile">
+            <td height="30"></td>
+        </tr>
     </tbody>
 </table>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-    bgcolor="#e1e1e1">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
     <tbody>
         <tr>
             <td>
@@ -282,7 +268,7 @@
                         <tr>
                             <td>
                                 <div
-                                    style="margin-left: 60px;margin-bottom: 10px;color: #686868;text-decoration: underline;">
+                                    style="margin-left: 80px;margin-bottom: 10px;color: #686868;text-decoration: underline;">
                                     Food Orders</div>
 
                                 <table width="480" border="0" cellpadding="0" cellspacing="0"
@@ -344,8 +330,7 @@
     </tbody>
 </table>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-    bgcolor="#e1e1e1">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
     <tbody>
         <tr>
             <td>
@@ -409,7 +394,8 @@
                                         <tr>
                                             <th
                                                 style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                <strong>Grand Total</strong></th>
+                                                <strong>Grand Total</strong>
+                                            </th>
                                             <td
                                                 style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
                                                 ₹
@@ -424,11 +410,13 @@
                 </table>
             </td>
         </tr>
+        <tr class="hiddenMobile">
+            <td height="30"></td>
+        </tr>
     </tbody>
 </table>
 
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable"
-    bgcolor="#e1e1e1">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable">
 
     <tr>
         <td>
@@ -456,7 +444,8 @@
         </td>
     </tr>
     <tr>
-        <td height="20"></td>
+        <td height="30"></td>
     </tr>
 </table>
+
 <?php /**PATH C:\xampp\htdocs\hotel\resources\views/pdf/invoice.blade.php ENDPATH**/ ?>
