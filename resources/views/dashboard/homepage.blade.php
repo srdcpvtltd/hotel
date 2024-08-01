@@ -8,33 +8,32 @@
 @section('content')
     <div class="container-fluid">
         @role('free')
-        @if (count($room_type) == 0 && $room_type == [])
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="{{ route('room_type.create') }}" style="color:#772b35!important">
-                    <strong>Please Add Room Types</strong>
-                </a>
-            </div>
-        @endif
-        @if (count($price) == 0 && $price == [])
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="{{ route('price_rule.create') }}" style="color:#772b35!important">
-                    <strong>Please Add Price for Room Types</strong>
-                </a>
-            </div>
-        @endif
-        @if (count($room) == 0 && $room == [])
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="{{ route('rooms.create') }}" style="color:#772b35!important">
-                    <strong>Please Add Room</strong>
-                </a>
-            </div>
-        @endif
+            @if (count($room_type) == 0 && $room_type == [])
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <a href="{{ route('room_type.create') }}" style="color:#772b35!important">
+                        <strong>Please Add Room Types</strong>
+                    </a>
+                </div>
+            @endif
+            @if (count($price) == 0 && $price == [])
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <a href="{{ route('price_rule.create') }}" style="color:#772b35!important">
+                        <strong>Please Add Price for Room Types</strong>
+                    </a>
+                </div>
+            @endif
+            @if (count($room) == 0 && $room == [])
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <a href="{{ route('rooms.create') }}" style="color:#772b35!important">
+                        <strong>Please Add Room</strong>
+                    </a>
+                </div>
+            @endif
         @endrole
         <div class="fade-in">
             @role('admin')
                 @include('dashboard.adminuserblocks')
-            @endrole
-            @role('free')
+            @else
                 @include('dashboard.userblocks')
             @endrole
         </div>

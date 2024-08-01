@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Models\Booking;
+use App\Models\HotelProfile;
 use App\Models\PriceRule;
 use App\Models\Room;
 use App\Models\RoomType;
@@ -42,10 +43,12 @@ class HomeController extends Controller
                 $q->where('status', '0');
             })->orderBy('created_at', 'DESC')->paginate(20);
             Session::forget('loginError');
-            if(count($bookings) > 0){
-                $room_type = RoomType::where('hotel_id', $bookings[0]->hotel_id)->get();
-                $price = PriceRule::where('hotel_id', $bookings[0]->hotel_id)->get();
-                $room = Room::where('hotel_id', $bookings[0]->hotel_id)->get();
+            $hotel_profile = HotelProfile::where('user_id', Auth::id())->first();
+
+            if($hotel_profile != null){
+                $room_type = RoomType::where('hotel_id', $hotel_profile->id)->get();
+                $price = PriceRule::where('hotel_id', $hotel_profile->id)->get();
+                $room = Room::where('hotel_id', $hotel_profile->id)->get();
             } else {
                 $room_type = [];
                 $price = [];

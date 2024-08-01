@@ -8,32 +8,33 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid">
-        <?php if(count($room_type) == 0 && $room_type == []): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="<?php echo e(route('room_type.create')); ?>" style="color:#772b35!important">
-                    <strong>Please Add Room Types</strong>
-                </a>
-            </div>
-        <?php endif; ?>
-        <?php if(count($price) == 0 && $price == []): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="<?php echo e(route('price_rule.create')); ?>" style="color:#772b35!important">
-                    <strong>Please Add Price for Room Types</strong>
-                </a>
-            </div>
-        <?php endif; ?>
-        <?php if(count($room) == 0 && $room == []): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <a href="<?php echo e(route('rooms.create')); ?>" style="color:#772b35!important">
-                    <strong>Please Add Room</strong>
-                </a>
-            </div>
+        <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
+            <?php if(count($room_type) == 0 && $room_type == []): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <a href="<?php echo e(route('room_type.create')); ?>" style="color:#772b35!important">
+                        <strong>Please Add Room Types</strong>
+                    </a>
+                </div>
+            <?php endif; ?>
+            <?php if(count($price) == 0 && $price == []): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <a href="<?php echo e(route('price_rule.create')); ?>" style="color:#772b35!important">
+                        <strong>Please Add Price for Room Types</strong>
+                    </a>
+                </div>
+            <?php endif; ?>
+            <?php if(count($room) == 0 && $room == []): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <a href="<?php echo e(route('rooms.create')); ?>" style="color:#772b35!important">
+                        <strong>Please Add Room</strong>
+                    </a>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         <div class="fade-in">
             <?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
                 <?php echo $__env->make('dashboard.adminuserblocks', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-            <?php endif; ?>
-            <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
+            <?php else: ?>
                 <?php echo $__env->make('dashboard.userblocks', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php endif; ?>
         </div>

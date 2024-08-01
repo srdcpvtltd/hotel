@@ -96,6 +96,18 @@
                     <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Plans') }}
                 </a>
             </li>
+        @else
+            <li class="c-sidebar-nav-item">
+                @if ($checkIsHotelCreated)
+                    {{-- <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
+                <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Edit Hotel') }}
+            </a> --}}
+                @else
+                    <a class="c-sidebar-nav-link" href="{{ route('add-hotel') }}">
+                        <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Add Hotel') }}
+                    </a>
+                @endif
+            </li>
         @endrole
         @role('viewer')
             <li class="c-sidebar-nav-item">
@@ -109,112 +121,102 @@
                 </a>
             </li>
         @endrole
-            @if ($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null))
-                @can('show-Booking')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('booking.index') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Bookings') }}
-                        </a>
-                    </li>
-                @endcan
+        @if ($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null))
+            @can('show-Booking')
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('guest.create') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Guest Check In') }}
+                    <a class="c-sidebar-nav-link" href="{{ route('booking.index') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Bookings') }}
                     </a>
                 </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('guest.list') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Guest Check Out') }}
-                    </a>
-                </li>
-                @can('show-order')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('order.index') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Order') }}
-                        </a>
-                    </li>
-                @endcan
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('messages') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Messages ') }}
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('guest.queries') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Queries ') }}
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('guest.report') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Report') }}
-                    </a>
-                </li>
-                @can('show-System Management')
-                    <li class="c-sidebar-nav-item">
-                        <a href="{{ url('/system_management') }}" class="c-sidebar-nav-link">
-                            <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('System Management') }}
-                        </a>
-                    </li>
-                @endcan
-                @can('show-food')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('food.management') }}">
-                            <i class="cil-fastfood c-sidebar-nav-icon"></i>{{ __('Food') }}
-                        </a>
-                    </li>
-                @endcan
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="{{ route('upgrade_plan') }}">
-                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Upgrade Plan') }}
-                    </a>
-                </li>
-                @can('show-inventory')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('stock_inventory') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
-                        </a>
-                    </li>
-                @endcan
-                @can('show-housekeeping')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('housekeeping.index') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
-                        </a>
-                    </li>
-                @endcan
-                @can('show-laundry')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('laundry.index') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Laundry') }}
-                        </a>
-                    </li>
-                @endcan
-                @can('show-vendor')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('vendors_management') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
-                        </a>
-                    </li>
-                @endcan
-                @can('show-expense')
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="{{ route('expenses.management') }}">
-                            <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Expenses') }}
-                        </a>
-                    </li>
-                @endcan
-            @endif
+            @endcan
             <li class="c-sidebar-nav-item">
-                @if ($checkIsHotelCreated)
-                    {{-- <a class="c-sidebar-nav-link" href="{{ asset(url('edit-hotel/'.$checkIsHotelCreated->id)) }}">
-                <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Edit Hotel') }}
-            </a> --}}
-                @else
-                    <a class="c-sidebar-nav-link" href="{{ route('add-hotel') }}">
-                        <i class="cil-building c-sidebar-nav-icon"></i>{{ __('Add Hotel') }}
-                    </a>
-                @endif
+                <a class="c-sidebar-nav-link" href="{{ route('guest.create') }}">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Guest Check In') }}
+                </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('guest.list') }}">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Guest Check Out') }}
+                </a>
+            </li>
+            @can('show-order')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('order.index') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Order') }}
+                    </a>
+                </li>
+            @endcan
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('messages') }}">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Messages ') }}
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('guest.queries') }}">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Queries ') }}
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('guest.report') }}">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Report') }}
+                </a>
+            </li>
+            @can('show-System Management')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ url('/system_management') }}" class="c-sidebar-nav-link">
+                        <i class="cil-cog c-sidebar-nav-icon"></i>{{ __('System Management') }}
+                    </a>
+                </li>
+            @endcan
+            @can('show-food')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('food.management') }}">
+                        <i class="cil-fastfood c-sidebar-nav-icon"></i>{{ __('Food') }}
+                    </a>
+                </li>
+            @endcan
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="{{ route('upgrade_plan') }}">
+                    <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Upgrade Plan') }}
+                </a>
+            </li>
+            @can('show-inventory')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('stock_inventory') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Stock & Inventory') }}
+                    </a>
+                </li>
+            @endcan
+            @can('show-housekeeping')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('housekeeping.index') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Housekeeping') }}
+                    </a>
+                </li>
+            @endcan
+            @can('show-laundry')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('laundry.index') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Laundry') }}
+                    </a>
+                </li>
+            @endcan
+            @can('show-vendor')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('vendors_management') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Vendors') }}
+                    </a>
+                </li>
+            @endcan
+            @can('show-expense')
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="{{ route('expenses.management') }}">
+                        <i class="cil-user c-sidebar-nav-icon"></i>{{ __('Expenses') }}
+                    </a>
+                </li>
+            @endcan
+        @endif
+
         @include('layouts.menu')
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"

@@ -111,6 +111,17 @@
 
                 </a>
             </li>
+        <?php else: ?>
+            <li class="c-sidebar-nav-item">
+                <?php if($checkIsHotelCreated): ?>
+                    
+                <?php else: ?>
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('add-hotel')); ?>">
+                        <i class="cil-building c-sidebar-nav-icon"></i><?php echo e(__('Add Hotel')); ?>
+
+                    </a>
+                <?php endif; ?>
+            </li>
         <?php endif; ?>
         <?php if(auth()->check() && auth()->user()->hasRole('viewer')): ?>
             <li class="c-sidebar-nav-item">
@@ -126,126 +137,117 @@
                 </a>
             </li>
         <?php endif; ?>
-            <?php if($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null)): ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Booking')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('booking.index')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Bookings')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
+        <?php if($checkIsHotelCreated && ($checkIsHotelCreated->city != null || $checkIsHotelCreated->police_station != null)): ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-Booking')): ?>
                 <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.create')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Guest Check In')); ?>
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('booking.index')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Bookings')); ?>
 
                     </a>
                 </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.list')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Guest Check Out')); ?>
-
-                    </a>
-                </li>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-order')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('order.index')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Order')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('messages')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Messages ')); ?>
-
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.queries')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Queries ')); ?>
-
-                    </a>
-                </li>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.report')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Report')); ?>
-
-                    </a>
-                </li>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-System Management')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a href="<?php echo e(url('/system_management')); ?>" class="c-sidebar-nav-link">
-                            <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('System Management')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-food')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('food.management')); ?>">
-                            <i class="cil-fastfood c-sidebar-nav-icon"></i><?php echo e(__('Food')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <li class="c-sidebar-nav-item">
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('upgrade_plan')); ?>">
-                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Upgrade Plan')); ?>
-
-                    </a>
-                </li>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-inventory')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('stock_inventory')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Stock & Inventory')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-housekeeping')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping.index')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Housekeeping')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-laundry')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('laundry.index')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Laundry')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-vendor')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('vendors_management')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Vendors')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-expense')): ?>
-                    <li class="c-sidebar-nav-item">
-                        <a class="c-sidebar-nav-link" href="<?php echo e(route('expenses.management')); ?>">
-                            <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Expenses')); ?>
-
-                        </a>
-                    </li>
-                <?php endif; ?>
             <?php endif; ?>
             <li class="c-sidebar-nav-item">
-                <?php if($checkIsHotelCreated): ?>
-                    
-                <?php else: ?>
-                    <a class="c-sidebar-nav-link" href="<?php echo e(route('add-hotel')); ?>">
-                        <i class="cil-building c-sidebar-nav-icon"></i><?php echo e(__('Add Hotel')); ?>
+                <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.create')); ?>">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Guest Check In')); ?>
+
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.list')); ?>">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Guest Check Out')); ?>
+
+                </a>
+            </li>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-order')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('order.index')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Order')); ?>
 
                     </a>
-                <?php endif; ?>
+                </li>
+            <?php endif; ?>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="<?php echo e(route('messages')); ?>">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Messages ')); ?>
+
+                </a>
             </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.queries')); ?>">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Queries ')); ?>
+
+                </a>
+            </li>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="<?php echo e(route('guest.report')); ?>">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Report')); ?>
+
+                </a>
+            </li>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-System Management')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a href="<?php echo e(url('/system_management')); ?>" class="c-sidebar-nav-link">
+                        <i class="cil-cog c-sidebar-nav-icon"></i><?php echo e(__('System Management')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-food')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('food.management')); ?>">
+                        <i class="cil-fastfood c-sidebar-nav-icon"></i><?php echo e(__('Food')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" href="<?php echo e(route('upgrade_plan')); ?>">
+                    <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Upgrade Plan')); ?>
+
+                </a>
+            </li>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-inventory')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('stock_inventory')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Stock & Inventory')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-housekeeping')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('housekeeping.index')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Housekeeping')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-laundry')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('laundry.index')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Laundry')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-vendor')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('vendors_management')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Vendors')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('show-expense')): ?>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link" href="<?php echo e(route('expenses.management')); ?>">
+                        <i class="cil-user c-sidebar-nav-icon"></i><?php echo e(__('Expenses')); ?>
+
+                    </a>
+                </li>
+            <?php endif; ?>
+        <?php endif; ?>
+
         <?php echo $__env->make('layouts.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"
