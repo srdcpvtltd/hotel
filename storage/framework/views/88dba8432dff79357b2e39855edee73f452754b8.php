@@ -125,7 +125,7 @@
                                                 <?php
                                                     if ($advance_booking != null) {
                                                         $checkout_date = $advance_booking->to_date;
-                                                    } elseif($room->status == 1){
+                                                    } elseif ($room->status == 1) {
                                                         $checkout_date = $room->checkout_date;
                                                     } else {
                                                         $checkout_date = date('Y-m-d');
@@ -169,7 +169,7 @@
                                                                                 <?php
                                                                                     $room_price = App\Models\Room::where(
                                                                                         'hotel_id',
-                                                                                        $hotel->id,
+                                                                                        $booking->hotel_id,
                                                                                     )
                                                                                         ->where(
                                                                                             'name',
@@ -182,9 +182,14 @@
                                                                                 ?>
                                                                                 <?php for($i = 0; $i < $days; $i++): ?>
                                                                                     <?php
-                                                                                        $anchor = Carbon\Carbon::create($booking->arrival_date)->addDay($i);
-                                                                                        $date[] = date('Y-m-d',strtotime($anchor));
-                                                                                        
+                                                                                        $anchor = Carbon\Carbon::create(
+                                                                                            $booking->arrival_date,
+                                                                                        )->addDay($i);
+                                                                                        $date[] = date(
+                                                                                            'Y-m-d',
+                                                                                            strtotime($anchor),
+                                                                                        );
+
                                                                                     ?>
                                                                                     <tr>
                                                                                         <td class="text-center">
@@ -192,7 +197,9 @@
 
                                                                                         </td>
                                                                                         <?php if($advance_booking != null): ?>
-                                                                                        <td>₹ <?php echo e($room_price->price); ?>.00</td>
+                                                                                            <td>₹
+                                                                                                <?php echo e($room_price->price); ?>.00
+                                                                                            </td>
                                                                                         <?php else: ?>
                                                                                             <?php if($date[$i] != date('Y-m-d')): ?>
                                                                                                 <td class="text-right">₹
@@ -291,21 +298,21 @@
                                         $tot_price = 0;
                                     ?>
                                     <?php if(count($orders) > 0): ?>
-                                        <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <tr>
-                                                    <td><?php echo e($key + 1); ?></td>
-                                                    <td>
-                                                        <?php echo e($order->food->name); ?> <br>
-                                                        (Room No.: <?php echo e($order->room->name); ?>)
-                                                    </td>
-                                                    <td><?php echo e(date('d-m-Y', strtotime($order->created_at))); ?></td>
-                                                    <td class="text-center"><?php echo e($order->quantity); ?></td>
-                                                    <td class="text-right">₹ <?php echo e($order->price); ?>.00</td>
-                                                    <td class="text-right">₹ <?php echo e($order->total_price); ?>.00</td>
-                                                </tr>
-                                                <?php
-                                                    $tot_price += $order->total_price;
-                                                ?>
+                                        <?php $__currentLoopData = $orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <tr>
+                                                <td><?php echo e($key + 1); ?></td>
+                                                <td>
+                                                    <?php echo e($order->food->name); ?> <br>
+                                                    (Room No.: <?php echo e($order->room->name); ?>)
+                                                </td>
+                                                <td><?php echo e(date('d-m-Y', strtotime($order->created_at))); ?></td>
+                                                <td class="text-center"><?php echo e($order->quantity); ?></td>
+                                                <td class="text-right">₹ <?php echo e($order->price); ?>.00</td>
+                                                <td class="text-right">₹ <?php echo e($order->total_price); ?>.00</td>
+                                            </tr>
+                                            <?php
+                                                $tot_price += $order->total_price;
+                                            ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php else: ?>
                                         <tr>
@@ -366,37 +373,41 @@
                                 </tbody>
                             </table>
                             <?php if($booking->payment_status != 'Paid'): ?>
-                                <form action="<?php echo e(route('payment')); ?>" method="post">
-                                    <?php echo csrf_field(); ?>
-                                    <div class="row">
-                                        <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
-                                        <input type="hidden" name="total_amount" value="<?php echo e($grand_total); ?>">
-                                        <div class="col-md-3 detil-item">
-                                            <label for="">Payment Method</label>
-                                            <select class="form-control" name="payment_method">
-                                                <option value="">Select</option>
-                                                <option value="UPI">UPI</option>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Card">Card</option>
-                                                <option value="bank_transfer">Bank Transfer</option>
-                                            </select>
+                                <?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
+                                <?php else: ?>
+                                    <form action="<?php echo e(route('payment')); ?>" method="post">
+                                        <?php echo csrf_field(); ?>
+                                        <div class="row">
+                                            <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
+                                            <input type="hidden" name="total_amount" value="<?php echo e($grand_total); ?>">
+                                            <div class="col-md-3 detil-item">
+                                                <label for="">Payment Method</label>
+                                                <select class="form-control" name="payment_method">
+                                                    <option value="">Select</option>
+                                                    <option value="UPI">UPI</option>
+                                                    <option value="Cash">Cash</option>
+                                                    <option value="Card">Card</option>
+                                                    <option value="bank_transfer">Bank Transfer</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 detil-item">
+                                                <label for="">Payment Status</label>
+                                                <select class="form-control" name="payment_status">
+                                                    <option value="">Select</option>
+                                                    <option value="Paid">Paid</option>
+                                                    <option value="Unpaid">Unpaid</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3" style="margin-top: 32px;">
+                                                <button type="submit" class="btn btn-primary">save</button>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3 detil-item">
-                                            <label for="">Payment Status</label>
-                                            <select class="form-control" name="payment_status">
-                                                <option value="">Select</option>
-                                                <option value="Paid">Paid</option>
-                                                <option value="Unpaid">Unpaid</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3" style="margin-top: 32px;">
-                                            <button type="submit" class="btn btn-primary">save</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
-                                <h5>Invoice : <a href="<?php echo e(route('download_invoice',$booking->id)); ?>"><span class="badge badge-primary">Download</span></a></h5>
+                                <h5>Invoice : <a href="<?php echo e(route('download_invoice', $booking->id)); ?>"><span
+                                            class="badge badge-primary">Download</span></a></h5>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -417,8 +428,9 @@
 
                                 </div>
                                 <div class="col-md-3 detil-item">
-                                    <?php if(auth()->check() && auth()->user()->hasRole('free')): ?>
-                                        <?php if($roomm->status == '0'): ?>
+                                    <?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
+                                    <?php else: ?>
+                                        <?php if($roomm->status == '0' && $booking->payment_status == 'Paid'): ?>
                                             <a href="<?php echo e($roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id))); ?>"
                                                 style="<?php echo e($roomm->status ? 'cursor: not-allowed; pointer-events:none' : ''); ?>"
                                                 class="btn btn-primary" onclick="return disableDoubleClick()">Checkout</a>

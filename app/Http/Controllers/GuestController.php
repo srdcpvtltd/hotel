@@ -40,7 +40,7 @@ class GuestController extends Controller
     {
         // check is hotel avialble or not
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-        //dd($request->all());
+
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }
@@ -174,9 +174,9 @@ class GuestController extends Controller
 
         $booking = Booking::where('user_id', Auth::id())->where('id', $bookingId)->with(['country', 'state', 'city', 'rooms', 'accompanies', 'nationalityName', 'p_country', 'p_city', 'p_state'])->first();
 
-        $advance_booking = AdvanceBooking::where('hotel_id', $hotel->id)->where('from_date', $booking->arrival_date)->where('name', $booking->gues_name)->where('phone_number', $booking->mobile_number)->orderBy('id', 'DESC')->first();
+        $advance_booking = AdvanceBooking::where('hotel_id', $booking->hotel_id)->where('from_date', $booking->arrival_date)->where('name', $booking->gues_name)->where('phone_number', $booking->mobile_number)->orderBy('id', 'DESC')->first();
         
-        $orders = Order::where('hotel_id', $hotel->id)->where('booking_id', $bookingId)->where('status', 1)->get();
+        $orders = Order::where('hotel_id', $booking->hotel_id)->where('booking_id', $bookingId)->where('status', 1)->get();
 
         return view('guest.detail', compact('booking', 'advance_booking','hotel','orders'));
     }
@@ -205,6 +205,11 @@ class GuestController extends Controller
     public function adminshow($bookingId)
     {
         $booking = Booking::where('id', $bookingId)->with(['country', 'state', 'city', 'rooms', 'accompanies', 'nationalityName', 'p_country', 'p_city', 'p_state'])->first();
+        // dd($booking);
+        
+        $advance_booking = AdvanceBooking::where('hotel_id', $booking->hotel_id)->where('from_date', $booking->arrival_date)->where('name', $booking->gues_name)->where('phone_number', $booking->mobile_number)->orderBy('id', 'DESC')->first();
+
+        $orders = Order::where('hotel_id', $booking->hotel_id)->where('booking_id', $bookingId)->where('status', 1)->get();
 
         $criminal = $crimminalMatch = null;
         //get criminal mapping if any
@@ -213,7 +218,7 @@ class GuestController extends Controller
             //get criminal details
             $criminal = Criminal::where('id', $crimminalMatch->criminal_id)->first();
         }
-        return view('guest.detail')->with(compact('booking', 'criminal'));
+        return view('guest.detail')->with(compact('booking','advance_booking', 'criminal', 'orders'));
     }
 
     public function checkOut($bookingId, $roomId)

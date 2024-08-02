@@ -201,16 +201,14 @@ class UserController extends Controller
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             $dir             = storage_path('uploads/avatar/');
             $image_path      = $dir . $userDetail['avatar'];
-            // dd($image_path);
             
             if (File::exists($image_path)) {
                 File::delete($image_path);
             }
-            // if (!file_exists($dir)) {
-            //     mkdir($dir, 0777, true);
-            // }
-
-            $path = $request->file('profile')->store($image_path);
+            if (!file_exists($dir)) {
+                mkdir($dir, 0777, true);
+            }
+            $path = $request->file('profile')->storeAs('uploads/avatar/', $fileNameToStore);
         }
 
         if (!empty($request->profile)) {

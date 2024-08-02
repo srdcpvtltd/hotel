@@ -155,7 +155,7 @@
                             </div>
                             <div class="col">
                                 <label>&nbsp;</label>
-                                <input name="land_mark" required placeholder="Landmark" type="text"
+                                <input name="land_mark" placeholder="Landmark" type="text"
                                     class="form-control">
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                                 <input name="p_lane" required placeholder="Lane" type="text" class="form-control">
                             </div>
                             <div class="col">
-                                <input name="p_land_mark" required placeholder="Landmark" type="text"
+                                <input name="p_land_mark" placeholder="Landmark" type="text"
                                     class="form-control">
                             </div>
                         </div>
@@ -351,6 +351,7 @@
                             <select name="id_type" required="required" class="form-control">
                                 <option value="">Select Id Type</option>
                                 <option value="dl">DL</option>
+                                <option value="pancard">PAN CARD</option>
                                 <option value="aadhaar">AADHAAR</option>
                                 <option value="passport">PASSPORT</option>
                                 <option value="voterid">VOTER ID CARD</option>
@@ -932,7 +933,7 @@
                 // get all value
                 var house_number = $("input[name*='house_number']").val();
                 var lane = $("input[name*='lane']").val();
-                var land_mark = $("input[name*='land_mark']").val();
+                var land_mark = $("input[name='land_mark']").val();
                 var country = $('#country :selected').val();
                 var state = $('#state :selected').val();
                 var district = $('#district :selected').val();
@@ -946,7 +947,7 @@
                 // replace all value
                 $("input[name*='house_number']").val(house_number);
                 $("input[name*='p_lane']").val(lane);
-                $("input[name*='p_land_mark']").val(land_mark);
+                $("input[name='p_land_mark']").val(land_mark);
                 $("input[name*='p_other_country']").val(otherCountry);
                 $("input[name*='p_other_state']").val(otherstate);
                 $("input[name*='p_other_city']").val(othercity);
@@ -967,7 +968,7 @@
             } else {
                 $("input[name*='house_number']").val('');
                 $("input[name*='p_lane']").val('');
-                $("input[name*='p_land_mark']").val('');
+                $("input[name='p_land_mark']").val('');
                 $("#p-country").val('').change();
                 $("#p-state").val('').change();
                 $("#p-district").val('').change();

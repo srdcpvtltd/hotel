@@ -353,6 +353,7 @@
                             <select name="id_type" required="required" class="form-control">
                                 <option value="">Select Id Type</option>
                                 <option value="dl">DL</option>
+                                <option value="pancard">PAN CARD</option>
                                 <option value="aadhaar">AADHAAR</option>
                                 <option value="passport">PASSPORT</option>
                                 <option value="voterid">VOTER ID CARD</option>
