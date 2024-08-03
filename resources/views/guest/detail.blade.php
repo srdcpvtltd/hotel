@@ -359,37 +359,34 @@
                                 </tbody>
                             </table>
                             @if ($booking->payment_status != 'Paid')
-                                @role('admin')
-                                @else
-                                    <form action="{{ route('payment') }}" method="post">
-                                        @csrf
-                                        <div class="row">
-                                            <input type="hidden" name="booking_id" value="{{ $booking->id }}">
-                                            <input type="hidden" name="total_amount" value="{{ $grand_total }}">
-                                            <div class="col-md-3 detil-item">
-                                                <label for="">Payment Method</label>
-                                                <select class="form-control" name="payment_method">
-                                                    <option value="">Select</option>
-                                                    <option value="UPI">UPI</option>
-                                                    <option value="Cash">Cash</option>
-                                                    <option value="Card">Card</option>
-                                                    <option value="bank_transfer">Bank Transfer</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3 detil-item">
-                                                <label for="">Payment Status</label>
-                                                <select class="form-control" name="payment_status">
-                                                    <option value="">Select</option>
-                                                    <option value="Paid">Paid</option>
-                                                    <option value="Unpaid">Unpaid</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3" style="margin-top: 32px;">
-                                                <button type="submit" class="btn btn-primary">save</button>
-                                            </div>
+                                <form action="{{ route('payment') }}" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                                        <input type="hidden" name="total_amount" value="{{ $grand_total }}">
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Method</label>
+                                            <select class="form-control" name="payment_method">
+                                                <option value="">Select</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Card">Card</option>
+                                                <option value="bank_transfer">Bank Transfer</option>
+                                            </select>
                                         </div>
-                                    </form>
-                                @endrole
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Status</label>
+                                            <select class="form-control" name="payment_status">
+                                                <option value="">Select</option>
+                                                <option value="Paid">Paid</option>
+                                                <option value="Unpaid">Unpaid</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3" style="margin-top: 32px;">
+                                            <button type="submit" class="btn btn-primary">save</button>
+                                        </div>
+                                    </div>
+                                </form>
                             @else
                                 <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
                                 <h5>Invoice : <a href="{{ route('download_invoice', $booking->id) }}"><span
@@ -413,14 +410,11 @@
                                     <b>Room Number:</b> {{ $roomm->room_number }}
                                 </div>
                                 <div class="col-md-3 detil-item">
-                                    @role('admin')
-                                    @else
-                                        @if ($roomm->status == '0' && $booking->payment_status == 'Paid')
-                                            <a href="{{ $roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id)) }}"
-                                                style="{{ $roomm->status ? 'cursor: not-allowed; pointer-events:none' : '' }}"
-                                                class="btn btn-primary" onclick="return disableDoubleClick()">Checkout</a>
-                                        @endif
-                                    @endrole
+                                    @if ($roomm->status == '0' && $booking->payment_status == 'Paid')
+                                        <a href="{{ $roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id)) }}"
+                                            style="{{ $roomm->status ? 'cursor: not-allowed; pointer-events:none' : '' }}"
+                                            class="btn btn-primary" onclick="return disableDoubleClick()">Checkout</a>
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

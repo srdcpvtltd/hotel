@@ -36,6 +36,9 @@ class Booking extends Model
     public function state() {
         return $this->belongsTo(State::class,'state_id');
     }
+    public function district() {
+        return $this->belongsTo(District::class,'district_id');
+    }
     public function city() {
         return $this->belongsTo(City::class,'city_id');
     }
@@ -44,6 +47,9 @@ class Booking extends Model
     }
     public function p_state() {
         return $this->belongsTo(State::class,'p_state_id');
+    }
+    public function p_district() {
+        return $this->belongsTo(District::class,'p_district_id');
     }
     public function p_city() {
         return $this->belongsTo(City::class,'p_city_id');

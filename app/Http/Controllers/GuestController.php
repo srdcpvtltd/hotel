@@ -206,19 +206,7 @@ class GuestController extends Controller
     {
         $booking = Booking::where('id', $bookingId)->with(['country', 'state', 'city', 'rooms', 'accompanies', 'nationalityName', 'p_country', 'p_city', 'p_state'])->first();
         // dd($booking);
-        
-        $advance_booking = AdvanceBooking::where('hotel_id', $booking->hotel_id)->where('from_date', $booking->arrival_date)->where('name', $booking->gues_name)->where('phone_number', $booking->mobile_number)->orderBy('id', 'DESC')->first();
-
-        $orders = Order::where('hotel_id', $booking->hotel_id)->where('booking_id', $bookingId)->where('status', 1)->get();
-
-        $criminal = $crimminalMatch = null;
-        //get criminal mapping if any
-        $crimminalMatch = CriminalBookingMatch::where('booking_id', $bookingId)->first();
-        if ($crimminalMatch) {
-            //get criminal details
-            $criminal = Criminal::where('id', $crimminalMatch->criminal_id)->first();
-        }
-        return view('guest.detail')->with(compact('booking','advance_booking', 'criminal', 'orders'));
+        return view('guest.viewdetail', compact('booking'));
     }
 
     public function checkOut($bookingId, $roomId)

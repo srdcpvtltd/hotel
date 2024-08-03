@@ -373,37 +373,34 @@
                                 </tbody>
                             </table>
                             <?php if($booking->payment_status != 'Paid'): ?>
-                                <?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
-                                <?php else: ?>
-                                    <form action="<?php echo e(route('payment')); ?>" method="post">
-                                        <?php echo csrf_field(); ?>
-                                        <div class="row">
-                                            <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
-                                            <input type="hidden" name="total_amount" value="<?php echo e($grand_total); ?>">
-                                            <div class="col-md-3 detil-item">
-                                                <label for="">Payment Method</label>
-                                                <select class="form-control" name="payment_method">
-                                                    <option value="">Select</option>
-                                                    <option value="UPI">UPI</option>
-                                                    <option value="Cash">Cash</option>
-                                                    <option value="Card">Card</option>
-                                                    <option value="bank_transfer">Bank Transfer</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3 detil-item">
-                                                <label for="">Payment Status</label>
-                                                <select class="form-control" name="payment_status">
-                                                    <option value="">Select</option>
-                                                    <option value="Paid">Paid</option>
-                                                    <option value="Unpaid">Unpaid</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3" style="margin-top: 32px;">
-                                                <button type="submit" class="btn btn-primary">save</button>
-                                            </div>
+                                <form action="<?php echo e(route('payment')); ?>" method="post">
+                                    <?php echo csrf_field(); ?>
+                                    <div class="row">
+                                        <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
+                                        <input type="hidden" name="total_amount" value="<?php echo e($grand_total); ?>">
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Method</label>
+                                            <select class="form-control" name="payment_method">
+                                                <option value="">Select</option>
+                                                <option value="UPI">UPI</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Card">Card</option>
+                                                <option value="bank_transfer">Bank Transfer</option>
+                                            </select>
                                         </div>
-                                    </form>
-                                <?php endif; ?>
+                                        <div class="col-md-3 detil-item">
+                                            <label for="">Payment Status</label>
+                                            <select class="form-control" name="payment_status">
+                                                <option value="">Select</option>
+                                                <option value="Paid">Paid</option>
+                                                <option value="Unpaid">Unpaid</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3" style="margin-top: 32px;">
+                                            <button type="submit" class="btn btn-primary">save</button>
+                                        </div>
+                                    </div>
+                                </form>
                             <?php else: ?>
                                 <h5>Payment Status : <span class="badge badge-success">Completed</span></h5>
                                 <h5>Invoice : <a href="<?php echo e(route('download_invoice', $booking->id)); ?>"><span
@@ -428,13 +425,10 @@
 
                                 </div>
                                 <div class="col-md-3 detil-item">
-                                    <?php if(auth()->check() && auth()->user()->hasRole('admin')): ?>
-                                    <?php else: ?>
-                                        <?php if($roomm->status == '0' && $booking->payment_status == 'Paid'): ?>
-                                            <a href="<?php echo e($roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id))); ?>"
-                                                style="<?php echo e($roomm->status ? 'cursor: not-allowed; pointer-events:none' : ''); ?>"
-                                                class="btn btn-primary" onclick="return disableDoubleClick()">Checkout</a>
-                                        <?php endif; ?>
+                                    <?php if($roomm->status == '0' && $booking->payment_status == 'Paid'): ?>
+                                        <a href="<?php echo e($roomm->status ? '#' : asset(url('/guest/checkout/' . $booking->id . '/room/' . $roomm->id))); ?>"
+                                            style="<?php echo e($roomm->status ? 'cursor: not-allowed; pointer-events:none' : ''); ?>"
+                                            class="btn btn-primary" onclick="return disableDoubleClick()">Checkout</a>
                                     <?php endif; ?>
                                 </div>
                             </div>

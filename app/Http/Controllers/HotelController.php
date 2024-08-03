@@ -30,7 +30,7 @@ class HotelController extends Controller
     {
         $user = \Auth::user();
         $countries = \DB::table('countries')->get();
-        return view('frontend.pages.add-hotel', compact('countries'))->with('user',$user);
+        return view('frontend.pages.add-hotel', compact('countries'))->with('user', $user);
     }
 
     public function get_police_stations(Request $request)
@@ -44,8 +44,8 @@ class HotelController extends Controller
 
     public function post_add_hotel(Request $request)
     {
-        try{
-            
+        try {
+
             $this->validate($request, [
                 'cmbcountry' => 'required',
                 'cmbstate' => 'required',
@@ -71,25 +71,25 @@ class HotelController extends Controller
             $hotel->outsource_employee_count = $request->outsource_employee_count;
             $hotel->website = $request->website;
             $hotel->email = $request->email;
-            $hotel->geo_tagging = (boolean)$request->tagging_radio_btn;
+            $hotel->geo_tagging = (bool)$request->tagging_radio_btn;
             $hotel->latitude = $request->txtlongitude;
             $hotel->longitude = $request->txtlatitude;
-            $hotel->swimming_pool = (boolean)$request->swimming_radio_btn;
-            $hotel->aggregator = (boolean)$request->aggr_radio_btn;
+            $hotel->swimming_pool = (bool)$request->swimming_radio_btn;
+            $hotel->aggregator = (bool)$request->aggr_radio_btn;
             $hotel->aggregator_registration = $request->agr_regno;
             $hotel->aggregator_name = $request->agr_name;
             $hotel->staff_count = $request->no_of_staf;
-            $hotel->security = (boolean)$request->security_radio_btn;
+            $hotel->security = (bool)$request->security_radio_btn;
             $hotel->security_registration = $request->security_reg_no;
             $hotel->security_name = $request->security_name;
-            $hotel->banquet_hall = (boolean)$request->banquet_radio_btn;
+            $hotel->banquet_hall = (bool)$request->banquet_radio_btn;
             $hotel->banquet_hall_count = $request->no_of_banquet;
             // Restaurant
             $hotel->restaurant_count = $request->no_of_restaurant;
-            $hotel->leased_room = (boolean)$request->leased_radio_btn;
+            $hotel->leased_room = (bool)$request->leased_radio_btn;
             $hotel->leased_room_count = $request->no_of_leased_room;
-            $hotel->has_bar = (boolean)$request->bar_radio_btn;
-            $hotel->has_pub = (boolean)$request->pub_radio_btn;
+            $hotel->has_bar = (bool)$request->bar_radio_btn;
+            $hotel->has_pub = (bool)$request->pub_radio_btn;
 
             $hotel->country = (isset($request->cmbcountry) && !empty($request->cmbcountry)) ? $request->cmbcountry : null;
             $hotel->otherCountry = (isset($request->otherCountry) && !empty($request->otherCountry)) ? $request->otherCountry : null;
@@ -98,24 +98,22 @@ class HotelController extends Controller
             $hotel->district = (isset($request->cmbdistrict) && !empty($request->cmbdistrict)) ? $request->cmbdistrict : null;
             $hotel->otherCity = (isset($request->otherCity) && !empty($request->otherCity)) ? $request->otherCity : null;
             $hotel->city = (isset($request->cmbcity) && !empty($request->cmbcity)) ? $request->cmbcity : null;
-            
+
             // Security Measures
-            $hotel->baggage_scanner = (boolean)$request->bagage_radio_btn;
-            $hotel->fire_detector = (boolean)$request->fire_radio_btn;
+            $hotel->baggage_scanner = (bool)$request->bagage_radio_btn;
+            $hotel->fire_detector = (bool)$request->fire_radio_btn;
             $hotel->fire_license = $request->fire_license_no;
-            $hotel->cctv = (boolean)$request->cctv_radio_btn;
+            $hotel->cctv = (bool)$request->cctv_radio_btn;
             $hotel->no_of_cameras = $request->no_of_camera;
             $hotel->no_of_cameras_outside = $request->no_of_camera_outside;
-            $hotel->metal_detector = (boolean)$request->metal_radio_btn;
-            
+            $hotel->metal_detector = (bool)$request->metal_radio_btn;
+
             $hotel->save();
             FacadesSession::flash('message', "Hotel Added Successfully");
             return redirect('/dashboard')->with('success', "Hotel Added Successfully");
-        }catch (Exception $e)
-        {
+        } catch (Exception $e) {
             request()->session()->flash('error', $e->getMessage());
             return back()->withInput($request->all());
-            
         }
     }
     public function index()
@@ -193,18 +191,17 @@ class HotelController extends Controller
 
             return response()->json(['lable' => $arrLable, 'value' => $arrValue], 200);
         }
-
-        
     }
-    public function post_edit_hotel($hotelId) {
+    public function post_edit_hotel($hotelId)
+    {
         $user = \Auth::user();
-        $hotel = HotelProfile::where('id',$hotelId)->where('user_id',Auth::id())->first();
-        
-        if($hotel){
+        $hotel = HotelProfile::where('id', $hotelId)->where('user_id', Auth::id())->first();
+
+        if ($hotel) {
             // $city = City::where('code', $hotel->city)->first();
             $police_station = PoliceStation::where([['city_id', $hotel->city]])->orderBy('desc', "ASC")->get();
             $countries = \DB::table('countries')->get();
-            return view('frontend.pages.edit-hotel')->with('countries',$countries)->with('user',$user)->with('hotel',$hotel)->with('police_station',$police_station);
+            return view('frontend.pages.edit-hotel')->with('countries', $countries)->with('user', $user)->with('hotel', $hotel)->with('police_station', $police_station);
         }
         return 'Edit Hotel';
     }
@@ -240,37 +237,36 @@ class HotelController extends Controller
         $hotel->banquet_hall = $request->banquet_radio_btn == 'yes' ? 1 : 0;
         $hotel->banquet_hall_count = $request->no_of_banquet;
 
-        if(isset($request->police_station))
-        {
+        if (isset($request->police_station)) {
             $hotel->police_station = (isset($request->police_station) && !empty($request->police_station)) ? $request->police_station : null;
         }
 
-        if(isset($request->cmbcountry)){
+        if (isset($request->cmbcountry)) {
             $hotel->country = (isset($request->cmbcountry) && !empty($request->cmbcountry)) ? $request->cmbcountry : null;
         }
-        if(isset($request->otherCountry)){
+        if (isset($request->otherCountry)) {
             $hotel->otherCountry = (isset($request->otherCountry) && !empty($request->otherCountry)) ? $request->otherCountry : null;
         }
-        if(isset($request->cmbstate)){
+        if (isset($request->cmbstate)) {
             $hotel->state = (isset($request->cmbstate) && !empty($request->cmbstate)) ? $request->cmbstate : null;
         }
-        if(isset($request->otherState)){
+        if (isset($request->otherState)) {
             $hotel->otherState = (isset($request->otherState) && !empty($request->otherState)) ? $request->otherState : null;
         }
-        if(isset($request->otherCity)){
+        if (isset($request->otherCity)) {
             $hotel->otherCity = (isset($request->otherCity) && !empty($request->otherCity)) ? $request->otherCity : null;
         }
-        if(isset($request->cmbcity)){
+        if (isset($request->cmbcity)) {
             $hotel->city = (isset($request->cmbcity) && !empty($request->cmbcity)) ? $request->cmbcity : null;
-        }   
-        
+        }
+
         // Restaurant
         $hotel->restaurant_count = $request->no_of_restaurant;
         $hotel->leased_room = $request->leased_radio_btn  == 'yes' ? 1 : 0;
         $hotel->leased_room_count = $request->no_of_leased_room;
         $hotel->has_bar = $request->bar_radio_btn  == 'yes' ? 1 : 0;
         $hotel->has_pub = $request->pub_radio_btn  == 'yes' ? 1 : 0;
-        
+
         // Security Measures
         $hotel->baggage_scanner = $request->bagage_radio_btn == 'yes' ? 1 : 0;
         $hotel->fire_detector = $request->fire_radio_btn == 'yes' ? 1 : 0;
@@ -279,53 +275,52 @@ class HotelController extends Controller
         $hotel->no_of_cameras = $request->no_of_camera;
         $hotel->no_of_cameras_outside = $request->no_of_camera_outside;
         $hotel->metal_detector = $request->metal_radio_btn == 'yes' ? 1 : 0;
-        
+
         $hotel->save();
         Session::flash('message', "Hotel Update Successfully");
-        if($user->id != $request->user_id){
+        if ($user->id != $request->user_id) {
             return redirect('/admin/hotel_report')->with('success', "Hotel Update Successfully");
         } else {
             return redirect('/dashboard')->with('success', "Hotel Update Successfully");
         }
-
     }
 
     public function show($hotal)
     {
-        $hotel = HotelProfile::where('id',$hotal)->first();
-     
-        $user = User::where('id',$hotel->user_id)->first();
-        
+        $hotel = HotelProfile::where('id', $hotal)->first();
+
+        $user = User::where('id', $hotel->user_id)->first();
+
         $state = State::where('id', $hotel->state)->first();
         $city = City::where('id', $hotel->city)->first();
         $police_station = PoliceStation::where('id', $hotel->police_station)->first();
         $countries = \DB::table('countries')->where('id', $hotel->country)->first();
-        return view('admin.hotel.detail')->with('countries',$countries)
-        ->with('state',$state)->with('hotel',$hotel)->with('user',$user)
-        ->with('police_station',$police_station)->with('city',$city);
+        return view('admin.hotel.detail')->with('countries', $countries)
+            ->with('state', $state)->with('hotel', $hotel)->with('user', $user)
+            ->with('police_station', $police_station)->with('city', $city);
     }
 
     public function destory($hotal)
     {
-        HotelProfile::where('id',$hotal)->delete();
+        HotelProfile::where('id', $hotal)->delete();
         $message = "Hotel removed Successfully";
         return redirect()->route('hotel_report.report')
-        ->with('message', __($message));
+            ->with('message', __($message));
     }
 
-    public function admin_edit_hotel($hotelId) {
+    public function admin_edit_hotel($hotelId)
+    {
+        $hotel = HotelProfile::where('id', $hotelId)->first();
 
-        $hotel = HotelProfile::where('id',$hotelId)->first();
-
-        if($hotel){
-            $user = User::where('id',$hotel->user_id)->first();
+        if ($hotel) {
+            $user = User::where('id', $hotel->user_id)->first();
             $city = City::where('id', $hotel->city)->first();
             $isAdmin = 1;
             $police_station = PoliceStation::where([['city_id', $hotel->city]])->orderBy('desc', "ASC")->get();
             $countries = \DB::table('countries')->get();
             return view('frontend.pages.edit-hotel')
-            ->with('isAdmin',$isAdmin)->with('countries',$countries)
-            ->with('user',$user)->with('hotel',$hotel)->with('police_station',$police_station);
+                ->with('isAdmin', $isAdmin)->with('countries', $countries)
+                ->with('user', $user)->with('hotel', $hotel)->with('police_station', $police_station);
         } else {
             return redirect()->route('hotel_report.report');
         }
