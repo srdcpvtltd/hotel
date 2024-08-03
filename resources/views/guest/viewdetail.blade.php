@@ -128,15 +128,6 @@
                                         <div class="col-md-4 detil-item">
                                             <b>Purpose of Visit:</b> {{ $booking->whom_to_visit }}
                                         </div>
-                                        <div class="col-md-4 detil-item">
-                                            <b>Total Amount:</b> {{ $booking->total_amount }} Rs.
-                                        </div>
-                                        <div class="col-md-4 detil-item">
-                                            <b>Payment Method:</b> {{ $booking->payment_method }}
-                                        </div>
-                                        <div class="col-md-4 detil-item">
-                                            <b>Payment Status:</b> {{ $booking->payment_status }}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
