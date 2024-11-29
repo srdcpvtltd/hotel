@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Laracasts\Flash\Flash;
 
 
@@ -180,7 +181,7 @@ class UserController extends Controller
     {
         $userDetail = Auth::user();
         $user       = User::findOrFail($userDetail['id']);
-        $validator = \Validator::make(
+        $validator = Validator::make(
             $request->all(),
             [
                 'name' => 'required|max:120',

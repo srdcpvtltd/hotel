@@ -5,6 +5,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/storage
 # /public/images
 .env
 composer.lock

@@ -40,7 +40,6 @@ class GuestController extends Controller
     {
         // check is hotel avialble or not
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
-
         if (!$hotel) {
             return redirect('/add-hotel')->with('success', "Please create hotel first.");
         }

@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\API\AdvanceBookingsController;
+use App\Http\Controllers\API\BookingController;
+use App\Http\Controllers\API\DesignationController;
+use App\Http\Controllers\Api\HotelRegisterController;
+use App\Http\Controllers\API\HotelStaffController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
-use App\Http\Controllers\HotelRegisterController;
 use App\Http\Controllers\PriceRuleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
@@ -22,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 //add,update,delete - hotel
 Route::middleware('auth:api')->group(function () {
     Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
-    // dd("jyoti");
+    // dd("testing");
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
 });
@@ -30,6 +34,37 @@ Route::middleware('auth:api')->group(function () {
 //Hotel register and login
 Route::post("hotel-register", [HotelRegisterController::class, 'hotel_register']);
 Route::post("login", [HotelRegisterController::class, 'login']);
+
+
+//Bookings
+Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
+Route::get("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
+Route::post("hotel-checkout", [BookingController::class, 'check_out']); //guest checkout
+Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create_advance_bookings']); //create Advance Booking
+Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking
+Route::post("update-advance-booking", [AdvanceBookingsController::class, 'update_advance_bookings']); //update Advance Booking
+Route::post("delete-advance-booking", [AdvanceBookingsController::class, 'delete_advance_bookings']); //delete Advance Booking
+Route::get("get-room-type", [BookingController::class, 'get_room_type']); //delete Advance Booking
+Route::post("get-rooms", [BookingController::class, 'get_rooms']); //delete Advance Booking
+
+
+//Counry,state,district,city
+Route::get("get-country", [BookingController::class, 'get_country']); //get Country
+Route::post("get-state", [BookingController::class, 'get_state']); //get state
+Route::post("get-district", [BookingController::class, 'get_district']); //get district
+Route::post("get-city", [BookingController::class, 'get_city']); //get city
+
+//crud for designation
+Route::post("create-designation", [DesignationController::class, 'create_designation']); //create room type
+Route::post("retrive-designation", [DesignationController::class, 'retrive_designation']); //retrive room type
+Route::post("update-designation", [DesignationController::class, 'update_designation']); //update room type
+Route::post("delete-designation", [DesignationController::class, 'delete_designation']); //delete room type
+
+//crud for hotel-staff
+Route::post("add-hotel-staff", [HotelStaffController::class, 'create_staff']); //create hotel staff
+Route::post("retrive-hotel-staff", [HotelStaffController::class, 'retrive_staff']); //retrive hotel staff
+Route::post("update-hotel-staff", [HotelStaffController::class, 'update_staff']); //update hotel staff
+Route::post("delete-hotel-staff", [HotelStaffController::class, 'delete_staff']); //delete hotel staff
 
 //crud for room type
 Route::post("create-room-type", [RoomTypeController::class, 'create_room_type']); //create room type
