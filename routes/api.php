@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\API\AdvanceBookingsController;
-use App\Http\Controllers\API\BookingController;
-use App\Http\Controllers\API\DesignationController;
+use App\Http\Controllers\Api\AdvanceBookingsController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\DesignationController;
 use App\Http\Controllers\Api\HotelRegisterController;
-use App\Http\Controllers\API\HotelStaffController;
+use App\Http\Controllers\Api\HotelStaffController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
 use App\Http\Controllers\PriceRuleController;
@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Api Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
+| Here is where you can register Api routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assigned the "Api" middleware group. Enjoy building your Api!
 |
 */
 //add,update,delete - hotel
@@ -98,4 +98,4 @@ Route::post('/save-bg-check-results', [FaceRecognitionController::class, 'saveBg
 
 
 
-// Route::resource('tests', App\Http\Controllers\API\TestAPIController::class);
+// Route::resource('tests', App\Http\Controllers\Api\TestApiController::class);
