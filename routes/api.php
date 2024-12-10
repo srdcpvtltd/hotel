@@ -43,7 +43,6 @@ Route::middleware('auth:api')->group(function () {
 
 
     //Counry,state,district,city
-    Route::get("get-country", [BookingController::class, 'get_country']); //get Country
     Route::post("get-state", [BookingController::class, 'get_state']); //get state
     Route::post("get-district", [BookingController::class, 'get_district']); //get district
     Route::post("get-city", [BookingController::class, 'get_city']); //get city
@@ -69,12 +68,11 @@ Route::middleware('auth:api')->group(function () {
 
     //crud for price rules
     Route::get("room-type-dropdown", [PriceRuleController::class, 'room_type_dropDown']); //dropdown for room type
-    Route::post("price-rules-create", [PriceRuleController::class, 'create_price_rules']); //create price rules
     Route::post("price-rules-retrive", [PriceRuleController::class, 'retrive_price_rules']); //retrive price rules
     Route::post("price-rules-paginate", [PriceRuleController::class, 'paginate']); //paginate for price rule
     Route::post("price-rules-update", [PriceRuleController::class, 'update_price_rules']); //update price rules
     Route::post("price-rules-delete", [PriceRuleController::class, 'delete_price_rules']); //delete price rules
-
+    Route::post("price-rules-create", [PriceRuleController::class, 'create_price_rules']); //create price rules
     //crud for room
     Route::post("room-create", [RoomController::class, 'create_room']); //create rooms
     Route::post("room-retrive", [RoomController::class, 'retrive_rooms']); //retrive rooms
@@ -82,6 +80,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post("room-update", [RoomController::class, 'update_rooms']); //update rooms
     Route::post("room-delete", [RoomController::class, 'delete_rooms']); //delete rooms
 });
+
+Route::get("get-country", [BookingController::class, 'get_country']); //get Country
 
 //Hotel register and login
 Route::post("hotel-register", [HotelRegisterController::class, 'hotel_register']);
