@@ -32,13 +32,13 @@ Route::middleware('auth:api')->group(function () {
 
     //Bookings
     Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
-    Route::get("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
+    Route::post("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
     Route::post("hotel-checkout", [BookingController::class, 'check_out']); //guest checkout
     Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create_advance_bookings']); //create Advance Booking
     Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking
     Route::post("update-advance-booking", [AdvanceBookingsController::class, 'update_advance_bookings']); //update Advance Booking
     Route::post("delete-advance-booking", [AdvanceBookingsController::class, 'delete_advance_bookings']); //delete Advance Booking
-    Route::get("get-room-type", [BookingController::class, 'get_room_type']); //delete Advance Booking
+    Route::post("get-room-type", [BookingController::class, 'get_room_type']); //delete Advance Booking
     Route::post("get-rooms", [BookingController::class, 'get_rooms']); //delete Advance Booking
 
 
@@ -67,7 +67,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("delete-room-type", [RoomTypeController::class, 'delete_room_type']); //delete room type
 
     //crud for price rules
-    Route::get("room-type-dropdown", [PriceRuleController::class, 'room_type_dropDown']); //dropdown for room type
+    Route::post("room-type-dropdown", [PriceRuleController::class, 'room_type_dropDown']); //dropdown for room type
     Route::post("price-rules-retrive", [PriceRuleController::class, 'retrive_price_rules']); //retrive price rules
     Route::post("price-rules-paginate", [PriceRuleController::class, 'paginate']); //paginate for price rule
     Route::post("price-rules-update", [PriceRuleController::class, 'update_price_rules']); //update price rules
@@ -79,9 +79,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post("rooms-paginate", [RoomController::class, 'paginate']); //paginate for rooms
     Route::post("room-update", [RoomController::class, 'update_rooms']); //update rooms
     Route::post("room-delete", [RoomController::class, 'delete_rooms']); //delete rooms
+    Route::post("get-country", [BookingController::class, 'get_country']); //get Country
 });
 
-Route::get("get-country", [BookingController::class, 'get_country']); //get Country
 
 //Hotel register and login
 Route::post("hotel-register", [HotelRegisterController::class, 'hotel_register']);
