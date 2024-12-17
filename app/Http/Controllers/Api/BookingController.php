@@ -180,76 +180,80 @@ class BookingController extends Controller
             return response()->json([
                 'message' => "No Country Data Found"
             ]);
-        }
-        
+        } 
     }
 
-    public function get_state(Request $request){
-        $state_data = State::where('country_id',$request->country_id)->get();
+    public function get_state(Request $request)
+    {
+        $state_data = State::where('country_id', $request->country_id)->get();
 
-        if($state_data->toArray()){
+        if ($state_data->toArray()) {
             return response()->json([
                 'data' => $state_data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "No Country Data Found"
             ]);
         }
     }
 
-    public function get_district(Request $request){
-        $district_data = District::where('state_id',$request->state_id)->get();
+    public function get_district(Request $request)
+    {
+        $district_data = District::where('state_id', $request->state_id)->get();
 
-        if($district_data->toArray()){
+        if ($district_data->toArray()) {
             return response()->json([
                 'data' => $district_data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "No Country Data Found"
             ]);
         }
     }
 
-    public function get_city(Request $request){
-        $city_data = City::where('district_id',$request->district_id)->get();
+    public function get_city(Request $request)
+    {
+        $city_data = City::where('district_id', $request->district_id)->get();
 
-        if($city_data->toArray()){
+        if ($city_data->toArray()) {
             return response()->json([
                 'data' => $city_data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "No Country Data Found"
             ]);
         }
     }
 
-    public function get_room_type(){
-        $room_type_data = RoomType::where('hotel_id',1045)->get();
+    public function get_room_type()
+    {
+        $room_type_data = RoomType::where('hotel_id', 1045)->get();
 
-        if($room_type_data->toArray()){
+        if ($room_type_data->toArray()) {
             return response()->json([
                 'data' => $room_type_data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "No Data Found"
             ]);
         }
     }
 
-    public function get_rooms(Request $request){
-        $room_data = Room::where('room_type_id',$request->room_type_id)
-        ->where('status',0)
-        ->get(['id','name']);
+    public function get_rooms(Request $request)
+    {
+        $room_data = Room::where('room_type_id', $request->room_type_id)
+            ->where('status', 0)
+            ->get(['id', 'name']);
 
-        if($room_data->toArray()){
+        if ($room_data->toArray()) {
             return response()->json([
                 'data' => $room_data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "No Data Found"
             ]);

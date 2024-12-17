@@ -29,6 +29,7 @@ Route::middleware('auth:api')->group(function () {
     // dd("testing");
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
+    Route::post("get-police-station", [HotelProfileController::class, 'get_police_stations']);
 
     //Bookings
     Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
