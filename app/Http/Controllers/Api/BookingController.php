@@ -120,6 +120,7 @@ class BookingController extends Controller
                 $room->save();
             }
             return response()->json([
+                'booking_id' => 1,
                 'message' => "Checkin Successfull"
             ]);
         } else {
@@ -169,18 +170,19 @@ class BookingController extends Controller
         }
     }
 
-    public function get_country(){
+    public function get_country()
+    {
         $country_data = Country::all();
 
-        if($country_data->toArray()){
+        if ($country_data->toArray()) {
             return response()->json([
                 'data' => $country_data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'message' => "No Country Data Found"
             ]);
-        } 
+        }
     }
 
     public function get_state(Request $request)
