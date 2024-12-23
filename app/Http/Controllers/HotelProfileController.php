@@ -25,13 +25,13 @@ class HotelProfileController extends Controller
 
     public function get_police_stations(Request $request)
     {
-        $code = $request->city;
+        $code = $request->city_id;
+        $city = PoliceStation::where('city_id', $code)->get();
 
-        $city = City::where([['code', $code]])->first();
-
-        $ps = PoliceStation::where([['city_id', $city->id]])->orderBy('desc', "ASC")->get();
-
-        return response()->json(['aaData' => $ps]);
+        return response()->json([
+            'data' => $city,
+            'code' => 200
+        ]);
     }
 
     public function post_add_hotel(Request $request)
@@ -160,9 +160,7 @@ class HotelProfileController extends Controller
         }
     }
 
-    public function retriv_hotel(Request $request)
-    {
-    }
+    public function retriv_hotel(Request $request) {}
     //update
     public function update_hotel(Request $request)
     {

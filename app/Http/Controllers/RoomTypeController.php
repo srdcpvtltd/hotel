@@ -9,7 +9,9 @@ use App\Models\HotelProfile;
 use App\Models\RoomType;
 use App\Services\RoomTypeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RoomTypeController extends Controller
 {
