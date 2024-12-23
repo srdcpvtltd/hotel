@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use Spatie\Permission\Models\Permission;
 use App\DataTables\RolesDataTable;
 use App\Models\Modual;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
@@ -129,11 +130,19 @@ class RoleController extends Controller
 
     public function assignPermission(Request $request, $id)
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-        $role = Role::find($id);
-        $permissions = $role->permissions()->get();
-        $role->revokePermissionTo($permissions);
-        $role->givePermissionTo($request->permissions);
-        return redirect()->route('roles.index')->with('message', __('Permissions assigned to Role successfully'));
+        try {
+            app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+            $role = Role::find($id);
+            $permissions = $role->permissions()->get();
+            DB::beginTransaction();
+            $role->revokePermissionTo($permissions);
+            $role->givePermissionTo($request->permissions);
+            DB::commit();
+
+            return redirect()->route('roles.index')->with('message', __('Permissions assigned to Role successfully'));
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->with('danger', $exception->getMessage());
+        }
     }
 }

@@ -332,7 +332,7 @@
                             <label>Local Contact Number</label>
                             <input name="local_contact_number"
                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                type="number" maxlength="10" required class="form-control"
+                                type="number" maxlength="10" class="form-control"
                                 placeholder="Local Contact Number" />
                         </div>
                         <div class="col">

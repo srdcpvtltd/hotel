@@ -163,17 +163,6 @@
                                             <b>Purpose of Visit:</b> <?php echo e($booking->whom_to_visit); ?>
 
                                         </div>
-                                        <div class="col-md-4 detil-item">
-                                            <b>Total Amount:</b> <?php echo e($booking->total_amount); ?> Rs.
-                                        </div>
-                                        <div class="col-md-4 detil-item">
-                                            <b>Payment Method:</b> <?php echo e($booking->payment_method); ?>
-
-                                        </div>
-                                        <div class="col-md-4 detil-item">
-                                            <b>Payment Status:</b> <?php echo e($booking->payment_status); ?>
-
-                                        </div>
                                     </div>
                                 </div>
                             </div>

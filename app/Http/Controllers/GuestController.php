@@ -205,7 +205,7 @@ class GuestController extends Controller
     public function adminshow($bookingId)
     {
         $booking = Booking::where('id', $bookingId)->with(['country', 'state', 'city', 'rooms', 'accompanies', 'nationalityName', 'p_country', 'p_city', 'p_state'])->first();
-        // dd($booking);
+
         return view('guest.viewdetail', compact('booking'));
     }
 
