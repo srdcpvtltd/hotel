@@ -105,7 +105,7 @@ class RegisterController extends Controller
 
         $user->email_token = $email_token;
         $user->save();
-        dispatch(new SendVerificationEmail($user));
+        // dispatch(new SendVerificationEmail($user));
 
         return view('verification');
     }

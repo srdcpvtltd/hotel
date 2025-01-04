@@ -25,8 +25,8 @@ use Illuminate\Support\Facades\Route;
 */
 //add,update,delete - hotel
 Route::middleware('auth:api')->group(function () {
-    Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
     // dd("testing");
+    Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
     Route::post("get-police-station", [HotelProfileController::class, 'get_police_stations']);

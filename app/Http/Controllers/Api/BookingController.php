@@ -110,7 +110,7 @@ class BookingController extends Controller
             // room status
             $count = count($request->bookingdata);
             for ($i = 0; $i < $count; $i++) {
-                $rooms[] = $request->bookingdata['booking' . $i]['room_number'];
+                $rooms[] = $request->bookingdata[$i]['room_number'];
             }
 
             foreach ($rooms as $room) {
@@ -146,7 +146,6 @@ class BookingController extends Controller
 
     public function check_out(Request $request)
     {
-
         $booking_room = BookingRoom::where('id', $request->id)
             ->where('booking_id', $request->booking_id)->first();
         $room = Room::where('name', $booking_room->room_number)->first();
