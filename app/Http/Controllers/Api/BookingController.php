@@ -22,7 +22,6 @@ class BookingController extends Controller
 {
     public function create_booking(Request $request)
     {
-
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
         if (!$hotel) {
             return response()->json([
@@ -32,9 +31,8 @@ class BookingController extends Controller
         $booking = new Booking();
 
         if ($request->guest_image) {
-
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $imageName = time() . '.' . $request->guest_image->extension();
+            $request->guest_image->move(public_path('images'), $imageName);
             $image_path = url('images/' . $imageName);
             $booking->guest_image = $image_path;
         }
@@ -229,9 +227,9 @@ class BookingController extends Controller
         }
     }
 
-    public function get_room_type()
+    public function get_room_type(Request $request)
     {
-        $room_type_data = RoomType::where('hotel_id', 1045)->get();
+        $room_type_data = RoomType::where('hotel_id', $request->hotel_id)->get();
 
         if ($room_type_data->toArray()) {
             return response()->json([

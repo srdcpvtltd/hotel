@@ -150,7 +150,8 @@ class HotelProfileController extends Controller
             $result = HotelProfile::create($request->all());
             if ($result) {
                 return response()->json([
-                    'message' => "Hotel Added Successfully"
+                    'message' => "Hotel Added Successfully",
+                    'data' => $result->fresh()
                 ], 200);
             } else {
                 return response()->json([
