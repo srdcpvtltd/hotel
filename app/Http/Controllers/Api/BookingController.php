@@ -245,6 +245,7 @@ class BookingController extends Controller
     public function get_rooms(Request $request)
     {
         $room_data = Room::where('room_type_id', $request->room_type_id)
+            ->where('hotel_id', $request->hotel_id)
             ->where('status', 0)
             ->get(['id', 'name']);
 

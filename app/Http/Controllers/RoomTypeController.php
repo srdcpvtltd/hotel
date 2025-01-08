@@ -134,7 +134,7 @@ class RoomTypeController extends Controller
             // }
 
             $result = RoomType::create([
-                        'hotel_id' =>  920, //only for testing and will be fix after solving the middleware issue
+                        'hotel_id' =>  $request->hotel_id, //only for testing and will be fix after solving the middleware issue
                         'room_type' => $request->room_type,
                         'description' => $request->description
                     ]);
@@ -174,7 +174,7 @@ class RoomTypeController extends Controller
                 ], 200);
             }
         }else{
-            $room_type = RoomType::all();
+            $room_type = RoomType::where('hotel_id',$request->hotel_id)->get();
             if($room_type){
                 return response()->json([
                     'data' => $room_type

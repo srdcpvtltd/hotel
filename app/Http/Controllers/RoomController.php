@@ -72,7 +72,7 @@ class RoomController extends Controller
         }
 
         $room_type = RoomType::where('hotel_id', $hotel->id)->get();
-        
+
         return view('system_management.room.edit')->with(compact('room', 'room_type'));
     }
 
@@ -181,50 +181,52 @@ class RoomController extends Controller
 
 
     //retrive rooms
-    public function retrive_rooms(Request $request){
+    public function retrive_rooms(Request $request)
+    {
         $limit = $request->limit > 0 ? $request->limit : 10;
         $index = $request->index > 0 ? $request->index : 0;
         $serch_text = $request->search_text;
-        if($serch_text){
-            $room = Room::where('name','like',"%$serch_text%")
-            ->orWhere('price','like',"%$serch_text%")
-            ->orWhere('status','like',"%$serch_text%")
-            ->with('room_type')
-            ->limit($limit)
-            ->offset($index)
-            ->orderBy('id', 'desc')
-            ->get()
-            ->toArray();
+        if ($serch_text) {
+            $room = Room::where('name', 'like', "%$serch_text%")
+                ->orWhere('price', 'like', "%$serch_text%")
+                ->orWhere('status', 'like', "%$serch_text%")
+                ->with('room_type')
+                ->limit($limit)
+                ->offset($index)
+                ->orderBy('id', 'desc')
+                ->get()
+                ->toArray();
 
-            $room_type = RoomType::where('room_type','like',"%$serch_text%")
-            ->with('price_rule')
-            ->limit($limit)
-            ->offset($index)
-            ->orderBy('id', 'desc')
-            ->get()
-            ->toArray();
-    
-            if(!empty($room)){
+            $room_type = RoomType::where('room_type', 'like', "%$serch_text%")
+                ->with('price_rule')
+                ->limit($limit)
+                ->offset($index)
+                ->orderBy('id', 'desc')
+                ->get()
+                ->toArray();
+
+            if (!empty($room)) {
                 return response()->json([
                     'data' => $room
                 ], 200);
-            }else if(!empty($room_type)){
+            } else if (!empty($room_type)) {
                 return response()->json([
                     'data' => $room_type
                 ], 200);
-            }
-            else{
+            } else {
                 return response()->json([
                     'message' => "No Rooms found"
                 ], 200);
             }
-        }else{
-            $room = Room::with('room_type')->get();
-            if($room){
+        } else {
+            $room = Room::with('room_type')
+            ->where('hotel_id',$request->hotel_id)
+            ->get();
+            if ($room) {
                 return response()->json([
                     'data' => $room
-                ], 200);
-            }else{
+                ], 200); 
+            } else {
                 return response()->json([
                     'message' => "No Rooms available"
                 ], 200);
@@ -249,52 +251,52 @@ class RoomController extends Controller
     //update room
 
     public function update_rooms(Request $request)
-     {
-         $payload = $request->all();
-         $data = Room::find($request->id);
-         Arr::forget($payload, 'id');
- 
-         if ($data) {
-             $result = $data->update($payload);
-             if ($result) {
-                 return response()->json([
-                     'message' => "The data has been successfully updated"
-                 ], 200);
-             } else {
-                 return response()->json([
-                     'message' => "Failed"
-                 ], 200);
-             }
-         }else{
-             return response()->json([
-                 'message' => "Invalid Id"
-             ], 200);
-         }
-     }
+    {
+        $payload = $request->all();
+        $data = Room::find($request->id);
+        Arr::forget($payload, 'id');
 
-     //delete rooms
-     public function delete_rooms(Request $request)
-     {
-         $room= Room::find($request->id);
-         if (!$room) {
-             return response()->json([
-                 'message' => 'Invalid Id'
-             ], 200);
-         }
- 
-         // Delete the employee record
-         $result = $room->delete();
- 
-         if ($result) {
-             // Deletion successful
-             return response()->json([
-                 'message' => 'Deleted successfully'
-             ], 200);
-         } else {
-             // Deletion failed
-             return response()->json([
-                 'message' => 'Failed to delete data'
-             ], 200);
-         }
-     }
+        if ($data) {
+            $result = $data->update($payload);
+            if ($result) {
+                return response()->json([
+                    'message' => "The data has been successfully updated"
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => "Failed"
+                ], 200);
+            }
+        } else {
+            return response()->json([
+                'message' => "Invalid Id"
+            ], 200);
+        }
+    }
+
+    //delete rooms
+    public function delete_rooms(Request $request)
+    {
+        $room = Room::find($request->id);
+        if (!$room) {
+            return response()->json([
+                'message' => 'Invalid Id'
+            ], 200);
+        }
+
+        // Delete the employee record
+        $result = $room->delete();
+
+        if ($result) {
+            // Deletion successful
+            return response()->json([
+                'message' => 'Deleted successfully'
+            ], 200);
+        } else {
+            // Deletion failed
+            return response()->json([
+                'message' => 'Failed to delete data'
+            ], 200);
+        }
+    }
 }
