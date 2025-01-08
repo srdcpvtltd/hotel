@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class HotelRegisterController extends Controller
 {
@@ -25,13 +26,23 @@ class HotelRegisterController extends Controller
                 'message' => $validator->errors()
             ], 200);
         } else {
-            $result =User::create(
+            $result = User::create(
                 [
                     'name' => $request['name'],
                     'email' => $request['email'],
-                    'password' => Hash::make($request['password'])
+                    'password' => Hash::make($request['password']),
+                    'created_by' => 1,
+                    // 'type'=>'user',
+                    'type' => 'free',
+                    'email_token' => base64_encode($request['email']),
                 ]
-            );;
+            );
+            // $role=Role::findByName('user');
+            $role = Role::findByName('free');
+            if ($role) {
+                $result->assignRole($role->id);
+            }
+            
             if ($result) {
                 return response()->json([
                     'message' => "Hotel Registerd"

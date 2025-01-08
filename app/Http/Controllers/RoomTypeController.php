@@ -94,6 +94,7 @@ class RoomTypeController extends Controller
     public function create_room_type(Request $request)
     {
         $rules = [
+            'hotel_id' => 'required',
             'room_type' => 'required|string|max:50',
             'description' => 'required|string|max:300',
         ];
