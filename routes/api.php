@@ -75,13 +75,14 @@ Route::middleware('auth:api')->group(function () {
     Route::post("price-rules-update", [PriceRuleController::class, 'update_price_rules']); //update price rules
     Route::post("price-rules-delete", [PriceRuleController::class, 'delete_price_rules']); //delete price rules
     Route::post("price-rules-create", [PriceRuleController::class, 'create_price_rules']); //create price rules
-
+    
     //crud for room
     Route::post("room-create", [RoomController::class, 'create_room']); //create rooms
     Route::post("room-retrive", [RoomController::class, 'retrive_rooms']); //retrive rooms
     Route::post("rooms-paginate", [RoomController::class, 'paginate']); //paginate for rooms
     Route::post("room-update", [RoomController::class, 'update_rooms']); //update rooms
     Route::post("room-delete", [RoomController::class, 'delete_rooms']); //delete rooms
+    Route::post('get-price', [RoomController::class, 'getPrice']); // get room price
     Route::post("get-country", [BookingController::class, 'get_country']); //get Country
 });
 
