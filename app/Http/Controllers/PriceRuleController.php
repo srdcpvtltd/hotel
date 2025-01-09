@@ -119,9 +119,9 @@ class PriceRuleController extends Controller
     {
         $rules = [
             'room_type_id' => 'required|string',
-            'rent_by_hour' => 'required|in:Yes,No',
-            'rent_by_hour_price' => 'required',
-            'after_rent_by_hour_price' => 'required',
+            // 'rent_by_hour' => 'required|in:Yes,No',
+            // 'rent_by_hour_price' => 'required',
+            // 'after_rent_by_hour_price' => 'required',
             'price' => 'required',
             'extra_adult_price' => 'required',
             'extra_child_price' => 'required',
@@ -129,10 +129,10 @@ class PriceRuleController extends Controller
             'check_out' => 'required',
             'overtime_charge' => 'required',
             'rounded_minutes' => 'required',
-            'friday_price' => 'required',
-            'saturday_price' => 'required',
-            'sunday_price' => 'required',
-            'holiday_price' => 'required'
+            // 'friday_price' => 'required',
+            // 'saturday_price' => 'required',
+            // 'sunday_price' => 'required',
+            // 'holiday_price' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);
