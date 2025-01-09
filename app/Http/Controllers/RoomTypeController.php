@@ -159,7 +159,8 @@ class RoomTypeController extends Controller
         $serch_text = $request->search_text;
 
         if($serch_text){
-            $room_type = RoomType::where('room_type','like',"%$serch_text%") 
+            $room_type = RoomType::where('room_type','like',"%$serch_text%")
+            ->where('hotel_id',$request->hotel_id) 
             ->limit($limit)
             ->offset($index)
             ->orderBy('id', 'desc')

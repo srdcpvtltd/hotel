@@ -9,6 +9,7 @@ use App\Models\HotelProfile;
 use App\Models\PoliceStation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class HotelProfileController extends Controller
@@ -147,16 +148,23 @@ class HotelProfileController extends Controller
                 'message' => $validator->errors()
             ], 200);
         } else {
-            $result = HotelProfile::create($request->all());
-            if ($result) {
+            $hotel = HotelProfile::where('user_id', Auth::user()->id)->first();
+            if ($hotel) {
                 return response()->json([
-                    'message' => "Hotel Added Successfully",
-                    'data' => $result->fresh()
+                    'message' => "Hotel Profile already exists"
                 ], 200);
             } else {
-                return response()->json([
-                    'message' => "Failed"
-                ], 200);
+                $result = HotelProfile::create($request->all());
+                if ($result) {
+                    return response()->json([
+                        'message' => "Hotel Added Successfully",
+                        'data' => $result->fresh()
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'message' => "Failed"
+                    ], 200);
+                }
             }
         }
     }

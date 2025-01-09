@@ -259,4 +259,22 @@ class BookingController extends Controller
             ]);
         }
     }
+
+    public function get_checkins(Request $request)
+    {
+        dd($request->all());
+        $bookings = Booking::where('hotel_id', $request->hotel_id)->whereHas('rooms', function ($q) {
+            $q->where('status', '0');
+        })->orderBy('created_at', 'DESC')->paginate(20);
+
+        if ($bookings->toArray()) {
+            return response()->json([
+                'data' => $bookings
+            ]);
+        } else {
+            return response()->json([
+                'message' => "No Data Found"
+            ]);
+        }
+    }
 }

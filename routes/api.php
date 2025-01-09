@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("delete-advance-booking", [AdvanceBookingsController::class, 'delete_advance_bookings']); //delete Advance Booking
     Route::post("get-room-type", [BookingController::class, 'get_room_type']); //delete Advance Booking
     Route::post("get-rooms", [BookingController::class, 'get_rooms']); //delete Advance Booking
+    Route::post("get-checkins", [BookingController::class, 'get_checkins']); //get all checkin list
 
 
     //Counry,state,district,city
@@ -74,6 +75,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("price-rules-update", [PriceRuleController::class, 'update_price_rules']); //update price rules
     Route::post("price-rules-delete", [PriceRuleController::class, 'delete_price_rules']); //delete price rules
     Route::post("price-rules-create", [PriceRuleController::class, 'create_price_rules']); //create price rules
+
     //crud for room
     Route::post("room-create", [RoomController::class, 'create_room']); //create rooms
     Route::post("room-retrive", [RoomController::class, 'retrive_rooms']); //retrive rooms
