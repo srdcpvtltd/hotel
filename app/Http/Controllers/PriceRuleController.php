@@ -11,6 +11,7 @@ use App\Models\RoomType;
 use App\Services\PriceRuleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PriceRuleController extends Controller
 {
