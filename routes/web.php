@@ -62,7 +62,7 @@ Route::get('get-states', [CountryDropdownController::class, 'getStates'])->name(
 Route::get('get-district', [CountryDropdownController::class, 'getDistricts'])->name('getDistricts')->middleware(['auth','XSS','2fa',]);
 Route::get('get-cities', [CountryDropdownController::class, 'getCities'])->name('getCities')->middleware(['auth','XSS','2fa',]);
 Route::get('get-guest-details/', [GuestController::class, 'getGuestDetail'])->name('getGuestDetail')->middleware(['auth','XSS','2fa',]);
-Route::get('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->middleware(['auth','XSS','2fa',]);
+Route::post('get-price', [RoomController::class, 'getPrice'])->name('getPrice')->middleware(['auth','XSS','2fa',]);
 Route::get('get-room', [BookingController::class, 'getRoom'])->name('getRoom')->middleware(['auth','XSS','2fa',]);
 Route::get('get-food', [OrderController::class, 'getFood'])->name('getFood')->middleware(['auth','XSS','2fa',]);
 Route::get('get-food-price', [OrderController::class, 'getFoodPrice'])->name('getFoodPrice')->middleware(['auth','XSS','2fa',]);

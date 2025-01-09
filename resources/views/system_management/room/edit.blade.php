@@ -60,8 +60,12 @@
             var RoomTypeId = this.value;
             $('#price').html('');
             $.ajax({
-                url: "{{ route('getPrice') }}?Roomtype_id=" + RoomTypeId,
-                type: 'get',
+                url: "{{ route('getPrice') }}",
+                type: 'post',
+                data: {
+                    room_type_id : RoomTypeId,
+                    _token : "{{ csrf_token() }}"
+                },
                 success: function(res) {
                     if(res == "No Price Rules Created"){
                         $('#price').val(res);

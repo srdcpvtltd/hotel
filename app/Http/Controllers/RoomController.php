@@ -105,7 +105,7 @@ class RoomController extends Controller
     public function getPrice(Request $request)
     {
         $price = DB::table('price_rules')
-            ->where('room_type_id', $request->Roomtype_id)
+            ->where('room_type_id', $request->room_type_id)
             ->first();
 
         if ($price != null) {
