@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\HotelProfile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -81,7 +82,9 @@ class HotelRegisterController extends Controller
                 ], 200);
             } else {
                 if ($admin && Hash::check($payloads['password'], $admin['password'])) {
+                    $hotel = HotelProfile::where('user_id', $admin->id)->first('id');
                     $token = $admin->createToken('Login_token')->accessToken;
+                    $admin['hotel_id'] = $hotel->id;
                     $admin['token'] = $token;
                     return response()->json([
                         'admin' => $admin

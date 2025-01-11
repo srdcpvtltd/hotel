@@ -111,11 +111,11 @@ class BookingController extends Controller
                 $rooms[] = $request->bookingdata[$i]['room_number'];
             }
 
-            foreach ($rooms as $room) {
-                $room = Room::where('name', $room)->first();
-                $room->status = 1;
-                $room->updated_at = date('Y-m-d H:i:s');
-                $room->save();
+            foreach ($rooms as $rooom) {
+                $rooom = Room::where('name', $rooom)->first();
+                $rooom->status = 1;
+                $rooom->updated_at = date('Y-m-d H:i:s');
+                $rooom->save();
             }
             return response()->json([
                 'booking_id' => 1,
