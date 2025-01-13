@@ -161,7 +161,7 @@ class RoomController extends Controller
             // }
 
             $result = Room::create([
-                'hotel_id' =>  920, //only for testing and will be fix after solving the middleware issue
+                'hotel_id' =>  $request->hotel_id, //only for testing and will be fix after solving the middleware issue
                 'name' => $request->name,
                 'room_type_id' => $request->room_type_id,
                 'price' => $request->price,
@@ -296,6 +296,24 @@ class RoomController extends Controller
             // Deletion failed
             return response()->json([
                 'message' => 'Failed to delete data'
+            ], 200);
+        }
+    }
+
+    //retrive rooms using hotel_id & room_type_id
+    public function get_room(Request $request)
+    {
+        $room = Room::where('hotel_id', $request->hotel_id)
+        ->where('room_type_id', $request->room_type_id)->get();
+
+        if ($room) {
+            return response()->json([
+                'message' => $room
+            ], 200);
+        } else {
+            // Deletion failed
+            return response()->json([
+                'message' => 'No Rooms found'
             ], 200);
         }
     }
