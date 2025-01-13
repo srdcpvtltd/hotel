@@ -84,8 +84,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post("room-delete", [RoomController::class, 'delete_rooms']); //delete rooms
     Route::post('get-price', [RoomController::class, 'getPrice']); // get room price
     Route::post("get-country", [BookingController::class, 'get_country']); //get Country
+    Route::post("get-room", [RoomController::class, 'get_room']); //get Country
 });
-Route::post("get-room", [RoomController::class, 'get_room']); //get Country
 
 
 //Hotel register and login
