@@ -306,12 +306,11 @@ class RoomController extends Controller
         $room = Room::where('hotel_id', $request->hotel_id)
         ->where('room_type_id', $request->room_type_id)->get();
 
-        if ($room) {
+        if (!$room->isEmpty()) {
             return response()->json([
                 'message' => $room
             ], 200);
         } else {
-            // Deletion failed
             return response()->json([
                 'message' => 'No Rooms found'
             ], 200);
