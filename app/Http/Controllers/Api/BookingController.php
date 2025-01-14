@@ -118,7 +118,8 @@ class BookingController extends Controller
                 $rooom->save();
             }
             return response()->json([
-                'booking_id' => 1,
+                'booking_rooms_id' => $booking->rooms->id,
+                'booking_id' => $booking->id,
                 'message' => "Checkin Successfull"
             ]);
         } else {
