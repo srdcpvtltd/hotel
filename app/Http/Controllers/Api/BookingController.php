@@ -93,7 +93,8 @@ class BookingController extends Controller
         if ($booking && $result) {
             // save booking rooms
             if ($request->bookingdata) {
-                $booking->rooms()->createMany($request->bookingdata);
+                $createdRooms = $booking->rooms()->createMany($request->bookingdata);
+                $insertedIds = $createdRooms->pluck('id');
             }
             if ($request->accompany) {
                 $booking->accompanies()->createMany($request->accompany);
@@ -118,7 +119,7 @@ class BookingController extends Controller
                 $rooom->save();
             }
             return response()->json([
-                'booking_rooms_id' => $booking->rooms->id,
+                'booking_rooms_id' => $insertedIds,
                 'booking_id' => $booking->id,
                 'message' => "Checkin Successfull"
             ]);
