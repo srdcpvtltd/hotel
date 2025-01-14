@@ -130,10 +130,10 @@ class BookingController extends Controller
         }
     }
 
-    public function get_checkin_details()
+    public function get_checkin_details(Request $request)
     {
 
-        $bookings = Booking::with('rooms')->where('user_id', 914)
+        $bookings = Booking::with('rooms')->where('user_id', $request->user_id)
             ->whereHas('rooms', function ($query) {
                 $query->where('status', 0);
             })

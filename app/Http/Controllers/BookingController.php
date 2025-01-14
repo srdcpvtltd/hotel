@@ -139,7 +139,7 @@ class BookingController extends Controller
     public function getRoom(Request $request)
     {
         $rooms = Room::where('room_type_id', $request->room_type)->where('status', 0)->get();
-
+        // dd($rooms);
         if (count($rooms) > 0) {
             return response()->json($rooms);
         }
