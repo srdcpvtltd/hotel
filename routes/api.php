@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\DesignationController;
 use App\Http\Controllers\Api\HotelRegisterController;
 use App\Http\Controllers\Api\HotelStaffController;
+use App\Http\Controllers\Api\PDFController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\HotelProfileController;
 use App\Http\Controllers\PriceRuleController;
@@ -24,8 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //add,update,delete - hotel
+Route::post("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
 Route::middleware('auth:api')->group(function () {
-    // dd("testing");
+    Route::post('download_invoice', [PDFController::class, 'download_invoice'])->name('download_invoice');
     Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
@@ -33,7 +35,6 @@ Route::middleware('auth:api')->group(function () {
 
     //Bookings
     Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
-    Route::post("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
     Route::post("hotel-checkout", [BookingController::class, 'check_out']); //guest checkout
     Route::post("create-advance-booking", [AdvanceBookingsController::class, 'create_advance_bookings']); //create Advance Booking
     Route::post("retrive-advance-booking", [AdvanceBookingsController::class, 'retrive_advance_bookings']); //retrive Advance Booking

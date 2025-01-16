@@ -132,15 +132,14 @@ class BookingController extends Controller
 
     public function get_checkin_details(Request $request)
     {
+        $bookings = Booking::where('id', $request->booking_id)
+            ->first();
 
-        $bookings = Booking::with('rooms')->where('user_id', $request->user_id)
-            ->whereHas('rooms', function ($query) {
-                $query->where('status', 0);
-            })
-            ->get();
+        $booking_room = BookingRoom::with('room')->where('booking_id', $request->booking_id)->get();
 
         return response()->json([
-            'data' => $bookings
+            'data' => $bookings,
+            'booking_room' => $booking_room
         ]);
     }
 
