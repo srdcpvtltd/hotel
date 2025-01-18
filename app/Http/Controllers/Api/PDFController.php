@@ -15,7 +15,6 @@ class PDFController extends Controller
 {
     public function download_invoice(Request $request)
     {
-        dd($request->booking_id, Auth::id());
         // Retrieve hotel profile associated with the authenticated user
         $hotel = HotelProfile::where('user_id', Auth::id())->first();
     

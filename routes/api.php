@@ -25,14 +25,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //add,update,delete - hotel
-Route::post("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
 Route::middleware('auth:api')->group(function () {
-    Route::post('download_invoice', [PDFController::class, 'download_invoice'])->name('download_invoice');
     Route::post("add-hotel", [HotelProfileController::class, 'add_hotel']);
     Route::post("update-hotel", [HotelProfileController::class, 'update_hotel']);
     Route::post("delete-hotel", [HotelProfileController::class, 'delete_hotel']);
     Route::post("get-police-station", [HotelProfileController::class, 'get_police_stations']);
-
+    Route::post('download_invoice', [PDFController::class, 'download_invoice'])->name('download_invoice');
+    
     //Bookings
     Route::post("hotel-checkin", [BookingController::class, 'create_booking']); //create checkin
     Route::post("hotel-checkout", [BookingController::class, 'check_out']); //guest checkout
@@ -43,6 +42,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post("get-room-type", [BookingController::class, 'get_room_type']); //delete Advance Booking
     Route::post("get-rooms", [BookingController::class, 'get_rooms']); //delete Advance Booking
     Route::post("get-checkins", [BookingController::class, 'get_checkins']); //get all checkin list
+    Route::post("get-checkin-details", [BookingController::class, 'get_checkin_details']); //get checkin details
 
 
     //Counry,state,district,city
